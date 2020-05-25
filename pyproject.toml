@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "paddle"
+version = "0.1.0"
+description = "Wrapper around the Paddle API"
+authors = ["Matt Pye <pyematt@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.6"
+httpx = "^0.13.1"
+
+[tool.poetry.dev-dependencies]
+pytest = "^4.6"
+mypy = "^0.770"
+isort = "^4.3.21"
+flake8 = "^3.8.2"
+pytest-cov = "^2.9.0"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
