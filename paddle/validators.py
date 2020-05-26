@@ -1,4 +1,4 @@
-from datetime import datetime, date
+from datetime import date, datetime
 
 
 def validate_date(value):

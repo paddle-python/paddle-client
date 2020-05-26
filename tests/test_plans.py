@@ -1,7 +1,5 @@
 import os
 
-import pytest
-
 from .test_paddle import paddle_client  # NOQA: F401
 
 
