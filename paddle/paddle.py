@@ -122,3 +122,5 @@ class Paddle():
     from ._order_information import get_order_details
 
     from ._user_history import get_user_history
+
+    from ._prices import get_prices
