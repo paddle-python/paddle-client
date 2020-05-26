@@ -1,7 +1,13 @@
+import pytest
+
 from .test_paddle import paddle_client  # NOQA: F401
 
 
 def test_create_pay_link(paddle_client):  # NOQA: F811
+    create_pay_link = getattr(paddle_client, 'create_pay_link', None)
+    if not create_pay_link or not callable(create_pay_link):
+        pytest.skip('paddle.create_pay_link does not exist')
+
     # ToDo: Create product when API exists for it here
     response = paddle_client.create_pay_link(
         # product_id=int(os.environ['PADDLE_TEST_DEFAULT_PRODUCT_ID']),

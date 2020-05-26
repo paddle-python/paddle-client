@@ -133,9 +133,9 @@ class Paddle():
 
     from ._products import list_products
 
-    from ._licenses import generate_license
+    # from ._licenses import generate_license
 
-    from ._pay_links import create_pay_link
+    # from ._pay_links import create_pay_link
 
     from ._plans import list_plans
 

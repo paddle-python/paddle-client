@@ -35,7 +35,7 @@ pytest tests/
 
 ### Cleanup
 
-_(these tests are currently not working anyway)_
+_(These tests are currently not working and marked as skipped so this can be ignored)_
 
 Parts of the Paddle API have create endpoints but not delete endpoints. Because of this several tests need to be cleaned up manually after they are run:
 
@@ -56,12 +56,17 @@ Parts of the Paddle API have create endpoints but not delete endpoints. Because 
 * [List Plans](https://developer.paddle.com/api-reference/subscription-api/plans/listplans)
 * [Get Webhook History](https://developer.paddle.com/api-reference/alert-api/webhooks/webhooks)
 
+
 ## Failing Endpoints
+
+The below endpoints have been implimented but are not working correctly according to the tests. They have been commented out in `paddle/paddle.py` and the tests will skip is the methods do not exist
+
 * [Generate License](https://developer.paddle.com/api-reference/product-api/licenses/createlicense) - `Paddle error 108 - Unable to find requested product`
 * [Create pay link](https://developer.paddle.com/api-reference/product-api/pay-links/createpaylink) -  `Paddle error 108 - Unable to find requested product`
 
 
 ## ToDo
+* Fix generate license and create pay link endpoints
 * Remove `base_url` from Paddle
 * Paddle API endpoints
     * [List Transactions](https://developer.paddle.com/api-reference/product-api/transactions/listtransactions)
