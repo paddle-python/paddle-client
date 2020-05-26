@@ -73,8 +73,6 @@ def create_coupon(
     json['description'] = description
     json['minimum_threshold'] = minimum_threshold
     json['group'] = group
-    # Clear None values
-    json = {k: v for k, v in json.items() if v}
 
     return self.post(url=url, json=json)
 
@@ -129,8 +127,5 @@ def update_coupon(
 
     if recurring:
         json['recurring'] = 1 if recurring else 0
-
-    # Clear None values
-    json = {k: v for k, v in json.items() if v}
 
     return self.post(url=url, json=json)

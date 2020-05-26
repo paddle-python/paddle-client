@@ -114,7 +114,4 @@ def create_pay_link(
     if expires:
         json['expires'] = validate_date(expires)
 
-    # Clear None values
-    json = {k: v for k, v in json.items() if v}
-
     return self.post(url=url, json=json)
