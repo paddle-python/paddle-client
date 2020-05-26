@@ -27,7 +27,7 @@ poetry shell
 vim .env
 export PADDLE_TEST_DEFAULT_CHECKOUT_ID="..."
 export PADDLE_TEST_DEFAULT_PRODUCT_ID=...
-
+export PADDLE_TEST_DEFAULT_PLAN_ID=...
 source .env
 pytest tests/
 # Coverage info is written to htmlcov/
@@ -51,7 +51,7 @@ Parts of the Paddle API have create endpoints but not delete endpoints. Because 
 * [Delete Coupon](https://developer.paddle.com/api-reference/product-api/coupons/deletecoupon)
 * [Update Coupon](https://developer.paddle.com/api-reference/product-api/coupons/updatecoupon)
 * [List products](https://developer.paddle.com/api-reference/product-api/products/getproducts)
-
+* [List Plans](https://developer.paddle.com/api-reference/subscription-api/plans/listplans)
 
 ## Failing Endpoints
 * [Generate License](https://developer.paddle.com/api-reference/product-api/licenses/createlicense) - `Paddle error 108 - Unable to find requested product`
@@ -63,7 +63,6 @@ Parts of the Paddle API have create endpoints but not delete endpoints. Because 
 * Paddle API endpoints
     * [List Transactions](https://developer.paddle.com/api-reference/product-api/transactions/listtransactions)
     * [Refund Payment](https://developer.paddle.com/api-reference/product-api/payments/refundpayment)
-    * [List Plans](https://developer.paddle.com/api-reference/subscription-api/plans/listplans)
     * [Create Plan](https://developer.paddle.com/api-reference/subscription-api/plans/createplan)
     * [List Users](https://developer.paddle.com/api-reference/subscription-api/subscription-users/listusers)
     * [Cancel Subscription](https://developer.paddle.com/api-reference/subscription-api/subscription-users/canceluser)
