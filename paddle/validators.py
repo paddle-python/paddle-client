@@ -15,3 +15,19 @@ def validate_date(value, field_name):
         return value.strftime(date_format)
 
     raise ValueError(error_message)
+
+
+def validate_datetime(value, field_name):
+    datetime_format = '%Y-%m-%d %H:%M:%S'
+    if isinstance(value, str):
+        error_message = '{0} must be a datetime object or string in format YYYY-MM-DD HH:MM:SS'.format(field_name)  # NOQA: E501
+        try:
+            datetime.strptime(value, datetime_format)
+        except ValueError:
+            raise ValueError(error_message)
+        else:
+            return value
+    elif type(value) in [datetime, date]:
+        return value.strftime(datetime_format)
+
+    raise ValueError(error_message)

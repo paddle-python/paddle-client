@@ -52,6 +52,7 @@ Parts of the Paddle API have create endpoints but not delete endpoints. Because 
 * [Update Coupon](https://developer.paddle.com/api-reference/product-api/coupons/updatecoupon)
 * [List products](https://developer.paddle.com/api-reference/product-api/products/getproducts)
 * [List Plans](https://developer.paddle.com/api-reference/subscription-api/plans/listplans)
+* [Get Webhook History](https://developer.paddle.com/api-reference/alert-api/webhooks/webhooks)
 
 ## Failing Endpoints
 * [Generate License](https://developer.paddle.com/api-reference/product-api/licenses/createlicense) - `Paddle error 108 - Unable to find requested product`
@@ -74,7 +75,6 @@ Parts of the Paddle API have create endpoints but not delete endpoints. Because 
     * [List Payments](https://developer.paddle.com/api-reference/subscription-api/payments/listpayments)
     * [Reschedule Payment](https://developer.paddle.com/api-reference/subscription-api/payments/updatepayment)
     * [Create One-off Charge](https://developer.paddle.com/api-reference/subscription-api/one-off-charges/createcharge)
-    * [Get Webhook History](https://developer.paddle.com/api-reference/alert-api/webhooks/webhooks)
 * Work out the best way to deal with the different API urls
 * tox setup
 * Do we want to have a set of tests which use mocks?
