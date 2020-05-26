@@ -2,49 +2,46 @@
 
 A python (3+) wrapper around the Paddle API
 
-This is a work in progress
+This is a work in progress, not all of the Paddle endpoints have been implimented yet
 
+## Quick start
 
-## Setup
-```bash
-curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3
-poetry install
+### Installation
 
-# Create a file called .env and add the below
-export PADDLE_VENDOR_ID=...
-export PADDLE_API_KEY="..."
-
-poetry shell
-source .env
+This package is not yet on Pypi (as the name `paddle` name it taken and we can't think of anything better right now) so until then you can install it straight from Github:
+```
+pip install git+https://github.com/pyepye/paddle-python
 ```
 
-## Running tests
 
-All tests are currently run against Paddle's API directly. No mocks are used as this is meant to be a thin wrapper. This does mean you need to set a few environmental variables specific to your Paddle account for the tests to run correctly.
+### Usage
 
-```bash
-poetry shell
-# Add the below to .env
-export PADDLE_TEST_DEFAULT_CHECKOUT_ID="..."
-export PADDLE_TEST_DEFAULT_PRODUCT_ID=...
-export PADDLE_TEST_DEFAULT_PLAN_ID=...
-source .env
-pytest tests/
-# Coverage info is written to htmlcov/
+```python
+from paddle import Paddle
+
+
+paddle = Paddle(vendor_id=12345, api_key='myapikey')
+paddle.list_products()
 ```
 
-### Cleanup
+If `vendor_id` and `api_key` are not passed through when initalising Paddle will fall back and try and use environmental variables called `PADDLE_VENDOR_ID` and `PADDLE_API_KEY`
+```bash
+export PADDLE_VENDOR_ID=12345
+export PADDLE_API_KEY="myfakeapikey"
+```
 
-_(These tests are currently not working and marked as skipped so this can be ignored)_
+```python
+from paddle import Paddle
 
-Parts of the Paddle API have create endpoints but not delete endpoints. Because of this several tests need to be cleaned up manually after they are run:
 
-
-* `tests/test_licenses.py::test_generate_license`
-* `tests/test_pay_links.py::test_create_pay_link`
+paddle = Paddle()
+paddle.list_products()
+```
 
 
 ## Working endpoints
+
+
 * [Get Order Details](https://developer.paddle.com/api-reference/checkout-api/order-information/getorder)
 * [Get User History](https://checkout.paddle.com/api/2.0/user/history)
 * [Get Prices](https://developer.paddle.com/api-reference/checkout-api/prices/getprices)
@@ -52,9 +49,46 @@ Parts of the Paddle API have create endpoints but not delete endpoints. Because 
 * [Create Coupon](https://developer.paddle.com/api-reference/product-api/coupons/createcoupon)
 * [Delete Coupon](https://developer.paddle.com/api-reference/product-api/coupons/deletecoupon)
 * [Update Coupon](https://developer.paddle.com/api-reference/product-api/coupons/updatecoupon)
-* [List products](https://developer.paddle.com/api-reference/product-api/products/getproducts)
+* [List Products](https://developer.paddle.com/api-reference/product-api/products/getproducts)
 * [List Plans](https://developer.paddle.com/api-reference/subscription-api/plans/listplans)
 * [Get Webhook History](https://developer.paddle.com/api-reference/alert-api/webhooks/webhooks)
+
+```python
+paddle.get_order_details(checkout_id=checkout_id)
+paddle.get_user_history(email=email)
+paddle.get_prices(product_ids=[product_id])
+paddle.list_coupons(product_id=product_id)
+paddle.create_coupon(
+    coupon_type=coupon_type,
+    discount_type=discount_type,
+    discount_amount=discount_amount,
+    allowed_uses=allowed_uses,
+    recurring=recurring,
+    currency=currency,
+    product_ids=product_ids,
+    coupon_code=coupon_code,
+    description=description,
+    expires=expires,
+    minimum_threshold=minimum_threshold,
+    group=group,
+)
+paddle.delete_coupon(coupon_code=new_coupon_code, product_id=product_id)
+paddle.update_coupon(
+    coupon_code=coupon_code,
+    new_coupon_code=new_coupon_code,
+    new_group='paddle-python-test',
+    product_ids=[product_id],
+    expires=expires,
+    allowed_uses=allowed_uses,
+    currency=currency,
+    minimum_threshold=9998,
+    discount_amount=discount_amount,
+    recurring=True
+)
+paddle.list_products()
+paddle.list_plans()
+paddle.get_webhook_history()
+```
 
 
 ## Failing Endpoints
