@@ -43,8 +43,12 @@ class Paddle():
                 raise ValueError('API key not set')
 
         self.base_url: str = 'https://vendors.paddle.com/api/2.0/'
-        # url = 'https://checkout.paddle.com/api/1.0/order'
-        # url = 'https://checkout.paddle.com/api/2.0/user/history'
+
+        self.checkout_v1 = 'https://checkout.paddle.com/api/1.0/'
+        self.checkout_v2 = 'https://checkout.paddle.com/api/2.0/'
+        self.checkout_v2_1 = 'https://vendors.paddle.com/api/2.1/'
+        self.vendors_v2 = 'https://vendors.paddle.com/api/2.0/'
+
         self.vendor_id: int = vendor_id
         self.api_key: str = api_key
         self.json: dict = {
@@ -115,23 +119,6 @@ class Paddle():
         kwargs['method'] = 'POST'
         return self.request(**kwargs)
 
-    def get_order_details(self, checkout_id: str, url: str = None) -> dict:
-        # Accept URL for compatibility with a new API if it arrives
-        if not url:
-            url = 'https://checkout.paddle.com/api/1.0/order'
-        params = {'checkout_id': checkout_id}
-        return self.get(url=url, params=params)
+    from ._order_information import get_order_details
 
-    def get_user_history(self, email: str, vendor_id: int = None, product_id: int = None) -> dict:  # NOQA: E501
-        url = 'https://checkout.paddle.com/api/2.0/user/history'
-
-        params = {'email': email}
-        if product_id:
-            params['product_id'] = product_id
-
-        if vendor_id:
-            params['vendor_id'] = vendor_id
-        else:
-            params['vendor_id'] = self.vendor_id
-
-        return self.get(url=url, params=params)
+    from ._user_history import get_user_history
