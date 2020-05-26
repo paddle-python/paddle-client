@@ -124,3 +124,8 @@ class Paddle():
     from ._user_history import get_user_history
 
     from ._prices import get_prices
+
+    from ._coupons import list_coupons
+    from ._coupons import create_coupon
+    from ._coupons import delete_coupon
+    from ._coupons import update_coupon
