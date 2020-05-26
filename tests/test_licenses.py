@@ -6,6 +6,7 @@ import pytest
 from .test_paddle import paddle_client  # NOQA: F401
 
 
+@pytest.mark.manual_cleanup
 def test_generate_license(paddle_client):  # NOQA: F811
     generate_license = getattr(paddle_client, 'generate_license', None)
     if not generate_license or not callable(generate_license):
