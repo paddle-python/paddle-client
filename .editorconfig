@@ -8,13 +8,7 @@ insert_final_newline = true
 trim_trailing_whitespace = true
 
 [*.py]
-# Start for isort
-line_length=79
-multi_line_output=5
-known_first_party=paddle
-skip_glob = __pycache__/*,venv/*,.venv/*,.tox/*,.mypy_cache
-not_skip=__init__.py
-# End for isort
+indent_size = 4
 
 [*.{yml,yaml,json}]
 indent_size = 2

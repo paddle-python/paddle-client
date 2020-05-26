@@ -8,7 +8,7 @@ _Note: This is a work in progress, not all of the Paddle endpoints have been imp
 
 ### Installation
 
-```
+```bash
 pip install paddle-python
 ```
 
@@ -28,7 +28,7 @@ paddle.list_products()
 If `vendor_id` and `api_key` are not passed through when initalising Paddle will fall back and try and use environmental variables called `PADDLE_VENDOR_ID` and `PADDLE_API_KEY`
 ```bash
 export PADDLE_VENDOR_ID=12345
-export PADDLE_API_KEY="myfakeapikey"
+export PADDLE_API_KEY="myapikey"
 ```
 
 ```python
@@ -40,9 +40,17 @@ paddle.list_products()
 ```
 
 
+## Documentation
+
+Coming soon. Please see `Working endpoints` below for basic usage.
+
+
+## Contributing
+
+All contributions are welcome and appreciated. Please see [CONTRIBUTING.md](https://github.com/pyepye/paddle-python/blob/master/CONTRIBUTING.md) for more details including details on how to run tests etc.
+
+
 ## Working endpoints
-
-
 * [Get Order Details](https://developer.paddle.com/api-reference/checkout-api/order-information/getorder)
 * [Get User History](https://checkout.paddle.com/api/2.0/user/history)
 * [Get Prices](https://developer.paddle.com/api-reference/checkout-api/prices/getprices)
@@ -118,7 +126,6 @@ The below endpoints have been implimented but are not working correctly accordin
     * [Create One-off Charge](https://developer.paddle.com/api-reference/subscription-api/one-off-charges/createcharge)
 * Get test coverage to 100%
 * Docs (auto docs?)
-* tox
 * Do we want to have a set of tests which use mocks?
     * Could use pytest-recording (vcrpy) to update Mock data
     * Github actions to recreate mocks nightly?
