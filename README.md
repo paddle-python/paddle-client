@@ -10,7 +10,7 @@ This is a work in progress
 curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3
 poetry install
 
-vim .env
+# Create a file called .env and add the below
 export PADDLE_VENDOR_ID=...
 export PADDLE_API_KEY="..."
 
@@ -24,7 +24,7 @@ All tests are currently run against Paddle's API directly. No mocks are used as 
 
 ```bash
 poetry shell
-vim .env
+# Add the below to .env
 export PADDLE_TEST_DEFAULT_CHECKOUT_ID="..."
 export PADDLE_TEST_DEFAULT_PRODUCT_ID=...
 export PADDLE_TEST_DEFAULT_PLAN_ID=...
@@ -34,6 +34,8 @@ pytest tests/
 ```
 
 ### Cleanup
+
+_(these tests are currently not working anyway)_
 
 Parts of the Paddle API have create endpoints but not delete endpoints. Because of this several tests need to be cleaned up manually after they are run:
 
