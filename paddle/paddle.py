@@ -2,7 +2,7 @@ import logging
 import os
 from urllib.parse import urljoin
 
-import httpx
+import requests
 
 log = logging.getLogger(__name__)
 
@@ -12,7 +12,7 @@ class PaddleException(Exception):
     def __init__(self, error):
         self.code: str = 'Unknown'
         self.message = error
-        if isinstance(error, httpx.HTTPError):  # pragma: no cover - Unsure how to trigger a HTTPError here  # NOQA: E501
+        if isinstance(error, requests.HTTPError):  # pragma: no cover - Unsure how to trigger a HTTPError here  # NOQA: E501
             self.code = 'HTTP error {0}'.format(error.response.status_code)
             self.message = error.response.content.decode("utf-8")
         elif isinstance(error, dict):
@@ -93,10 +93,10 @@ class Paddle():
         if params:
             kwargs['params'] = params
 
-        response = httpx.request(**kwargs)
+        response = requests.request(**kwargs)
         try:
             response.raise_for_status()
-        except httpx.HTTPError as e:  # pragma: no cover - Unsure how to trigger a HTTPError here  # NOQA: E501
+        except requests.HTTPError as e:  # pragma: no cover - Unsure how to trigger a HTTPError here  # NOQA: E501
             raise PaddleException(e)
 
         response_json: dict = response.json()

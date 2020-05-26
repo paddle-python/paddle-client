@@ -5,8 +5,8 @@ description = "Wrapper around the Paddle API"
 authors = ["Matt Pye <pyematt@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.6"
-httpx = "^0.13.1"
+python = "^3.5"
+requests = "^2.23.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^4.6"
