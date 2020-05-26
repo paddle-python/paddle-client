@@ -1,3 +1,4 @@
+# https://developer.paddle.com/reference/platform-parameters/supported-countries
 supported_countries = {
     'AF': 'Afghanistan',
     'AL': 'Albania',
@@ -241,6 +242,8 @@ supported_countries = {
     'ZM': 'Zambia',
     'ZW': 'Zimbabwe',
 }
+
+# https://developer.paddle.com/reference/platform-parameters/supported-countries#countries-requiring-postcode
 countries_requiring_postcode = [
     'AU', 'CA', 'FR', 'DE', 'IN', 'IT', 'NL', 'ES', 'GB', 'US',
 ]

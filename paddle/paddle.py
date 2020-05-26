@@ -1,6 +1,6 @@
-import warnings
 import logging
 import os
+import warnings
 from urllib.parse import urljoin
 
 import requests

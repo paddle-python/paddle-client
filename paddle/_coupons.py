@@ -1,12 +1,16 @@
 import logging
 from urllib.parse import urljoin
 
+from .types import DatetimeType, PaddleJsonType
 from .validators import validate_date
 
 log = logging.getLogger(__name__)
 
 
 def list_coupons(self, product_id: int) -> dict:
+    """
+    https://developer.paddle.com/api-reference/product-api/coupons/listcoupons
+    """
     url = urljoin(self.vendors_v2, 'product/list_coupons')
     return self.post(url=url, json={'product_id': product_id})
 
@@ -24,16 +28,17 @@ def create_coupon(
     coupon_prefix: str = None,
     num_coupons: int = None,
     description: str = None,
-    expires=None,
+    expires: DatetimeType = None,
     minimum_threshold: int = None,
     group: str = None,
 ) -> dict:
     """
+    https://developer.paddle.com/api-reference/product-api/coupons/createcoupon
+
     currency appears to be required:
         Paddle error 134 - The given coupon currency is invalid. The currency must match your balance currency.  # NOQA: E501
     Even though the docs states:
         "Required if discount_amount is flat."
-    https://developer.paddle.com/api-reference/product-api/coupons/createcoupon  # NOQA: E501
     """
 
     url = urljoin(self.checkout_v2_1, 'product/create_coupon')
@@ -49,7 +54,7 @@ def create_coupon(
     if coupon_code and (coupon_prefix or num_coupons):
         raise ValueError('coupon_prefix and num_coupons not valid when coupon_code set')  # NOQA: E501
 
-    json = {
+    json: PaddleJsonType = {
         'coupon_type': coupon_type,
         'discount_type': discount_type,
         'discount_amount': discount_amount,
@@ -78,8 +83,11 @@ def create_coupon(
 
 
 def delete_coupon(self, coupon_code: str, product_id: int = None) -> dict:
+    """
+    https://developer.paddle.com/api-reference/product-api/coupons/deletecoupon
+    """
     url = urljoin(self.vendors_v2, 'product/delete_coupon')
-    json = {'coupon_code': coupon_code}
+    json: PaddleJsonType = {'coupon_code': coupon_code}
     if product_id:
         json['product_id'] = product_id
     return self.post(url=url, json=json)
@@ -92,19 +100,22 @@ def update_coupon(
     group: str = None,
     new_group: str = None,
     product_ids: list = None,
-    expires=None,
+    expires: DatetimeType = None,
     allowed_uses: int = None,
     currency: str = None,
     minimum_threshold: int = None,
     discount_amount: float = None,
     recurring: bool = None,
 ) -> dict:
+    """
+    https://developer.paddle.com/api-reference/product-api/coupons/updatecoupon
+    """
     url = urljoin(self.checkout_v2_1, 'product/update_coupon')
 
     if coupon_code and group:
         raise ValueError('You must specify either coupon_code or group, but not both')  # NOQA: E501
 
-    json = {
+    json: PaddleJsonType = {
         'coupon_code': coupon_code,
         'new_coupon_code': new_coupon_code,
         'group': group,

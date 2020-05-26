@@ -117,6 +117,7 @@ The below endpoints have been implimented but are not working correctly accordin
     * [Reschedule Payment](https://developer.paddle.com/api-reference/subscription-api/payments/updatepayment)
     * [Create One-off Charge](https://developer.paddle.com/api-reference/subscription-api/one-off-charges/createcharge)
 * Get test coverage to 100%
+* Docs (auto docs?)
 * tox
 * Do we want to have a set of tests which use mocks?
     * Could use pytest-recording (vcrpy) to update Mock data
@@ -125,8 +126,6 @@ The below endpoints have been implimented but are not working correctly accordin
     * Mock requests to check params, json, urls etc?
     * How to deal with the manual cleanup
 * Pull request template
-* Travis?
-    * Test results in pull request
-    * Coverage info in pull request
+* TravisCI?
 * Dependabot
 * Remove double call for exception error message checking. How to get the exception str from `pytest.raises()`

@@ -3,6 +3,7 @@ from typing import List
 from urllib.parse import urljoin
 
 from .constants import countries_requiring_postcode, supported_countries
+from .types import DatetimeType, PaddleJsonType
 from .validators import validate_date
 
 log = logging.getLogger(__name__)
@@ -23,7 +24,7 @@ def create_pay_link(
     return_url: str = None,
     quantity_variable: bool = None,
     quantity: int = None,
-    expires=None,
+    expires: DatetimeType = None,
     affiliates: List[str] = None,
     recurring_affiliate_limit: int = None,
     marketing_consent: str = None,
@@ -40,6 +41,8 @@ def create_pay_link(
     vat_postcode: str = None,
 ) -> dict:
     """
+    https://developer.paddle.com/api-reference/product-api/pay-links/createpaylink
+
     product_id appears to be required:
         Paddle error 108 - Unable to find requested product
     Even though the docs states:
@@ -82,7 +85,7 @@ def create_pay_link(
                      'vat_country is set'.format(vat_country))
             raise ValueError(error)
 
-    json = {
+    json: PaddleJsonType = {
         'product_id': product_id,
         'title': title,
         'webhook_url': webhook_url,
