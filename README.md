@@ -1,20 +1,21 @@
 # Paddle Python
 
-A python (3+) wrapper around the Paddle API
+A python (3.5+) wrapper around the [Paddle.com](https://paddle.com/) [API](https://developer.paddle.com/api-reference/intro)
 
-This is a work in progress, not all of the Paddle endpoints have been implimented yet
+_Note: This is a work in progress, not all of the Paddle endpoints have been implemented yet_
 
 ## Quick start
 
 ### Installation
 
-This package is not yet on Pypi (as the name `paddle` name it taken and we can't think of anything better right now) so until then you can install it straight from Github:
 ```
-pip install git+https://github.com/pyepye/paddle-python
+pip install paddle-python
 ```
 
 
 ### Usage
+
+To use the Paddle API you will need a Paddle Vendor ID and API key which can be found on [Paddle's SDK page](https://vendors.paddle.com/sdk)
 
 ```python
 from paddle import Paddle
@@ -101,7 +102,7 @@ The below endpoints have been implimented but are not working correctly accordin
 
 ## ToDo
 * Fix generate license and create pay link endpoints
-* Remove `base_url` from Paddle
+* Remove `base_url` from Paddle and work out the best way to deal with the different API URLs
 * Paddle API endpoints
     * [List Transactions](https://developer.paddle.com/api-reference/product-api/transactions/listtransactions)
     * [Refund Payment](https://developer.paddle.com/api-reference/product-api/payments/refundpayment)
@@ -116,19 +117,16 @@ The below endpoints have been implimented but are not working correctly accordin
     * [List Payments](https://developer.paddle.com/api-reference/subscription-api/payments/listpayments)
     * [Reschedule Payment](https://developer.paddle.com/api-reference/subscription-api/payments/updatepayment)
     * [Create One-off Charge](https://developer.paddle.com/api-reference/subscription-api/one-off-charges/createcharge)
-* Work out the best way to deal with the different API urls
-* tox setup
+* tox
 * Do we want to have a set of tests which use mocks?
     * Could use pytest-recording (vcrpy) to update Mock data
     * Github actions to recreate mocks nightly?
     * How to deal with different vendor_ids etc?
-    * Mock httpx to check params, json, urls etc?
+    * Mock requests to check params, json, urls etc?
     * How to deal with the manual cleanup
-* pytest-watch and pytest-testmon for faster TDD?
 * Pull request template
 * Travis?
     * Test results in pull request
     * Coverage info in pull request
-* Release to pypi
 * Dependabot
 * Remove double call for exception error message checking. How to get the exception str from `pytest.raises()`
