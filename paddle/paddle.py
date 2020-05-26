@@ -131,3 +131,5 @@ class Paddle():
     from ._coupons import update_coupon
 
     from ._products import list_products
+
+    from ._licenses import generate_license
