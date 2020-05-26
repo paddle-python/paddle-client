@@ -17,7 +17,6 @@ def test_get_prices(paddle_client):  # NOQA: F811
         assert 'list_price' in product
         assert 'price' in product
         assert 'product_title' in product
-        assert 'subscription' in product or 'product' in product
         assert 'vendor_set_prices_included_tax' in product
 
 
@@ -78,7 +77,7 @@ def test_get_prices_with_coupons(paddle_client):  # NOQA: F811
     for product in response['products']:
         assert product['product_id'] == product_id
         # Coupon discounts are for one-time products only
-        if 'subscription' not in product:
+        if 'subscription' not in product and product['applied_coupon']:
             product['applied_coupon']['code'] == coupon_code
 
 
