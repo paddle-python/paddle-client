@@ -112,6 +112,6 @@ def create_pay_link(
         'vat_postcode': vat_postcode,
     }
     if expires:
-        json['expires'] = validate_date(expires)
+        json['expires'] = validate_date(expires, 'expires')
 
     return self.post(url=url, json=json)

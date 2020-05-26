@@ -65,7 +65,7 @@ def create_coupon(
         json['currency'] = currency
 
     if expires:
-        json['expires'] = validate_date(expires)
+        json['expires'] = validate_date(expires, 'expires')
 
     json['coupon_code'] = coupon_code
     json['coupon_prefix'] = coupon_prefix
@@ -123,7 +123,7 @@ def update_coupon(
         json['currency'] = currency
 
     if expires:
-        json['expires'] = validate_date(expires)
+        json['expires'] = validate_date(expires, 'expires')
 
     if recurring:
         json['recurring'] = 1 if recurring else 0

@@ -18,5 +18,5 @@ def generate_license(
         'allowed_uses': allowed_uses,
     }
     if expires_at:
-        json['expires_at'] = validate_date(expires_at)
+        json['expires_at'] = validate_date(expires_at, 'expires_at')
     return self.post(url=url)
