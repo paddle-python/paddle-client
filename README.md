@@ -102,7 +102,6 @@ The below endpoints have been implimented but are not working correctly accordin
 
 ## ToDo
 * Fix generate license and create pay link endpoints
-* Remove `base_url` from Paddle and work out the best way to deal with the different API URLs
 * Paddle API endpoints
     * [List Transactions](https://developer.paddle.com/api-reference/product-api/transactions/listtransactions)
     * [Refund Payment](https://developer.paddle.com/api-reference/product-api/payments/refundpayment)
@@ -117,6 +116,7 @@ The below endpoints have been implimented but are not working correctly accordin
     * [List Payments](https://developer.paddle.com/api-reference/subscription-api/payments/listpayments)
     * [Reschedule Payment](https://developer.paddle.com/api-reference/subscription-api/payments/updatepayment)
     * [Create One-off Charge](https://developer.paddle.com/api-reference/subscription-api/one-off-charges/createcharge)
+* Get test coverage to 100%
 * tox
 * Do we want to have a set of tests which use mocks?
     * Could use pytest-recording (vcrpy) to update Mock data

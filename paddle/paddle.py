@@ -1,3 +1,4 @@
+import warnings
 import logging
 import os
 from urllib.parse import urljoin
@@ -42,12 +43,11 @@ class Paddle():
             except KeyError:
                 raise ValueError('API key not set')
 
-        self.base_url: str = 'https://vendors.paddle.com/api/2.0/'
-
         self.checkout_v1 = 'https://checkout.paddle.com/api/1.0/'
         self.checkout_v2 = 'https://checkout.paddle.com/api/2.0/'
         self.checkout_v2_1 = 'https://vendors.paddle.com/api/2.1/'
         self.vendors_v2 = 'https://vendors.paddle.com/api/2.0/'
+        self.default_url = self.vendors_v2
 
         self.vendor_id: int = vendor_id
         self.api_key: str = api_key
@@ -55,6 +55,13 @@ class Paddle():
             'vendor_id': self.vendor_id,
             'vendor_auth_code': self.api_key,
         }
+
+        self.url_warning = (
+            'Paddle recieved a relative URL so it will attempt to join it to '
+            '{0} as it is the Paddle URL with the most endpoints. The full '
+            'URL that will be used is: {1} - You should specifiy the full URL '
+            'as this default URL may change in the future.'
+        )
 
     def request(
         self,
@@ -71,7 +78,11 @@ class Paddle():
         if not url.startswith('http'):
             if url.startswith('/'):
                 url = url[1:]
-            url = urljoin(self.base_url, url)
+            url = urljoin(self.default_url, url)
+            warning_message = self.url_warning.format(self.default_url, url)
+            warnings.warn(warning_message, RuntimeWarning)
+        if 'paddle.com/api/' not in url:
+            raise ValueError('URL "{0}" does not appear to be a Paddle API URL')  # NOQA: E501
         kwargs['url'] = url
 
         kwargs['method'] = method.upper()
