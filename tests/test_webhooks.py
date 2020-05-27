@@ -44,7 +44,7 @@ def test_get_webhook_history_head_and_tail(paddle_client):  # NOQA: F811
     new_tail = head + timedelta(minutes=-30)
     webhook_history = paddle_client.get_webhook_history(
         query_head=new_head.strftime('%Y-%m-%d %H:%M:%S'),
-        query_tail=new_tail.strftime('%Y-%m-%d %H:%M:%S'),
+        query_tail=new_tail,
 
     )
     base_total_alerts = base_webhook_history['total_alerts']

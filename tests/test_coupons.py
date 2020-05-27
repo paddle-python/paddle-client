@@ -23,7 +23,7 @@ def create_coupon(paddle_client):  # NOQA: F811
         product_ids=[product_id],
         coupon_code='paddle-python-create_coupon_fixture-{0}'.format(uuid4()),
         description='Test coupon created by paddle-python create_coupon_fixture',  # NOQA: E501
-        expires=datetime.today().strftime('%Y-%m-%d'),
+        expires=datetime.today(),
         minimum_threshold=9999,
         group='paddle-python',
     )
