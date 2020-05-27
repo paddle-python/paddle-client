@@ -1,6 +1,7 @@
-import pytest
-import os
 import contextlib
+import os
+
+import pytest
 
 from paddle.paddle import requests
 
