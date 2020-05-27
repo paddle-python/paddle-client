@@ -98,7 +98,7 @@ class Paddle():
                 kwargs['json'] = data
             if json:
                 kwargs['json'] = json
-            kwargs['json'] = {k: v for k, v in kwargs['json'].items() if v}
+            kwargs['json'] = {k: v for k, v in kwargs['json'].items() if v != None}  # NOQA: E501
             kwargs['json'].update(self.json)
 
         if params:
