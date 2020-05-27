@@ -148,6 +148,8 @@ class Paddle():
 
     # from ._pay_links import create_pay_link
 
+    from ._transactions import list_transactions
+
     from ._plans import list_plans
 
     from ._webhooks import get_webhook_history

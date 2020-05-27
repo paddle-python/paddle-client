@@ -58,6 +58,7 @@ All contributions are welcome and appreciated. Please see [CONTRIBUTING.md](http
 * [Create Coupon](https://developer.paddle.com/api-reference/product-api/coupons/createcoupon)
 * [Delete Coupon](https://developer.paddle.com/api-reference/product-api/coupons/deletecoupon)
 * [Update Coupon](https://developer.paddle.com/api-reference/product-api/coupons/updatecoupon)
+* [List Transactions](https://developer.paddle.com/api-reference/product-api/transactions/listtransactions)
 * [List Products](https://developer.paddle.com/api-reference/product-api/products/getproducts)
 * [List Plans](https://developer.paddle.com/api-reference/subscription-api/plans/listplans)
 * [Get Webhook History](https://developer.paddle.com/api-reference/alert-api/webhooks/webhooks)
@@ -68,33 +69,34 @@ paddle.get_user_history(email=email)
 paddle.get_prices(product_ids=[product_id])
 paddle.list_coupons(product_id=product_id)
 paddle.create_coupon(
-    coupon_type=coupon_type,
-    discount_type=discount_type,
-    discount_amount=discount_amount,
-    allowed_uses=allowed_uses,
-    recurring=recurring,
-    currency=currency,
+    coupon_type='product',
+    discount_type='percentage',
+    discount_amount=50,
+    allowed_uses=1,
+    recurring=False,
+    currency='USD',
     product_ids=product_ids,
-    coupon_code=coupon_code,
-    description=description,
+    coupon_code='50%OFF',
+    description='50% off coupon over $10',
     expires=expires,
-    minimum_threshold=minimum_threshold,
-    group=group,
+    minimum_threshold=10,
+    group='paddle-python',
 )
 paddle.delete_coupon(coupon_code=new_coupon_code, product_id=product_id)
 paddle.update_coupon(
     coupon_code=coupon_code,
-    new_coupon_code=new_coupon_code,
+    new_coupon_code='40%OFF',
     new_group='paddle-python-test',
     product_ids=[product_id],
     expires=expires,
-    allowed_uses=allowed_uses,
-    currency=currency,
-    minimum_threshold=9998,
-    discount_amount=discount_amount,
+    allowed_uses=1,
+    currency='USD',
+    minimum_threshold=10,
+    discount_amount=40,
     recurring=True
 )
 paddle.list_products()
+paddle.list_transactions(entity='subscription', entity_id=subscription_id)
 paddle.list_plans()
 paddle.get_webhook_history()
 ```
@@ -111,7 +113,6 @@ The below endpoints have been implimented but are not working correctly accordin
 ## ToDo
 * Fix generate license and create pay link endpoints
 * Paddle API endpoints
-    * [List Transactions](https://developer.paddle.com/api-reference/product-api/transactions/listtransactions)
     * [Refund Payment](https://developer.paddle.com/api-reference/product-api/payments/refundpayment)
     * [Create Plan](https://developer.paddle.com/api-reference/subscription-api/plans/createplan)
     * [List Users](https://developer.paddle.com/api-reference/subscription-api/subscription-users/listusers)
