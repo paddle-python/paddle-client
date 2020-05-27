@@ -58,8 +58,9 @@ All contributions are welcome and appreciated. Please see [CONTRIBUTING.md](http
 * [Create Coupon](https://developer.paddle.com/api-reference/product-api/coupons/createcoupon)
 * [Delete Coupon](https://developer.paddle.com/api-reference/product-api/coupons/deletecoupon)
 * [Update Coupon](https://developer.paddle.com/api-reference/product-api/coupons/updatecoupon)
-* [List Transactions](https://developer.paddle.com/api-reference/product-api/transactions/listtransactions)
 * [List Products](https://developer.paddle.com/api-reference/product-api/products/getproducts)
+* [List Transactions](https://developer.paddle.com/api-reference/product-api/transactions/listtransactions)
+* [Refund Payment](https://developer.paddle.com/api-reference/product-api/payments/refundpayment)
 * [List Plans](https://developer.paddle.com/api-reference/subscription-api/plans/listplans)
 * [Get Webhook History](https://developer.paddle.com/api-reference/alert-api/webhooks/webhooks)
 
@@ -97,6 +98,7 @@ paddle.update_coupon(
 )
 paddle.list_products()
 paddle.list_transactions(entity='subscription', entity_id=subscription_id)
+paddle.refund_payment(order_id=order_id, amount=amount, reason=reason)
 paddle.list_plans()
 paddle.get_webhook_history()
 ```
@@ -113,7 +115,6 @@ The below endpoints have been implimented but are not working correctly accordin
 ## ToDo
 * Fix generate license and create pay link endpoints
 * Paddle API endpoints
-    * [Refund Payment](https://developer.paddle.com/api-reference/product-api/payments/refundpayment)
     * [Create Plan](https://developer.paddle.com/api-reference/subscription-api/plans/createplan)
     * [List Users](https://developer.paddle.com/api-reference/subscription-api/subscription-users/listusers)
     * [Cancel Subscription](https://developer.paddle.com/api-reference/subscription-api/subscription-users/canceluser)
@@ -127,13 +128,9 @@ The below endpoints have been implimented but are not working correctly accordin
     * [Create One-off Charge](https://developer.paddle.com/api-reference/subscription-api/one-off-charges/createcharge)
 * Get test coverage to 100%
 * Docs (auto docs?)
-* Do we want to have a set of tests which use mocks?
-    * Could use pytest-recording (vcrpy) to update Mock data
-    * Github actions to recreate mocks nightly?
-    * How to deal with different vendor_ids etc?
-    * Mock requests to check params, json, urls etc?
-    * How to deal with the manual cleanup
+* Use `pytest-mock` `Spy` to check params, json, urls etc for test requests
+* How to deal with the manual cleanup?
 * Pull request template
 * TravisCI?
 * Dependabot
-* Remove double call for exception error message checking. How to get the exception str from `pytest.raises()`
+* Remove double call for exception error message checking - How to get the exception str from `pytest.raises()`? pytest-mock `Spy`?

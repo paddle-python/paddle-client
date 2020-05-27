@@ -74,7 +74,15 @@ pytest tests/
 # Coverage info is written to htmlcov/
 ```
 
-All tests are currently run against Paddle's API directly. No mocks are used as this is meant to be a thin wrapper. This does mean you need to set a few environmental variables specific to your Paddle account for the tests to run correctly.
+### Mocking
+
+As few mocks should be used as possible, Mocks should only be used for dangerous Paddle operations that can't be undone or cleaned up.
+
+Mocks should be done at the point paddle-python interfaces with `requests` and check the exact kwargs that were sent. This will cause any change in the request to cause the mocked test to fail. All mocked tests should also include a commented out function
+which will call the actual Paddle endpoint if uncommented (see an already mocked test below as an example).
+
+The current mocked tests are:
+* Refund Payment - `test_transactions::test_refund_payment`
 
 
 ### Cleanup
