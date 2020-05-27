@@ -150,6 +150,8 @@ class Paddle():
 
     from ._transactions import list_transactions
 
+    from ._payments import refund_payment
+
     from ._plans import list_plans
 
     from ._webhooks import get_webhook_history
