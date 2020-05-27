@@ -27,6 +27,9 @@ def test_generate_license(paddle_client):  # NOQA: F811
 
 
 def test_generate_license_mocked(mocker, paddle_client):  # NOQA: F811
+    """
+    Mock test as the above test is not run by tox due to manual_cleanup mark
+    """
     generate_license = getattr(paddle_client, 'generate_license', None)
     if not generate_license or not callable(generate_license):
         pytest.skip('paddle.generate_license does not exist')

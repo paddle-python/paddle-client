@@ -129,7 +129,6 @@ The below endpoints have been implimented but are not working correctly accordin
 * Get test coverage to 100%
 * Docs (auto docs?)
 * Use `pytest-mock` `Spy` to check params, json, urls etc for test requests
-* Have mock which always runs to go along side each `manual_cleanup` test
 * How to deal with the manual cleanup?
 * Pull request template
 * TravisCI?
