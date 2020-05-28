@@ -80,11 +80,12 @@ pytest tests/  # Run all tests against Paddle's API. See mocking and cleanup bel
 
 As few mocks should be used as possible, Mocks should only be used for dangerous Paddle operations that can't be undone or cleaned up.
 
-Mocks should be done at the point paddle-python interfaces with `requests` and check the exact kwargs that were sent. This will cause any change in the request to cause the mocked test to fail. All mocked tests should also include a commented out function
-which will call the actual Paddle endpoint if uncommented (see an already mocked test below as an example).
+Mocks should be done at the point paddle-python interfaces with `requests` and check the exact kwargs that were sent. This will cause any change in the request to cause the mocked test to fail. All mocked tests should also be accompanied by a matching test which hits Paddle's API but has the decorator`@pytest.mark.skip()` (see an already mocked test below as an example).
 
 The current mocked tests are:
-* Refund Payment - `test_transactions::test_refund_payment`
+
+* Refund Payment - `test_transactions.py::test_refund_payment`
+* Cancel Subscription - `test_subscription_users.py::test_cancel_subscription`
 
 
 ### Cleanup

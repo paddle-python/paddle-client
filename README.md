@@ -64,6 +64,7 @@ All contributions are welcome and appreciated. Please see [CONTRIBUTING.md](http
 * [List Plans](https://developer.paddle.com/api-reference/subscription-api/plans/listplans)
 * [Create Plan](https://developer.paddle.com/api-reference/subscription-api/plans/createplan)
 * [List Subscription Users](https://developer.paddle.com/api-reference/subscription-api/subscription-users/listusers)
+* [Update Subscription](https://developer.paddle.com/api-reference/subscription-api/subscription-users/canceluser)
 * [Get Webhook History](https://developer.paddle.com/api-reference/alert-api/webhooks/webhooks)
 
 ```python
@@ -112,6 +113,7 @@ paddle.create_plan(
     recurring_price_usd=50,
 )
 paddle.list_subscription_users()
+paddle.cancel_subscription(subscription_id=1234)
 paddle.get_webhook_history()
 ```
 
@@ -127,7 +129,6 @@ The below endpoints have been implimented but are not working correctly accordin
 ## ToDo
 * Fix generate license and create pay link endpoints
 * Paddle API endpoints
-    * [Cancel Subscription](https://developer.paddle.com/api-reference/subscription-api/subscription-users/canceluser)
     * [Update Subscription](https://developer.paddle.com/api-reference/subscription-api/subscription-users/updateuser)
     * [Preview Subscription Update](https://developer.paddle.com/api-reference/subscription-api/subscription-users/previewupdate)
     * [Add Modifier](https://developer.paddle.com/api-reference/subscription-api/modifiers/createmodifier)

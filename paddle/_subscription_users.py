@@ -32,3 +32,14 @@ def list_subscription_users(
         'results_per_page': results_per_page,
     }
     return self.post(url=url, json=json)
+
+
+def cancel_subscription(
+    self,
+    subscription_id: int,
+) -> bool:
+    """
+    https://developer.paddle.com/api-reference/subscription-api/subscription-users/canceluser
+    """
+    url = urljoin(self.vendors_v2, 'subscription/users_cancel')
+    return self.post(url=url, json={'subscription_id': subscription_id})

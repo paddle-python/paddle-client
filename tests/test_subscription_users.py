@@ -1,4 +1,9 @@
+import contextlib
+import os
 from datetime import datetime
+
+import pytest
+import requests
 
 from .test_paddle import paddle_client  # NOQA: F401
 
@@ -82,7 +87,58 @@ def test_list_subscription_users_with_results_per_page(paddle_client):  # NOQA: 
     )
     assert len(list_one) == 1
 
-# def test_cancel_subscription(paddle_client):  # NOQA: F811
-#     # ToDo: Create plan when API exists for it here
-#     plan_id = int(os.environ['PADDLE_TEST_DEFAULT_PLAN_ID'])
-#     plan_list = paddle_client.list_plans(plan=plan_id)
+
+@pytest.mark.mocked
+def test_cancel_subscription(mocker, paddle_client):  # NOQA: F811
+    """
+    This test is mocked as creating a refund is not something you want to
+    happen against a live system.
+
+    If the below test fails it means a change has been made which has affected
+    the refund payment endpoint.
+
+    The code now needs to be run directly against Paddle's API at least once to
+    ensure the new code is working as expected.
+
+    Please uncomment the '@pytest.mark.skip()' line for the
+    'cancel_subscription_no_mock' test to run the the cancel_subscription code
+    against the PAddle API to check the changes work.
+
+    Once the `cancel_subscription_no_mock` test passes please update
+    the mock below and comment out the function again.
+    """
+    subscription_id = 123
+    json = {
+        'subscription_id': subscription_id,
+        'vendor_id': int(os.environ['PADDLE_VENDOR_ID']),
+        'vendor_auth_code': os.environ['PADDLE_API_KEY'],
+    }
+    url = 'https://vendors.paddle.com/api/2.0/subscription/users_cancel'
+    method = 'POST'
+    with contextlib.ExitStack() as stack:
+        stack.enter_context(mocker.patch('paddle.paddle.requests.request'))
+        paddle_client.cancel_subscription(
+            subscription_id=subscription_id,
+        )
+        requests.request.assert_called_once_with(
+            url=url,
+            json=json,
+            method=method,
+        )
+
+
+# Comment out '@pytest.mark.skip()' to ensure the cancel_subscription
+# code is working as expected
+@pytest.mark.skip()
+def test_cancel_subscription_no_mock(paddle_client):  # NOQA: F811
+    """
+    If you get the error:
+        "Paddle error 119 - Unable to find requested subscription""
+    You will need to manually enter a subscription_id below.
+    (this is why it's mocked in the first place, it's a pain sorry)
+    """
+    subscription_id = 1  # This will need to be manually entered
+    response = paddle_client.cancel_subscription(
+        subscription_id=subscription_id,
+    )
+    assert response is True

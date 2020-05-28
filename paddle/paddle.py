@@ -117,9 +117,11 @@ class Paddle():
         if 'success' in response_json and not response_json['success']:  # pragma: no cover - Not sure if this is even possible  # NOQA: E501
             raise PaddleException(response_json)
 
-        if 'response' in response_json:
+        if 'response' in response_json and response_json['response'] is not None:  # NOQA: E501
             return response_json['response']
-        return response_json
+
+        # Response is only {"success": True}
+        return response_json['success']
 
     def get(self, url, **kwargs):
         kwargs['url'] = url
@@ -157,5 +159,6 @@ class Paddle():
     from ._plans import create_plan
 
     from ._subscription_users import list_subscription_users
+    from ._subscription_users import cancel_subscription
 
     from ._webhooks import get_webhook_history
