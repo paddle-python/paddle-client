@@ -1,5 +1,5 @@
 import logging
-from typing import Union, List
+from typing import List, Union
 from urllib.parse import urljoin
 
 log = logging.getLogger(__name__)

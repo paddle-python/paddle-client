@@ -1,6 +1,6 @@
 import logging
-from urllib.parse import urljoin
 from typing import List
+from urllib.parse import urljoin
 
 from .types import DatetimeType, PaddleJsonType
 from .validators import validate_date

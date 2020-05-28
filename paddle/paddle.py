@@ -156,4 +156,6 @@ class Paddle():
     # from ._plans import get_plan
     from ._plans import create_plan
 
+    from ._subscription_users import list_subscription_users
+
     from ._webhooks import get_webhook_history
