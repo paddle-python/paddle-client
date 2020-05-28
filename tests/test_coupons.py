@@ -1,6 +1,5 @@
 import os
 from datetime import datetime, timedelta
-from uuid import uuid4
 
 import pytest
 
@@ -13,6 +12,7 @@ from .test_paddle import paddle_client  # NOQA: F401
 def create_coupon(paddle_client):  # NOQA: F811
     product_id = int(os.environ['PADDLE_TEST_DEFAULT_PRODUCT_ID'])
     currency = 'GBP'
+    now = datetime.now().isoformat()
     response = paddle_client.create_coupon(
         coupon_type='product',
         discount_type='percentage',
@@ -21,7 +21,7 @@ def create_coupon(paddle_client):  # NOQA: F811
         recurring=False,
         currency=currency,
         product_ids=[product_id],
-        coupon_code='paddle-python-create_coupon_fixture-{0}'.format(uuid4()),
+        coupon_code='paddle-python-create_coupon_fixture-{0}'.format(now),
         description='Test coupon created by paddle-python create_coupon_fixture',  # NOQA: E501
         expires=datetime.today(),
         minimum_threshold=9999,
@@ -76,7 +76,8 @@ def test_create_coupon(paddle_client):  # NOQA: F811
     product_id = int(os.environ['PADDLE_TEST_DEFAULT_PRODUCT_ID'])
     product_ids = [product_id]
     currency = 'GBP'
-    coupon_code = 'paddle-python-test_create_coupon-{0}'.format(uuid4())
+    now = datetime.now().isoformat()
+    coupon_code = 'paddle-python-test_create_coupon-{0}'.format(now)
     description = 'Test code created by paddle-python test_create_coupon'
     expires = datetime.today().strftime('%Y-%m-%d')
     minimum_threshold = 100
@@ -131,7 +132,8 @@ def test_delete_coupon(paddle_client, create_coupon):  # NOQA: F811
 
 def test_update_coupon(paddle_client, create_coupon):  # NOQA: F811
     coupon_code, product_id = create_coupon
-    new_coupon_code = 'paddle-python-test_update_coupon-{0}'.format(uuid4())
+    now = datetime.now().isoformat()
+    new_coupon_code = 'paddle-python-test_update_coupon-{0}'.format(now)
     expires = (datetime.today() + timedelta(days=1)).strftime('%Y-%m-%d')
     currency = 'GBP'
     recurring = True
