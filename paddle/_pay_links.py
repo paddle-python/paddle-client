@@ -3,7 +3,7 @@ from typing import List
 from urllib.parse import urljoin
 
 from .constants import countries_requiring_postcode, supported_countries
-from .types import DatetimeType
+from .types import DatetimeType, PaddleJsonType
 from .validators import validate_date
 
 log = logging.getLogger(__name__)
@@ -59,7 +59,7 @@ def create_pay_link(
         if not webhook_url:
             raise ValueError('webhook_url must be set if product_id is not set')  # NOQA: E501
         if recurring_prices:
-            raise ValueError('recurring_prices can only be set if product_id is set to a subscription')  # NOQA: E501
+            raise ValueError('recurring_prices can only be set if product_id is set to a subsciption')  # NOQA: E501
     if customer_country:
         if customer_country not in supported_countries.keys():
             error = 'Country code "{0}" is not valid'.format(customer_country)
@@ -113,7 +113,7 @@ def create_pay_link(
         'vat_state': vat_state,
         'vat_country': vat_country,
         'vat_postcode': vat_postcode,
-    }
+    }  # type: PaddleJsonType
     if expires:
         json['expires'] = validate_date(expires, 'expires')
 

@@ -1,4 +1,5 @@
 import logging
+from typing import Dict
 from urllib.parse import urljoin
 
 from .constants import supported_countries
@@ -18,7 +19,7 @@ def get_prices(
     """
     url = urljoin(self.checkout_v2, 'prices')
 
-    params = {}
+    params = {}  # type: Dict[str, str]
     if product_ids:
         products = ','.join([str(int(product)) for product in product_ids])
         params['product_ids'] = products

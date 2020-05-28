@@ -2,7 +2,7 @@ import logging
 from typing import List
 from urllib.parse import urljoin
 
-from .types import DatetimeType
+from .types import DatetimeType, PaddleJsonType
 from .validators import validate_date
 
 log = logging.getLogger(__name__)
@@ -61,7 +61,7 @@ def create_coupon(
         'discount_amount': discount_amount,
         'allowed_uses': allowed_uses,
         'recurring': 1 if recurring else 0,
-    }
+    }  # type: PaddleJsonType
     if product_ids:
         products = ','.join([str(int(product)) for product in product_ids])
         json['product_ids'] = products
@@ -88,7 +88,7 @@ def delete_coupon(self, coupon_code: str, product_id: int = None) -> dict:
     https://developer.paddle.com/api-reference/product-api/coupons/deletecoupon
     """
     url = urljoin(self.vendors_v2, 'product/delete_coupon')
-    json = {'coupon_code': coupon_code}
+    json = {'coupon_code': coupon_code}  # type: PaddleJsonType
     if product_id:
         json['product_id'] = product_id
     return self.post(url=url, json=json)
@@ -124,7 +124,7 @@ def update_coupon(
         'allowed_uses': allowed_uses,
         'minimum_threshold': minimum_threshold,
         'discount_amount': discount_amount,
-    }
+    }  # type: PaddleJsonType
     if product_ids:
         products = ','.join([str(int(product)) for product in product_ids])
         json['product_ids'] = products

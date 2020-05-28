@@ -2,6 +2,7 @@ import logging
 import os
 import warnings
 from urllib.parse import urljoin
+from typing import Dict, Union
 
 import requests
 
@@ -12,7 +13,7 @@ class PaddleException(Exception):
 
     def __init__(self, error):
         self.code = 'Unknown'
-        self.message = error
+        self.message = str(error)
         if isinstance(error, requests.HTTPError):  # pragma: no cover - Unsure how to trigger a HTTPError here  # NOQA: E501
             self.code = 'HTTP error {0}'.format(error.response.status_code)
             self.message = error.response.content.decode("utf-8")
@@ -71,7 +72,7 @@ class Paddle():
         data: dict = None,
         json: dict = None
     ) -> dict:
-        kwargs = {}
+        kwargs = {}  # type: dict
 
         # URL join will remove anything after the host name is the url
         # is prepended with a /
@@ -110,7 +111,8 @@ class Paddle():
         except requests.HTTPError as e:  # pragma: no cover - Unsure how to trigger a HTTPError here  # NOQA: E501
             raise PaddleException(e)
 
-        response_json = response.json()
+        response_json = response.json()  # type: dict
+
         if 'error' in response_json:
             raise PaddleException(response_json['error'])
         # API v1 does not include success

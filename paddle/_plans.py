@@ -2,6 +2,8 @@ import logging
 from typing import List
 from urllib.parse import urljoin
 
+from .types import PaddleJsonType
+
 log = logging.getLogger(__name__)
 
 
@@ -82,5 +84,5 @@ def create_plan(
         'recurring_price_usd': recurring_price_usd,
         'recurring_price_gbp': recurring_price_gbp,
         'recurring_price_eur': recurring_price_eur,
-    }
+    }  # type: PaddleJsonType
     return self.post(url=url, json=json)

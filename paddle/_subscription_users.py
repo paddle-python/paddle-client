@@ -2,6 +2,8 @@ import logging
 from typing import List
 from urllib.parse import urljoin
 
+from .types import PaddleJsonType
+
 log = logging.getLogger(__name__)
 
 
@@ -28,7 +30,7 @@ def list_subscription_users(
         'state': state,
         'page': page,
         'results_per_page': results_per_page,
-    }
+    }  # type: PaddleJsonType
     return self.post(url=url, json=json)
 
 
