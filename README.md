@@ -62,6 +62,7 @@ All contributions are welcome and appreciated. Please see [CONTRIBUTING.md](http
 * [List Transactions](https://developer.paddle.com/api-reference/product-api/transactions/listtransactions)
 * [Refund Payment](https://developer.paddle.com/api-reference/product-api/payments/refundpayment)
 * [List Plans](https://developer.paddle.com/api-reference/subscription-api/plans/listplans)
+* [Create Plan](https://developer.paddle.com/api-reference/subscription-api/plans/createplan)
 * [Get Webhook History](https://developer.paddle.com/api-reference/alert-api/webhooks/webhooks)
 
 ```python
@@ -100,6 +101,15 @@ paddle.list_products()
 paddle.list_transactions(entity='subscription', entity_id=subscription_id)
 paddle.refund_payment(order_id=order_id, amount=amount, reason=reason)
 paddle.list_plans()
+paddle.create_plan(
+    plan_name='plan_name',
+    plan_trial_days=14,
+    plan_length=1,
+    plan_type='month',
+    main_currency_code='USD',
+    initial_price_usd=50,
+    recurring_price_usd=50,
+)
 paddle.get_webhook_history()
 ```
 
@@ -115,7 +125,6 @@ The below endpoints have been implimented but are not working correctly accordin
 ## ToDo
 * Fix generate license and create pay link endpoints
 * Paddle API endpoints
-    * [Create Plan](https://developer.paddle.com/api-reference/subscription-api/plans/createplan)
     * [List Users](https://developer.paddle.com/api-reference/subscription-api/subscription-users/listusers)
     * [Cancel Subscription](https://developer.paddle.com/api-reference/subscription-api/subscription-users/canceluser)
     * [Update Subscription](https://developer.paddle.com/api-reference/subscription-api/subscription-users/updateuser)
