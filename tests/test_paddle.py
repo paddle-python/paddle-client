@@ -3,6 +3,10 @@ import pytest
 from paddle import Paddle, PaddleException, __version__
 
 
+class BadPaddleDataWarning(UserWarning):
+    pass
+
+
 @pytest.fixture(scope='session')
 def paddle_client():
     paddle = Paddle()

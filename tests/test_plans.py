@@ -77,7 +77,7 @@ def test_create_plan(paddle_client):  # NOQA: F811
     assert isinstance(response['product_id'], int)
     plan_id = response['product_id']
 
-    plan_list = paddle_client.get_plan(plan=plan_id)
+    plan_list = paddle_client.list_plans(plan=plan_id)
     plan = plan_list[0]
     assert plan['name'] == plan_name
     assert plan['trial_days'] == plan_trial_days

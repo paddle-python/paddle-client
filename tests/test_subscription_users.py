@@ -1,3 +1,4 @@
+import warnings
 import contextlib
 import os
 from datetime import datetime
@@ -5,7 +6,7 @@ from datetime import datetime
 import pytest
 import requests
 
-from .test_paddle import paddle_client  # NOQA: F401
+from .test_paddle import BadPaddleDataWarning, paddle_client  # NOQA: F401
 
 
 def test_list_subscription_users(paddle_client):  # NOQA: F811
@@ -34,7 +35,15 @@ def test_list_subscription_users_with_subscription_id(paddle_client):  # NOQA: F
     response = paddle_client.list_subscription_users(
         results_per_page=1
     )
-    first_subscription = response[0]
+    try:
+        first_subscription = response[0]
+    except IndexError:
+        warning = ('No subscriptions returned by list_subscription_users() in '
+                   'test_list_subscription_users_with_subscription_id')
+        warnings.warn(warning, BadPaddleDataWarning)
+        skip_message = ('list_subscription_users did not return any user subscription')  # NOQA: E501
+        pytest.skip(skip_message)
+
     subscription_id = first_subscription['subscription_id']
     subscription_users = paddle_client.list_subscription_users(
         subscription_id=first_subscription['subscription_id'],
@@ -48,7 +57,14 @@ def test_list_subscription_users_with_plan_id(paddle_client):  # NOQA: F811
     response = paddle_client.list_subscription_users(
         results_per_page=1
     )
-    first_subscription = response[0]
+    try:
+        first_subscription = response[0]
+    except IndexError:
+        warning = ('No subscriptions returned by list_subscription_users() in '
+                   'test_list_subscription_users_with_plan_id')
+        warnings.warn(warning, BadPaddleDataWarning)
+        skip_message = ('list_subscription_users did not return any user subscription')  # NOQA: E501
+        pytest.skip(skip_message)
     subscription_users = paddle_client.list_subscription_users(
         plan_id=first_subscription['plan_id'],
     )
@@ -61,7 +77,14 @@ def test_list_subscription_users_with_state(paddle_client):  # NOQA: F811
     response = paddle_client.list_subscription_users(
         results_per_page=1
     )
-    first_subscription = response[0]
+    try:
+        first_subscription = response[0]
+    except IndexError:
+        warning = ('No subscriptions returned by list_subscription_users() in '
+                   'test_list_subscription_users_with_state')
+        warnings.warn(warning, BadPaddleDataWarning)
+        skip_message = ('list_subscription_users did not return any user subscription')  # NOQA: E501
+        pytest.skip(skip_message)
     subscription_users = paddle_client.list_subscription_users(
         state=first_subscription['state'],
     )
@@ -74,6 +97,12 @@ def test_list_subscription_users_with_page(paddle_client):  # NOQA: F811
     list_one = paddle_client.list_subscription_users(
         results_per_page=1, page=1,
     )
+    if not list_one:
+        warning = ('No subscriptions returned by list_subscription_users() in '
+                   'test_list_subscription_users_with_page')
+        warnings.warn(warning, BadPaddleDataWarning)
+        skip_message = ('list_subscription_users did not return any user subscription')  # NOQA: E501
+        pytest.skip(skip_message)
     list_two = paddle_client.list_subscription_users(
         results_per_page=1, page=2,
     )
@@ -85,6 +114,12 @@ def test_list_subscription_users_with_results_per_page(paddle_client):  # NOQA: 
     list_one = paddle_client.list_subscription_users(
         results_per_page=1, page=1,
     )
+    if not list_one:
+        warning = ('No subscriptions returned by list_subscription_users() in '
+                   'test_list_subscription_users_with_page')
+        warnings.warn(warning, BadPaddleDataWarning)
+        skip_message = ('list_subscription_users did not return any user subscription')  # NOQA: E501
+        pytest.skip(skip_message)
     assert len(list_one) == 1
 
 
