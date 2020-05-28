@@ -20,10 +20,11 @@ def test_refund_payment(mocker, paddle_client):  # NOQA: F811
     The code now needs to be run directly against Paddle's API at least once to
     ensure the new code is working as expected.
 
-    Please uncomment the `refund_payment_no_mock` function call to run the
-    refund_payment code against the PAddle API to check the changes work.
+    Please uncomment the '@pytest.mark.skip()' line for the
+    'test_refund_payment_no_mock' test to run the the refund_payment code
+    against the PAddle API to check the changes work.
 
-    Once the `refund_payment_no_mock` function / test passes please update
+    Once the `test_refund_payment_no_mock` test passes please update
     the mock below and comment out the function again.
     """
     order_id = 123
@@ -51,24 +52,18 @@ def test_refund_payment(mocker, paddle_client):  # NOQA: F811
             method=method,
         )
 
-    # Uncomment the next line to ensure refund_payment is working as expected
-    # refund_payment_no_mock(paddle_client)
 
-
-def refund_payment_no_mock(paddle_client):  # NOQA: F811
+# Comment out '@pytest.mark.skip()' to ensure the refund_payment code
+# is working as expected
+@pytest.mark.skip()
+def test_refund_payment_no_mock(paddle_client):  # NOQA: F811
     """
     If you get the error:
         "Paddle error 172 - The transaction can no longer be refunded.""
-    You may need to manually find an order_id to run this test against.
+    You will need to manually enter a subscription_id below.
     (this is why it's mocked in the first place, it's a pain sorry)
     """
-    checkout_id = os.environ['PADDLE_TEST_DEFAULT_CHECKOUT_ID']
-    checkout_list = paddle_client.list_transactions(
-        entity='checkout',
-        entity_id=checkout_id,
-        page=1,
-    )
-    order_id = checkout_list[0]['order_id']
+    order_id = 1  # This will need to be manually entered
     response = paddle_client.refund_payment(
         order_id=order_id,
         amount=0.1,
