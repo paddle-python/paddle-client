@@ -49,9 +49,9 @@ class Paddle():
         self.vendors_v2 = 'https://vendors.paddle.com/api/2.0/'
         self.default_url = self.vendors_v2
 
-        self.vendor_id: int = vendor_id
-        self.api_key: str = api_key
-        self.json: dict = {
+        self.vendor_id = vendor_id
+        self.api_key = api_key
+        self.json = {
             'vendor_id': self.vendor_id,
             'vendor_auth_code': self.api_key,
         }
@@ -71,7 +71,7 @@ class Paddle():
         data: dict = None,
         json: dict = None
     ) -> dict:
-        kwargs: dict = {}
+        kwargs = {}
 
         # URL join will remove anything after the host name is the url
         # is prepended with a /
@@ -110,7 +110,7 @@ class Paddle():
         except requests.HTTPError as e:  # pragma: no cover - Unsure how to trigger a HTTPError here  # NOQA: E501
             raise PaddleException(e)
 
-        response_json: dict = response.json()
+        response_json = response.json()
         if 'error' in response_json:
             raise PaddleException(response_json['error'])
         # API v1 does not include success

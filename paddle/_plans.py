@@ -2,8 +2,6 @@ import logging
 from typing import List
 from urllib.parse import urljoin
 
-from .types import PaddleJsonType
-
 log = logging.getLogger(__name__)
 
 
@@ -72,7 +70,7 @@ def create_plan(
     if main_currency_code == 'USD' and recurring_price_eur is None:
         raise ValueError('main_currency_code is USD so recurring_price_eur must be set')  # NOQA: E501
 
-    json: PaddleJsonType = {
+    json = {
         'plan_name': plan_name,
         'plan_trial_days': plan_trial_days,
         'plan_length': plan_length,

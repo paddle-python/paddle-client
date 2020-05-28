@@ -2,8 +2,6 @@ import logging
 from typing import List
 from urllib.parse import urljoin
 
-from .types import PaddleJsonType
-
 log = logging.getLogger(__name__)
 
 
@@ -24,7 +22,7 @@ def list_subscription_users(
     if state is not None and state not in states:
         raise ValueError('state must be one of {0}'.format(', '.join(states)))
 
-    json: PaddleJsonType = {
+    json = {
         'subscription_id': subscription_id,
         'plan_id': plan_id,
         'state': state,

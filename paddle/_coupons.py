@@ -2,7 +2,7 @@ import logging
 from typing import List
 from urllib.parse import urljoin
 
-from .types import DatetimeType, PaddleJsonType
+from .types import DatetimeType
 from .validators import validate_date
 
 log = logging.getLogger(__name__)
@@ -55,7 +55,7 @@ def create_coupon(
     if coupon_code and (coupon_prefix or num_coupons):
         raise ValueError('coupon_prefix and num_coupons not valid when coupon_code set')  # NOQA: E501
 
-    json: PaddleJsonType = {
+    json = {
         'coupon_type': coupon_type,
         'discount_type': discount_type,
         'discount_amount': discount_amount,
@@ -88,7 +88,7 @@ def delete_coupon(self, coupon_code: str, product_id: int = None) -> dict:
     https://developer.paddle.com/api-reference/product-api/coupons/deletecoupon
     """
     url = urljoin(self.vendors_v2, 'product/delete_coupon')
-    json: PaddleJsonType = {'coupon_code': coupon_code}
+    json = {'coupon_code': coupon_code}
     if product_id:
         json['product_id'] = product_id
     return self.post(url=url, json=json)
@@ -116,7 +116,7 @@ def update_coupon(
     if coupon_code and group:
         raise ValueError('You must specify either coupon_code or group, but not both')  # NOQA: E501
 
-    json: PaddleJsonType = {
+    json = {
         'coupon_code': coupon_code,
         'new_coupon_code': new_coupon_code,
         'group': group,

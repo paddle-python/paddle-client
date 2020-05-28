@@ -2,8 +2,6 @@ import logging
 from typing import Union
 from urllib.parse import urljoin
 
-from .types import PaddleJsonType
-
 log = logging.getLogger(__name__)
 
 
@@ -18,7 +16,7 @@ def refund_payment(
     """
     url = urljoin(self.vendors_v2, 'payment/refund')
 
-    json: PaddleJsonType = {
+    json = {
         'order_id': order_id,
         'amount': amount,
         'reason': reason,

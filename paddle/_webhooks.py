@@ -1,7 +1,7 @@
 import logging
 from urllib.parse import urljoin
 
-from .types import DatetimeType, PaddleJsonType
+from .types import DatetimeType
 from .validators import validate_datetime
 
 log = logging.getLogger(__name__)
@@ -19,7 +19,7 @@ def get_webhook_history(
     """
     url = urljoin(self.vendors_v2, 'alert/webhooks')
 
-    json: PaddleJsonType = {
+    json = {
         'page': page,
         'alerts_per_page': alerts_per_page,
     }

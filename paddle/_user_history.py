@@ -1,5 +1,4 @@
 import logging
-from typing import Dict, Union
 from urllib.parse import urljoin
 
 log = logging.getLogger(__name__)
@@ -16,7 +15,7 @@ def get_user_history(
     """
     url = urljoin(self.checkout_v2, 'user/history')
 
-    params: Dict[str, Union[str, int]] = {'email': email}
+    params = {'email': email}
     if product_id:
         params['product_id'] = product_id
 

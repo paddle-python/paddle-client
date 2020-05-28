@@ -59,7 +59,7 @@ def create_pay_link(
         if not webhook_url:
             raise ValueError('webhook_url must be set if product_id is not set')  # NOQA: E501
         if recurring_prices:
-            raise ValueError('recurring_prices can only be set if product_id is set to a subsciption')  # NOQA: E501
+            raise ValueError('recurring_prices can only be set if product_id is set to a subscription')  # NOQA: E501
     if customer_country:
         if customer_country not in supported_countries.keys():
             error = 'Country code "{0}" is not valid'.format(customer_country)
@@ -85,7 +85,7 @@ def create_pay_link(
                      'vat_country is set'.format(vat_country))
             raise ValueError(error)
 
-    json: PaddleJsonType = {
+    json = {
         'product_id': product_id,
         'title': title,
         'webhook_url': webhook_url,
