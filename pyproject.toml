@@ -3,7 +3,7 @@ name = "paddle-python"
 packages = [
     {include = "paddle"}
 ]
-version = "0.4.1"
+version = "0.4.2"
 description = "Python wrapper around the Paddle.com API"
 license = "MIT"
 authors = ["Matt Pye <pyematt@gmail.com>"]

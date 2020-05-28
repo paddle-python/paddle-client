@@ -3,7 +3,7 @@ from typing import List
 from urllib.parse import urljoin
 
 from .constants import countries_requiring_postcode, supported_countries
-from .types import DatetimeType, PaddleJsonType
+from .types import DatetimeType
 from .validators import validate_date
 
 log = logging.getLogger(__name__)
