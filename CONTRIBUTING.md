@@ -70,8 +70,10 @@ export PADDLE_TEST_DEFAULT_PLAN_ID=...
 
 poetry shell
 source .env
-pytest tests/
+pytest -m "not manual_cleanup" tests/
 # Coverage info is written to htmlcov/
+
+pytest tests/  # Run all tests against Paddle's API. See mocking and cleanup below
 ```
 
 ### Mocking
