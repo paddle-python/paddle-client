@@ -1,5 +1,5 @@
 import logging
-from typing import Union
+from typing import Union, List
 from urllib.parse import urljoin
 
 log = logging.getLogger(__name__)
@@ -10,7 +10,7 @@ def list_transactions(
     entity: str,
     entity_id: Union[str, int],
     page: int = None
-) -> dict:
+) -> List[dict]:
     """
     https://developer.paddle.com/api-reference/product-api/transactions/listtransactions
     """

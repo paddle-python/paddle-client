@@ -1,12 +1,13 @@
 import logging
 from urllib.parse import urljoin
+from typing import List
 
 from .types import PaddleJsonType
 
 log = logging.getLogger(__name__)
 
 
-def list_plans(self, plan: int = None) -> dict:
+def list_plans(self, plan: int = None) -> List[dict]:
     """
     https://developer.paddle.com/api-reference/subscription-api/plans/listplans
     """

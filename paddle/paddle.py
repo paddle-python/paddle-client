@@ -11,7 +11,7 @@ log = logging.getLogger(__name__)
 class PaddleException(Exception):
 
     def __init__(self, error):
-        self.code: str = 'Unknown'
+        self.code = 'Unknown'
         self.message = error
         if isinstance(error, requests.HTTPError):  # pragma: no cover - Unsure how to trigger a HTTPError here  # NOQA: E501
             self.code = 'HTTP error {0}'.format(error.response.status_code)

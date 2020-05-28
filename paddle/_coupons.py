@@ -1,5 +1,6 @@
 import logging
 from urllib.parse import urljoin
+from typing import List
 
 from .types import DatetimeType, PaddleJsonType
 from .validators import validate_date
@@ -7,7 +8,7 @@ from .validators import validate_date
 log = logging.getLogger(__name__)
 
 
-def list_coupons(self, product_id: int) -> dict:
+def list_coupons(self, product_id: int) -> List[dict]:
     """
     https://developer.paddle.com/api-reference/product-api/coupons/listcoupons
     """

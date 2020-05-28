@@ -97,7 +97,6 @@ def test_create_plan(paddle_client):  # NOQA: F811
 
 
 def test_create_plan_mock(mocker, paddle_client):  # NOQA: F811
-
     request = mocker.patch('paddle.paddle.requests.request')
 
     now = datetime.now().isoformat()
