@@ -10,17 +10,13 @@ def test_get_user_history_with_vendor_id(unset_vendor_id):  # NOQA: F811
     vendor_id = 11
     paddle = Paddle(vendor_id=vendor_id)
     response = paddle.get_user_history(email=email, vendor_id=vendor_id)
-    assert len(response.keys()) == 2
-    assert response['message'] == 'We\'ve sent details of your past transactions, licenses and downloads to you via email.'  # NOQA: E501
-    assert response['success'] is True
+    assert response == 'We\'ve sent details of your past transactions, licenses and downloads to you via email.'  # NOQA: E501
 
 
 def test_get_user_history_with_vendor_id_env_var(paddle_client):  # NOQA: F811
     email = 'test@example.com'
     response = paddle_client.get_user_history(email=email)
-    assert len(response.keys()) == 2
-    assert response['message'] == 'We\'ve sent details of your past transactions, licenses and downloads to you via email.'  # NOQA: E501
-    assert response['success'] is True
+    assert response == 'We\'ve sent details of your past transactions, licenses and downloads to you via email.'  # NOQA: E501
 
 
 def test_get_user_history_with_product_id(paddle_client):  # NOQA: F811
@@ -39,6 +35,4 @@ def test_get_user_history_missing_vendoer_id_and_product_id(unset_vendor_id):  #
     vendor_id = 11
     paddle = Paddle(vendor_id=vendor_id)
     response = paddle.get_user_history(email=email)
-    assert len(response.keys()) == 2
-    assert response['message'] == 'We\'ve sent details of your past transactions, licenses and downloads to you via email.'  # NOQA: E501
-    assert response['success'] is True
+    assert response == 'We\'ve sent details of your past transactions, licenses and downloads to you via email.'  # NOQA: E501

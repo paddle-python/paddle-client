@@ -122,8 +122,14 @@ class Paddle():
         if 'response' in response_json and response_json['response'] is not None:  # NOQA: E501
             return response_json['response']
 
+        if 'message' in response_json and response_json['message'] is not None:
+            return response_json['message']
+
         # Response is only {"success": True}
-        return response_json['success']
+        if len(response_json.keys()) == 1 and 'success' in response_json:
+            return response_json['success']
+
+        return response_json
 
     def get(self, url, **kwargs):
         kwargs['url'] = url
