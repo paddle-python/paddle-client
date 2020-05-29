@@ -1,9 +1,6 @@
-import contextlib
 import os
 
 import pytest
-
-from paddle.paddle import requests
 
 from .test_paddle import paddle_client  # NOQA: F401
 
@@ -39,18 +36,13 @@ def test_refund_payment(mocker, paddle_client):  # NOQA: F811
     }
     url = 'https://vendors.paddle.com/api/2.0/payment/refund'
     method = 'POST'
-    with contextlib.ExitStack() as stack:
-        stack.enter_context(mocker.patch('paddle.paddle.requests.request'))
-        paddle_client.refund_payment(
-            order_id=order_id,
-            amount=amount,
-            reason=reason
-        )
-        requests.request.assert_called_once_with(
-            url=url,
-            json=json,
-            method=method,
-        )
+    request = mocker.patch('paddle.paddle.requests.request')
+    paddle_client.refund_payment(
+        order_id=order_id,
+        amount=amount,
+        reason=reason
+    )
+    request.assert_called_once_with(url=url, json=json, method=method)
 
 
 # Comment out '@pytest.mark.skip()' to ensure the refund_payment code

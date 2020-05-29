@@ -168,5 +168,9 @@ class Paddle():
 
     from ._subscription_users import list_subscription_users
     from ._subscription_users import cancel_subscription
+    from ._subscription_users import update_subscription
+    from ._subscription_users import preview_subscription_update
+    # Alias to better match update_subscription
+    from ._subscription_users import preview_subscription_update as preview_update_subscription  # NOQA: E501
 
     from ._webhooks import get_webhook_history
