@@ -79,7 +79,7 @@ def test_paddle_json_and_data(paddle_client):
 
 def test_paddle_data_and_json(paddle_client):
     with pytest.raises(PaddleException):
-        paddle_client.get('badurl')
+        paddle_client.get('/badurl')
     try:
         paddle_client.get('badurl')
     except PaddleException as error:

@@ -23,8 +23,8 @@ def list_plans(self, plan: int = None) -> List[dict]:
 #     """
 #     https://developer.paddle.com/api-reference/subscription-api/plans/listplans
 
-#     There is no get_plan endpoint. This is a convenient alias of the list
-#     plans endpoint where plan id is required
+#     There is no get_plan endpoint in Paddle's API. This is a convenient
+#     alias of the list plans endpoint where plan id is required
 #     """
 #     return self.list_plans(plan=plan)[0]
 

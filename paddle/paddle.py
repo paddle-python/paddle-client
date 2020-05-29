@@ -2,7 +2,6 @@ import logging
 import os
 import warnings
 from urllib.parse import urljoin
-from typing import Dict, Union
 
 import requests
 
