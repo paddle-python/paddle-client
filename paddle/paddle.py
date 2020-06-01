@@ -15,11 +15,17 @@ class PaddleException(Exception):
         self.message = str(error)
         if isinstance(error, requests.HTTPError):  # pragma: no cover - Unsure how to trigger a HTTPError here  # NOQA: E501
             self.code = int(error.response.status_code)
-            self.message = f'HTTP error {self.code} - {error.response.content.decode("utf-8")}'  # NOQA
+            self.message = 'HTTP error {0} - {1}'.format(
+                self.code,
+                error.response.content.decode('utf-8'),
+            )
         elif isinstance(error, dict):
             try:
                 self.code = int(error['code'])
-                self.message = f'Paddle error {error["code"]} - {error["message"]}'  # NOQA
+                self.message = 'Paddle error {0} - {1}'.format(
+                    error['code'],
+                    error['message'],
+                )
             except KeyError:  # pragma: no cover - Not sure if this is even possible  # NOQA: E501
                 pass
 
