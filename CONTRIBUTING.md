@@ -36,8 +36,8 @@ Please see the sections below for more details
 This package uses the [Poetry](https://python-poetry.org/) for packaging and dependency management. Before you get started please install it.
 
 Once you have cloned this repository you will then need:
-* Your `Paddle Vendor ID` which can be found on the [Paddle's SDK page](https://vendors.paddle.com/sdk)
-* Your `Paddle API key` which is found on the same [Paddle's SDK page](https://vendors.paddle.com/sdk)
+* Your `Paddle Vendor ID` which can be found on the [Paddle's authentication page](https://vendors.paddle.com/authentication)
+* Your `Paddle API key` which is found on the same [Paddle's authentication page](https://vendors.paddle.com/authentication)
 
 ```bash
 # Fork and clone this repo

@@ -15,7 +15,7 @@ pip install paddle-python
 
 ### Usage
 
-To use the Paddle API you will need a Paddle Vendor ID and API key which can be found on [Paddle's SDK page](https://vendors.paddle.com/sdk)
+To use the Paddle API you will need a Paddle Vendor ID and API key which can be found on [Paddle's authentication page](https://vendors.paddle.com/authentication)
 
 ```python
 from paddle import Paddle
