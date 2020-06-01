@@ -2,6 +2,8 @@
 
 A python (3.5+) wrapper around the [Paddle.com](https://paddle.com/) [API](https://developer.paddle.com/api-reference/intro)
 
+If you are looking at intergrating Paddle with Django check out [dj-paddle](https://github.com/dj-paddle/dj-paddle)
+
 _Note: This is a work in progress, not all of the Paddle endpoints have been implemented yet_
 
 ## Quick start
