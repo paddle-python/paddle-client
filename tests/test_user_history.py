@@ -1,6 +1,6 @@
 import pytest
 
-from paddle import Paddle, PaddleException
+from paddle import PaddleClient, PaddleException
 
 from .test_paddle import paddle_client, unset_vendor_id  # NOQA: F401
 
@@ -8,7 +8,7 @@ from .test_paddle import paddle_client, unset_vendor_id  # NOQA: F401
 def test_get_user_history_with_vendor_id(unset_vendor_id):  # NOQA: F811
     email = 'test@example.com'
     vendor_id = 11
-    paddle = Paddle(vendor_id=vendor_id)
+    paddle = PaddleClient(vendor_id=vendor_id)
     response = paddle.get_user_history(email=email, vendor_id=vendor_id)
     assert response == 'We\'ve sent details of your past transactions, licenses and downloads to you via email.'  # NOQA: E501
 
@@ -33,6 +33,6 @@ def test_get_user_history_with_product_id(paddle_client):  # NOQA: F811
 def test_get_user_history_missing_vendoer_id_and_product_id(unset_vendor_id):  # NOQA: F811, E501
     email = 'test@example.com'
     vendor_id = 11
-    paddle = Paddle(vendor_id=vendor_id)
+    paddle = PaddleClient(vendor_id=vendor_id)
     response = paddle.get_user_history(email=email)
     assert response == 'We\'ve sent details of your past transactions, licenses and downloads to you via email.'  # NOQA: E501

@@ -127,7 +127,7 @@ _Note: As `tox` runs the test suite multiple times, it is configured to skip any
 
 ## Submitting changes
 
-Please send a [GitHub Pull Request to paddle-python](https://github.com/pyepye/paddle-python/pull/new/master) with a clear list of what you've done (read more about [pull requests](http://help.github.com/pull-requests/)).
+Please send a [GitHub Pull Request to paddle-python](https://github.com/paddle-python/paddle-client/pull/new/master) with a clear list of what you've done (read more about [pull requests](http://help.github.com/pull-requests/)).
 
 All changes should have at least one test to accompany it, either to prove the bug it is fixing has indeed been fixed on to ensure a new feature works as expected.
 

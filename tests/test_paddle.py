@@ -1,6 +1,6 @@
 import pytest
 
-from paddle import Paddle, PaddleException, __version__
+from paddle import PaddleClient, PaddleException
 
 
 class BadPaddleDataWarning(UserWarning):
@@ -9,7 +9,7 @@ class BadPaddleDataWarning(UserWarning):
 
 @pytest.fixture(scope='session')
 def paddle_client():
-    paddle = Paddle()
+    paddle = PaddleClient()
     return paddle
 
 
@@ -28,42 +28,38 @@ def unset_api_key(monkeypatch):
     monkeypatch.delenv('PADDLE_API_KEY', raising=False)
 
 
-def test_version():
-    assert __version__ == '0.1.0'
-
-
 def test_paddle__manual_vendor_id_and_api_key(unset_vendor_id, unset_api_key):
     with pytest.raises(ValueError):
-        Paddle(api_key='test')
+        PaddleClient(api_key='test')
     try:
-        Paddle(api_key='test')
+        PaddleClient(api_key='test')
     except ValueError as error:
         assert str(error) == 'Vendor ID not set'
 
 
 def test_paddle_vendor_id_not_set(unset_vendor_id):
     with pytest.raises(ValueError):
-        Paddle(api_key='test')
+        PaddleClient(api_key='test')
     try:
-        Paddle(api_key='test')
+        PaddleClient(api_key='test')
     except ValueError as error:
         assert str(error) == 'Vendor ID not set'
 
 
 def test_paddle_vendor_id_not_int(set_vendor_id_to_invalid):
     with pytest.raises(ValueError):
-        Paddle(api_key='test')
+        PaddleClient(api_key='test')
     try:
-        Paddle(api_key='test')
+        PaddleClient(api_key='test')
     except ValueError as error:
         assert str(error) == 'Vendor ID must be a number'
 
 
 def test_paddle_api_key_not_set(unset_api_key):
     with pytest.raises(ValueError):
-        Paddle(vendor_id=1)
+        PaddleClient(vendor_id=1)
     try:
-        Paddle(vendor_id=1)
+        PaddleClient(vendor_id=1)
     except ValueError as error:
         assert str(error) == 'API key not set'
 

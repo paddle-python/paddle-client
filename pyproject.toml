@@ -1,15 +1,15 @@
 [tool.poetry]
-name = "paddle-python"
+name = "paddle-client"
 packages = [
     {include = "paddle"}
 ]
-version = "0.5.1"
+version = "0.6.0"
 description = "Python wrapper around the Paddle.com API"
 license = "MIT"
 authors = ["Matt Pye <pyematt@gmail.com>"]
 readme = "README.md"
-repository = "https://github.com/pyepye/paddle-python"
-homepage = "https://github.com/pyepye/paddle-python"
+repository = "https://github.com/paddle-python/paddle-client"
+homepage = "https://github.com/paddle-python/paddle-client"
 keywords = ["paddle", "paddle.com", "payments", "billing", "commerce", "finance", "saas"]
 
 [tool.poetry.dependencies]

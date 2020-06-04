@@ -33,7 +33,7 @@ class PaddleException(Exception):
         return self.message
 
 
-class Paddle():
+class PaddleClient():
 
     def __init__(self, vendor_id: int = None, api_key: str = None):
         if not vendor_id:

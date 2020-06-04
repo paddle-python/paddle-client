@@ -1,4 +1,4 @@
-# Paddle Python
+# Paddle Client
 
 A python (3.5+) wrapper around the [Paddle.com](https://paddle.com/) [API](https://developer.paddle.com/api-reference/intro)
 
@@ -11,7 +11,7 @@ _Note: This is a work in progress, not all of the Paddle endpoints have been imp
 ### Installation
 
 ```bash
-pip install paddle-python
+pip install paddle-client
 ```
 
 
@@ -20,10 +20,10 @@ pip install paddle-python
 To use the Paddle API you will need a Paddle Vendor ID and API key which can be found on [Paddle's authentication page](https://vendors.paddle.com/authentication)
 
 ```python
-from paddle import Paddle
+from paddle import PaddleClient
 
 
-paddle = Paddle(vendor_id=12345, api_key='myapikey')
+paddle = PaddleClient(vendor_id=12345, api_key='myapikey')
 paddle.list_products()
 ```
 
@@ -34,10 +34,10 @@ export PADDLE_API_KEY="myapikey"
 ```
 
 ```python
-from paddle import Paddle
+from paddle import PaddleClient
 
 
-paddle = Paddle()
+paddle = PaddleClient()
 paddle.list_products()
 ```
 
@@ -49,7 +49,7 @@ Coming soon. Please see `Working endpoints` below for basic usage.
 
 ## Contributing
 
-All contributions are welcome and appreciated. Please see [CONTRIBUTING.md](https://github.com/pyepye/paddle-python/blob/master/CONTRIBUTING.md) for more details including details on how to run tests etc.
+All contributions are welcome and appreciated. Please see [CONTRIBUTING.md](https://github.com/paddle-python/paddle-client/blob/master/CONTRIBUTING.md) for more details including details on how to run tests etc.
 
 
 ## Working endpoints
