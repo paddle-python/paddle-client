@@ -19,7 +19,7 @@ def test_refund_payment(mocker, paddle_client):  # NOQA: F811
 
     Please uncomment the '@pytest.mark.skip()' line for the
     'test_refund_payment_no_mock' test to run the the refund_payment code
-    against the PAddle API to check the changes work.
+    against the Paddle API to check the changes work.
 
     Once the `test_refund_payment_no_mock` test passes please update
     the mock below and comment out the function again.

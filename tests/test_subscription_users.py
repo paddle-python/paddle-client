@@ -117,8 +117,8 @@ def test_list_subscription_users_with_results_per_page(paddle_client):  # NOQA: 
 @pytest.mark.mocked
 def test_cancel_subscription(mocker, paddle_client):  # NOQA: F811
     """
-    This test is mocked as creating a refund is not something you want to
-    happen against a live system.
+    This test is mocked as canceling a subscription is not something you want
+    to do against a live system.
 
     If the below test fails it means a change has been made which has affected
     the refund payment endpoint.
@@ -128,7 +128,7 @@ def test_cancel_subscription(mocker, paddle_client):  # NOQA: F811
 
     Please uncomment the '@pytest.mark.skip()' line for the
     'cancel_subscription_no_mock' test to run the the cancel_subscription code
-    against the PAddle API to check the changes work.
+    against the Paddle API to check the changes work.
 
     Once the `cancel_subscription_no_mock` test passes please update
     the mock below and comment out the function again.
@@ -168,8 +168,8 @@ def test_cancel_subscription_no_mock(paddle_client):  # NOQA: F811
 @pytest.mark.mocked
 def test_update_subscription(mocker, paddle_client):  # NOQA: F811
     """
-    This test is mocked as creating a refund is not something you want to
-    happen against a live system.
+    This test is mocked as updating a subscription is probably not  something
+    you want to do on a live system.
 
     If the below test fails it means a change has been made which has affected
     the refund payment endpoint.
@@ -179,7 +179,7 @@ def test_update_subscription(mocker, paddle_client):  # NOQA: F811
 
     Please uncomment the '@pytest.mark.skip()' line for the
     'update_subscription_no_mock' test to run the the update_subscription code
-    against the PAddle API to check the changes work.
+    against the Paddle API to check the changes work.
 
     Once the `update_subscription_no_mock` test passes please update
     the mock below and comment out the function again.
