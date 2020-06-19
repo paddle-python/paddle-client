@@ -69,10 +69,11 @@ All contributions are welcome and appreciated. Please see [CONTRIBUTING.md](http
 * [Cancel Subscription](https://developer.paddle.com/api-reference/subscription-api/subscription-users/canceluser)
 * [Update Subscription](https://developer.paddle.com/api-reference/subscription-api/subscription-users/updateuser)
 * [Preview Subscription Update](https://developer.paddle.com/api-reference/subscription-api/subscription-users/previewupdate)
-* [Get Webhook History](https://developer.paddle.com/api-reference/alert-api/webhooks/webhooks)
 * [Add Modifier](https://developer.paddle.com/api-reference/subscription-api/modifiers/createmodifier)
 * [Delete Modifier](https://developer.paddle.com/api-reference/subscription-api/modifiers/deletemodifier)
 * [List Modifiers](https://developer.paddle.com/api-reference/subscription-api/modifiers/listmodifiers)
+* [Create One-off Charge](https://developer.paddle.com/api-reference/subscription-api/one-off-charges/createcharge)
+* [Get Webhook History](https://developer.paddle.com/api-reference/alert-api/webhooks/webhooks)
 
 ```python
 paddle.get_order_details(checkout_id=checkout_id)
@@ -130,6 +131,11 @@ paddle.preview_update_subscription(
 paddle.add_modifier(subscription_id=1234, modifier_amount=10.5)
 paddle.delete_modifier(modifier_id=10)
 paddle.list_modifiers()
+paddle.create_one_off_charge(
+    subscription_id=1234,
+    amount=0.0,
+    charge_name="Add X on top of subscription"
+)
 paddle.get_webhook_history()
 ```
 
@@ -147,7 +153,6 @@ The below endpoints have been implimented but are not working correctly accordin
 * Paddle API endpoints
     * [List Payments](https://developer.paddle.com/api-reference/subscription-api/payments/listpayments)
     * [Reschedule Payment](https://developer.paddle.com/api-reference/subscription-api/payments/updatepayment)
-    * [Create One-off Charge](https://developer.paddle.com/api-reference/subscription-api/one-off-charges/createcharge)
 * Work out if we want to include 'alias' methods like pause_subscription
 * Get test coverage to 100%
 * Docs (auto docs?)

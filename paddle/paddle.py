@@ -188,4 +188,6 @@ class PaddleClient():
     from ._modifiers import delete_modifier
     from ._modifiers import list_modifiers
 
+    from ._one_off_charges import create_one_off_charge
+
     from ._webhooks import get_webhook_history
