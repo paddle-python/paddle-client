@@ -49,7 +49,6 @@ def create_plan(
     In the docs all of the price variables are noted as strings except for USD
     which is a number. This is probably an error in the docs.
     """
-
     url = urljoin(self.vendors_v2, 'subscription/plans_create')
 
     plan_types = ['day', 'week', 'month', 'year']

@@ -130,6 +130,9 @@ class PaddleClient():
         if 'message' in response_json and response_json['message'] is not None:
             return response_json['message']
 
+        # Response is {"response": None, "success": True}
+        if response_json['response'] is None:
+            del response_json['response']
         # Response is only {"success": True}
         if len(response_json.keys()) == 1 and 'success' in response_json:
             return response_json['success']
@@ -177,5 +180,9 @@ class PaddleClient():
     from ._subscription_users import preview_subscription_update
     # Alias to better match update_subscription
     from ._subscription_users import preview_subscription_update as preview_update_subscription  # NOQA: E501
+
+    from ._modifiers import add_modifier
+    from ._modifiers import delete_modifier
+    from ._modifiers import list_modifiers
 
     from ._webhooks import get_webhook_history

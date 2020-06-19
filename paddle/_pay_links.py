@@ -50,7 +50,6 @@ def create_pay_link(
         can be generated instead by specifying title, webhook_url and prices."
     https://developer.paddle.com/api-reference/product-api/coupons/createcoupon  # NOQA: E501
     """
-
     url = urljoin(self.vendors_v2, 'product/generate_license')
 
     if not product_id:

@@ -41,7 +41,6 @@ def create_coupon(
     Even though the docs states:
         "Required if discount_amount is flat."
     """
-
     url = urljoin(self.checkout_v2_1, 'product/create_coupon')
 
     if coupon_type not in ['product', 'checkout']:

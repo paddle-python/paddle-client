@@ -70,6 +70,9 @@ All contributions are welcome and appreciated. Please see [CONTRIBUTING.md](http
 * [Update Subscription](https://developer.paddle.com/api-reference/subscription-api/subscription-users/updateuser)
 * [Preview Subscription Update](https://developer.paddle.com/api-reference/subscription-api/subscription-users/previewupdate)
 * [Get Webhook History](https://developer.paddle.com/api-reference/alert-api/webhooks/webhooks)
+* [Add Modifier](https://developer.paddle.com/api-reference/subscription-api/modifiers/createmodifier)
+* [Delete Modifier](https://developer.paddle.com/api-reference/subscription-api/modifiers/deletemodifier)
+* [List Modifiers](https://developer.paddle.com/api-reference/subscription-api/modifiers/listmodifiers)
 
 ```python
 paddle.get_order_details(checkout_id=checkout_id)
@@ -124,6 +127,9 @@ paddle.preview_update_subscription(
     bill_immediately=True,
     quantity=101,
 )
+paddle.add_modifier(subscription_id=1234, modifier_amount=10.5)
+paddle.delete_modifier(modifier_id=10)
+paddle.list_modifiers()
 paddle.get_webhook_history()
 ```
 
@@ -139,9 +145,6 @@ The below endpoints have been implimented but are not working correctly accordin
 ## ToDo
 * Fix generate license and create pay link endpoints
 * Paddle API endpoints
-    * [Add Modifier](https://developer.paddle.com/api-reference/subscription-api/modifiers/createmodifier)
-    * [Delete Modifier](https://developer.paddle.com/api-reference/subscription-api/modifiers/deletemodifier)
-    * [List Modifiers](https://developer.paddle.com/api-reference/subscription-api/modifiers/listmodifiers)
     * [List Payments](https://developer.paddle.com/api-reference/subscription-api/payments/listpayments)
     * [Reschedule Payment](https://developer.paddle.com/api-reference/subscription-api/payments/updatepayment)
     * [Create One-off Charge](https://developer.paddle.com/api-reference/subscription-api/one-off-charges/createcharge)
