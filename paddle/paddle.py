@@ -57,7 +57,7 @@ class PaddleClient():
 
         self.vendor_id = vendor_id
         self.api_key = api_key
-        self.json = {
+        self.auth = {
             'vendor_id': self.vendor_id,
             'vendor_auth_code': self.api_key,
         }
@@ -75,7 +75,7 @@ class PaddleClient():
         method: str = 'GET',
         params: dict = None,
         data: dict = None,
-        json: dict = None
+        json: dict = None,
     ) -> dict:
         kwargs = {}  # type: dict
 
@@ -99,13 +99,16 @@ class PaddleClient():
             log.warn('GET data/json should not be provided with GET method.')
 
         if kwargs['method'] in ['POST', 'PUT', 'PATCH']:
-            kwargs['json'] = {}
             if data:
-                kwargs['json'] = data
-            if json:
+                kwargs['data'] = data
+                kwargs['data'] = {k: v for k, v in kwargs['data'].items() if v is not None}  # NOQA: E501
+                kwargs['data'].update(self.auth)
+            elif json:
                 kwargs['json'] = json
-            kwargs['json'] = {k: v for k, v in kwargs['json'].items() if v is not None}  # NOQA: E501
-            kwargs['json'].update(self.json)
+                kwargs['json'] = {k: v for k, v in kwargs['json'].items() if v is not None}  # NOQA: E501
+                kwargs['json'].update(self.auth)
+            else:
+                kwargs['json'] = self.auth
 
         if params:
             kwargs['params'] = params
@@ -131,7 +134,7 @@ class PaddleClient():
             return response_json['message']
 
         # Response is {"response": None, "success": True}
-        if response_json['response'] is None:
+        if 'response' in response_json and response_json['response'] is None:
             del response_json['response']
         # Response is only {"success": True}
         if len(response_json.keys()) == 1 and 'success' in response_json:
