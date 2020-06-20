@@ -84,7 +84,7 @@ Mocks should be done at the point paddle-python interfaces with `requests` and c
 
 The current mocked tests are:
 
-* Refund Payment - `test_transactions.py::test_refund_payment`
+* Refund Payment - `test_transactions.py::test_refund_product_payment`
 * Cancel Subscription - `test_subscription_users.py::test_cancel_subscription`
 
 

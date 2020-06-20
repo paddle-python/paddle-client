@@ -1,9 +1,9 @@
 from datetime import date, datetime
 
-from .types import DatetimeType
+from .types import DatetimeType, DateType
 
 
-def validate_date(value: DatetimeType, field_name: str) -> str:
+def validate_date(value: DateType, field_name: str) -> str:
     date_format = '%Y-%m-%d'
     if isinstance(value, str):
         error_message = '{0} must be a datetime/data object or string in format YYYY-MM-DD'.format(field_name)  # NOQA: E501

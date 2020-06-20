@@ -7,7 +7,7 @@ from .types import PaddleJsonType
 log = logging.getLogger(__name__)
 
 
-def refund_payment(
+def refund_product_payment(
     self,
     order_id: Union[str, int],
     amount: float = None,

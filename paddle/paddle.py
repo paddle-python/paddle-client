@@ -171,7 +171,7 @@ class PaddleClient():
 
     from ._transactions import list_transactions
 
-    from ._payments import refund_payment
+    from ._product_payments import refund_product_payment
 
     from ._plans import list_plans
     # from ._plans import get_plan
@@ -187,6 +187,9 @@ class PaddleClient():
     from ._modifiers import add_modifier
     from ._modifiers import delete_modifier
     from ._modifiers import list_modifiers
+
+    from ._subscription_payments import list_subscription_payments
+    from ._subscription_payments import reschedule_subscription_payment
 
     from ._one_off_charges import create_one_off_charge
 
