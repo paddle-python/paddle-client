@@ -86,6 +86,8 @@ The current mocked tests are:
 
 * Refund Payment - `test_transactions.py::test_refund_product_payment`
 * Cancel Subscription - `test_subscription_users.py::test_cancel_subscription`
+* Update Subscription - `test_subscription_users.py::test_update_subscription`
+* Create one off charge - `test_one_off_charges.py::test_create_one_off_charge`
 
 
 ### Cleanup

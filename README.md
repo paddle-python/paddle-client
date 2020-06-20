@@ -44,7 +44,7 @@ paddle.list_products()
 
 ## Documentation
 
-Coming soon. Please see `Working endpoints` below for basic usage.
+Coming soon. Please see `Endpoints` below for basic usage.
 
 
 ## Contributing
@@ -52,10 +52,16 @@ Coming soon. Please see `Working endpoints` below for basic usage.
 All contributions are welcome and appreciated. Please see [CONTRIBUTING.md](https://github.com/paddle-python/paddle-client/blob/master/CONTRIBUTING.md) for more details including details on how to run tests etc.
 
 
-## Working endpoints
+## Paddle Endpoints
+
+*Note: See `Usage` below for how to use each endpoint*
+
+**Checkout API**
 * [Get Order Details](https://developer.paddle.com/api-reference/checkout-api/order-information/getorder)
 * [Get User History](https://checkout.paddle.com/api/2.0/user/history)
 * [Get Prices](https://developer.paddle.com/api-reference/checkout-api/prices/getprices)
+
+**Product API**
 * [List Coupons](https://developer.paddle.com/api-reference/product-api/coupons/listcoupons)
 * [Create Coupon](https://developer.paddle.com/api-reference/product-api/coupons/createcoupon)
 * [Delete Coupon](https://developer.paddle.com/api-reference/product-api/coupons/deletecoupon)
@@ -63,6 +69,8 @@ All contributions are welcome and appreciated. Please see [CONTRIBUTING.md](http
 * [List Products](https://developer.paddle.com/api-reference/product-api/products/getproducts)
 * [List Transactions](https://developer.paddle.com/api-reference/product-api/transactions/listtransactions)
 * [Refund Payment](https://developer.paddle.com/api-reference/product-api/payments/refundpayment)
+
+**Subscription API**
 * [List Plans](https://developer.paddle.com/api-reference/subscription-api/plans/listplans)
 * [Create Plan](https://developer.paddle.com/api-reference/subscription-api/plans/createplan)
 * [List Subscription Users](https://developer.paddle.com/api-reference/subscription-api/subscription-users/listusers)
@@ -72,14 +80,23 @@ All contributions are welcome and appreciated. Please see [CONTRIBUTING.md](http
 * [Add Modifier](https://developer.paddle.com/api-reference/subscription-api/modifiers/createmodifier)
 * [Delete Modifier](https://developer.paddle.com/api-reference/subscription-api/modifiers/deletemodifier)
 * [List Modifiers](https://developer.paddle.com/api-reference/subscription-api/modifiers/listmodifiers)
+* [List Payments](https://developer.paddle.com/api-reference/subscription-api/payments/listpayments)
+* [Reschedule Payment](https://developer.paddle.com/api-reference/subscription-api/payments/updatepayment)
 * [Create One-off Charge](https://developer.paddle.com/api-reference/subscription-api/one-off-charges/createcharge)
+
+**Alert API**
 * [Get Webhook History](https://developer.paddle.com/api-reference/alert-api/webhooks/webhooks)
 
+### Usage
+
 ```python
-paddle.get_order_details(checkout_id=checkout_id)
-paddle.get_user_history(email=email)
-paddle.get_prices(product_ids=[product_id])
-paddle.list_coupons(product_id=product_id)
+# Checkout API
+paddle.get_order_details(checkout_id='aaaa-bbbb-cccc-1234')
+paddle.get_user_history(email='test@example.com')
+paddle.get_prices(product_ids=[1234])
+
+# Product API
+paddle.list_coupons(product_id=1234)
 paddle.create_coupon(
     coupon_type='product',
     discount_type='percentage',
@@ -87,20 +104,20 @@ paddle.create_coupon(
     allowed_uses=1,
     recurring=False,
     currency='USD',
-    product_ids=product_ids,
+    product_ids=[1234],
     coupon_code='50%OFF',
     description='50% off coupon over $10',
-    expires=expires,
+    expires='2030-01-01 10:00:00',
     minimum_threshold=10,
     group='paddle-python',
 )
-paddle.delete_coupon(coupon_code=new_coupon_code, product_id=product_id)
+paddle.delete_coupon(coupon_code='mycoupon', product_id=1234)
 paddle.update_coupon(
-    coupon_code=coupon_code,
+    coupon_code='mycoupon',
     new_coupon_code='40%OFF',
     new_group='paddle-python-test',
-    product_ids=[product_id],
-    expires=expires,
+    product_ids=[1234],
+    expires='2030-01-01 10:00:00',
     allowed_uses=1,
     currency='USD',
     minimum_threshold=10,
@@ -108,8 +125,10 @@ paddle.update_coupon(
     recurring=True
 )
 paddle.list_products()
-paddle.list_transactions(entity='subscription', entity_id=subscription_id)
-paddle.refund_payment(order_id=order_id, amount=amount, reason=reason)
+paddle.list_transactions(entity='subscription', entity_id=1234)
+paddle.refund_product_payment(order_id=1234, amount=0.01, reason='reason')
+
+# Subscription API
 paddle.list_plans()
 paddle.create_plan(
     plan_name='plan_name',
@@ -131,11 +150,15 @@ paddle.preview_update_subscription(
 paddle.add_modifier(subscription_id=1234, modifier_amount=10.5)
 paddle.delete_modifier(modifier_id=10)
 paddle.list_modifiers()
+paddle.list_subscription_payments()
+paddle.reschedule_subscription_payment(payment_id=4567, date='2030-01-01')
 paddle.create_one_off_charge(
     subscription_id=1234,
     amount=0.0,
     charge_name="Add X on top of subscription"
 )
+
+# Alert API
 paddle.get_webhook_history()
 ```
 
@@ -146,13 +169,11 @@ The below endpoints have been implimented but are not working correctly accordin
 
 * [Generate License](https://developer.paddle.com/api-reference/product-api/licenses/createlicense) - `Paddle error 108 - Unable to find requested product`
 * [Create pay link](https://developer.paddle.com/api-reference/product-api/pay-links/createpaylink) -  `Paddle error 108 - Unable to find requested product`
+* [Reschedule subscription payment](https://developer.paddle.com/api-reference/subscription-api/payments/updatepayment) -  `Paddle error 122 - Provided date is not valid`
 
 
 ## ToDo
-* Fix generate license and create pay link endpoints
-* Paddle API endpoints
-    * [List Payments](https://developer.paddle.com/api-reference/subscription-api/payments/listpayments)
-    * [Reschedule Payment](https://developer.paddle.com/api-reference/subscription-api/payments/updatepayment)
+* Fix generate license, create pay link and reschedule payment endpoints
 * Work out if we want to include 'alias' methods like pause_subscription
 * Get test coverage to 100%
 * Docs (auto docs?)
