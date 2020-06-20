@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 import pytest
 
 from paddle import PaddleException
+
 from .test_paddle import BadPaddleDataWarning, paddle_client  # NOQA: F401
 
 
