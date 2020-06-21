@@ -138,6 +138,7 @@ paddle.refund_product_payment(order_id=1234, amount=0.01, reason='reason')
 
 # Subscription API
 paddle.list_plans()
+paddle.get_plan(plan=123)
 paddle.create_plan(
     plan_name='plan_name',
     plan_trial_days=14,
@@ -150,6 +151,19 @@ paddle.create_plan(
 paddle.list_subscription_users()
 paddle.cancel_subscription(subscription_id=1234)
 paddle.update_subscription(subscription_id=1234, pause=True)
+paddle.update_subscription(
+    subscription_id=1234,
+    quantity=10.00,
+    currency='USD',
+    recurring_price=10.00,
+    bill_immediately=False,
+    plan_id=123,
+    prorate=True,
+    keep_modifiers=True,
+    passthrough='passthrough',
+)
+paddle.pause_subscription(subscription_id=1234)
+paddle.resume_subscription(subscription_id=1234)
 paddle.preview_update_subscription(
     subscription_id=123,
     bill_immediately=True,
@@ -177,14 +191,12 @@ The below endpoints have been implimented but are not working correctly accordin
 
 * [Generate License](https://developer.paddle.com/api-reference/product-api/licenses/createlicense) - `Paddle error 108 - Unable to find requested product`
 * [Create pay link](https://developer.paddle.com/api-reference/product-api/pay-links/createpaylink) -  `Paddle error 108 - Unable to find requested product`
-* [Reschedule subscription payment](https://developer.paddle.com/api-reference/subscription-api/payments/updatepayment) -  `Paddle error 122 - Provided date is not valid`
+* [Reschedule subscription payment](https://developer.paddle.com/api-reference/subscription-api/payments/updatepayment) -  `Paddle error 122 - Provided date is not valid` - After manually testing via Paddles API reference I believe this is an issue with Paddle's API.
 
 
 ## ToDo
 * Fix generate license, create pay link and reschedule payment endpoints
-* Work out if we want to include 'alias' methods like pause_subscription
 * Get test coverage to 100%
-* Docs (auto docs?)
 * Use `pytest-mock` `Spy` to check params, json, urls etc for test requests
     * Needed to any tests which skip due to missing data
 * How to deal with the manual cleanup?

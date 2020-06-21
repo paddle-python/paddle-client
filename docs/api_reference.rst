@@ -3,6 +3,10 @@ API Reference
 
 Below is a :ref:`full list<Full reference>` of the Paddle Client methods. :ref:`Supported Paddle endpoints` lists the Paddle API endpoints in the same order as they are in the `Paddle API Reference <https://developer.paddle.com/api-reference>`_
 
+There are also several *helper* methods implimented on top of the Paddle endpoints to make usage of the API easier.
+
+For example the ``pause_subscription`` and ``resume_subscription`` methods have been added on top of ``update_subscription`` as to pause or resume a subscription the ``update_subscription`` endpoint is used but only the ``pause`` parameter can be set (and will fail if any others are).
+
 
 Supported Paddle endpoints
 --------------------------
@@ -27,11 +31,11 @@ As listed in the `Paddle API Reference <https://developer.paddle.com/api-referen
 
 **Subscription API**
 
-- :meth:`List Plans<paddle.PaddleClient.list_plans>`
+- :meth:`List Plans<paddle.PaddleClient.list_plans>` - (Including :meth:`Get Plan<paddle.PaddleClient.get_plan>`)
 - :meth:`Create Plan<paddle.PaddleClient.create_plan>`
 - :meth:`List Subscription Users<paddle.PaddleClient.list_subscription_users>`
 - :meth:`Cancel Subscription<paddle.PaddleClient.cancel_subscription>`
-- :meth:`Update Subscription<paddle.PaddleClient.update_subscription>`
+- :meth:`Update Subscription<paddle.PaddleClient.update_subscription>` - (Including :meth:`Pause Subscription<paddle.PaddleClient.pause_subscription>` and :meth:`Resume Subscription<paddle.PaddleClient.resume_subscription>`)
 - :meth:`Preview Subscription Update<paddle.PaddleClient.preview_subscription_update>`
 - :meth:`Add Modifier<paddle.PaddleClient.add_modifier>`
 - :meth:`Delete Modifier<paddle.PaddleClient.delete_modifier>`

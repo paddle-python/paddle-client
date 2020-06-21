@@ -11,8 +11,8 @@ def test_refund_product_payment(mocker, paddle_client):  # NOQA: F811
     This test is mocked as creating a refund is not something you want to
     happen against a live system.
 
-    If the below test fails it means a change has been made which has affected
-    the refund payment endpoint.
+    If this test fails it means a change has been made which has affected
+    the refund product payment endpoint.
 
     The code now needs to be run directly against Paddle's API at least once to
     ensure the new code is working as expected.

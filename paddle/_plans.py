@@ -19,14 +19,15 @@ def list_plans(self, plan: int = None) -> List[dict]:
     return self.post(url=url)
 
 
-# def get_plan(self, plan: int) -> dict:
-#     """
-#     `List Plans Paddle docs <https://developer.paddle.com/api-reference/subscription-api/plans/listplans>`_  # NOQA: E501
+def get_plan(self, plan: int) -> dict:
+    """
+    `List Plans Paddle docs <https://developer.paddle.com/api-reference/subscription-api/plans/listplans>`_
 
-#     There is no get_plan endpoint in Paddle's API. This is a convenient
-#     alias of the list plans endpoint where the Plan ID is required
-#     """  # NOQA: E501
-#     return self.list_plans(plan=plan)[0]
+    There is no Get Plan endpoint in Paddle's API but list plans does support
+    sending through a plan ID. This is a helper method to get a single plan
+    where the plan parameter is required.
+    """  # NOQA: E501
+    return self.list_plans(plan=plan)[0]
 
 
 def create_plan(

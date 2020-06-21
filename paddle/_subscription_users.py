@@ -36,30 +36,6 @@ def list_subscription_users(
     return self.post(url=url, json=json)
 
 
-# def list_subscriptions(self, **kwargs: dict) -> List[dict]:
-#     """
-#     `List Users (subscription) Paddle docs <https://developer.paddle.com/api-reference/subscription-api/subscription-users/listusers>`_  # NOQA: E501
-
-#     This is a convenient alias for list_subscription_users as while the
-#     other name matches the API name, it's not particularly guessable
-#     """ # NOQA: E501
-#     return self.list_subscription_users(**kwargs)
-
-
-# def get_subscription(self, subscription_id: int) -> dict:
-#     """
-#     `List Users (subscription) Paddle docs <https://developer.paddle.com/api-reference/subscription-api/subscription-users/listusers>`_  # NOQA: E501
-
-#     There is no get_subscription endpoint in Paddle's API, This is a
-#     convenient alias
-#     """  # NOQA: E501
-#     for subscription in self.list_subscription_users():
-#         if subscription['subscription_id'] == subscription_id:
-#             return subscription
-#     error = 'Unable to find subscription with id {0}'.format(subscription_id)
-#     raise ValueError(error)
-
-
 def cancel_subscription(
     self,
     subscription_id: int,
@@ -108,26 +84,26 @@ def update_subscription(
     return self.post(url=url, json=json)
 
 
-# def pause_subscription(self, subscription_id: int) -> dict:
-#     """
-#     `Update Subscription Paddle docs <https://developer.paddle.com/api-reference/subscription-api/subscription-users/updateuser`_  # NOQA: E501
+def pause_subscription(self, subscription_id: int) -> dict:
+    """
+    `Update Subscription Paddle docs <https://developer.paddle.com/api-reference/subscription-api/subscription-users/updateuser>`_
 
-#     There is no resume_subscription endpoint in Paddle's API. This is a
-#     convenient alias for update_subscription as no extra data can be sent
-#     when pausing/resuming subscriptions
-#     """  # NOQA: E501
-#     return self.update_subscription(subscription_id=subscription_id, pause=True)  # NOQA: E501
+    There is no Pause Subscription endpoint in Paddle's API. This is a
+    convenient helper method for update_subscription as no extra data can be
+    sent when pausing/resuming subscriptions
+    """  # NOQA: E501
+    return self.update_subscription(subscription_id=subscription_id, pause=True)  # NOQA: E501
 
 
-# def resume_subscription(self, subscription_id: int) -> dict:
-#     """
-#     `Update Subscription Paddle docs <https://developer.paddle.com/api-reference/subscription-api/subscription-users/updateuser`_  # NOQA: E501
+def resume_subscription(self, subscription_id: int) -> dict:
+    """
+    `Update Subscription Paddle docs <https://developer.paddle.com/api-reference/subscription-api/subscription-users/updateuser>`_
 
-#     There is no resume_subscription endpoint in Paddle's API. This is a
-#     convenient alias for update_subscription as no extra data can be sent
-#     when pausing/resuming subscriptions
-#     """  # NOQA: E501
-#     return self.update_subscription(subscription_id=subscription_id, pause=False)  # NOQA: E501
+    There is no Resume Subscription endpoint in Paddle's API. This is a
+    convenient helper method for update_subscription as no extra data can be
+    sent when pausing/resuming subscriptions
+    """  # NOQA: E501
+    return self.update_subscription(subscription_id=subscription_id, pause=False)  # NOQA: E501
 
 
 def preview_subscription_update(

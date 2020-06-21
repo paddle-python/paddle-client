@@ -14,8 +14,8 @@ def test_create_one_off_charge(mocker, paddle_client):  # NOQA: F811
     This test is mocked as creating a one off charge against Paddle will
     actually create a one of charge
 
-    If the below test fails it means a change has been made which has affected
-    the refund payment endpoint.
+    If this test fails it means a change has been made which has affected
+    the one-off charge endpoint.
 
     The code now needs to be run directly against Paddle's API at least once to
     ensure the new code is working as expected.

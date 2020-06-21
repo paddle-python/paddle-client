@@ -120,8 +120,8 @@ def test_cancel_subscription(mocker, paddle_client):  # NOQA: F811
     This test is mocked as canceling a subscription is not something you want
     to do against a live system.
 
-    If the below test fails it means a change has been made which has affected
-    the refund payment endpoint.
+    If this test fails it means a change has been made which has affected
+    the cancel subscription endpoint.
 
     The code now needs to be run directly against Paddle's API at least once to
     ensure the new code is working as expected.
@@ -171,8 +171,8 @@ def test_update_subscription(mocker, paddle_client):  # NOQA: F811
     This test is mocked as updating a subscription is probably not  something
     you want to do on a live system.
 
-    If the below test fails it means a change has been made which has affected
-    the refund payment endpoint.
+    If this test fails it means a change has been made which has affected
+    the update subscription endpoint.
 
     The code now needs to be run directly against Paddle's API at least once to
     ensure the new code is working as expected.
@@ -274,6 +274,54 @@ def get_subscription(paddle_client, subscription_id):  # NOQA: F811
         if subscription['subscription_id'] == subscription_id:
             return subscription
     raise ValueError('Unable to find subscription with id {0}'.format(subscription_id))  # NOQA: E501
+
+
+@pytest.mark.mocked
+def test_pause_subscription(mocker, paddle_client):  # NOQA: F811
+    """
+    This test is mocked as pausing a subscription is probably not something
+    you want to do on a live system.
+
+    If this test fails it means a change has been made which has affected
+    the update subscription endpoint. Please see test_update_subscription
+    one what to do now.
+    """
+    subscription_id = 123
+    json = {
+        'subscription_id': subscription_id,
+        'pause': True,
+        'vendor_id': int(os.environ['PADDLE_VENDOR_ID']),
+        'vendor_auth_code': os.environ['PADDLE_API_KEY'],
+    }
+    url = 'https://vendors.paddle.com/api/2.0/subscription/users/update'
+    method = 'POST'
+    request = mocker.patch('paddle.paddle.requests.request')
+    paddle_client.pause_subscription(subscription_id=subscription_id)
+    request.assert_called_once_with(url=url, json=json, method=method)
+
+
+@pytest.mark.mocked
+def test_resume_subscription(mocker, paddle_client):  # NOQA: F811
+    """
+    This test is mocked as pausing a subscription is probably not something
+    you want to do on a live system.
+
+    If this test fails it means a change has been made which has affected
+    the update subscription endpoint. Please see test_update_subscription
+    one what to do now.
+    """
+    subscription_id = 123
+    json = {
+        'subscription_id': subscription_id,
+        'pause': False,
+        'vendor_id': int(os.environ['PADDLE_VENDOR_ID']),
+        'vendor_auth_code': os.environ['PADDLE_API_KEY'],
+    }
+    url = 'https://vendors.paddle.com/api/2.0/subscription/users/update'
+    method = 'POST'
+    request = mocker.patch('paddle.paddle.requests.request')
+    paddle_client.resume_subscription(subscription_id=subscription_id)
+    request.assert_called_once_with(url=url, json=json, method=method)
 
 
 def test_preview_subscription_update(mocker, paddle_client):  # NOQA: F811

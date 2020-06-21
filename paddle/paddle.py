@@ -179,12 +179,15 @@ class PaddleClient():
     from ._product_payments import refund_product_payment
 
     from ._plans import list_plans
-    # from ._plans import get_plan
+    from ._plans import get_plan
     from ._plans import create_plan
 
     from ._subscription_users import list_subscription_users
+    from ._subscription_users import list_subscription_users as list_subscriptions  # NOQA: E501
     from ._subscription_users import cancel_subscription
     from ._subscription_users import update_subscription
+    from ._subscription_users import pause_subscription
+    from ._subscription_users import resume_subscription
     from ._subscription_users import preview_subscription_update
     # Alias to better match update_subscription
     from ._subscription_users import preview_subscription_update as preview_update_subscription  # NOQA: E501
