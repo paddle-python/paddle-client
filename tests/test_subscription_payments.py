@@ -88,6 +88,22 @@ def test_list_subscription_payments_with_from_to(paddle_client):  # NOQA: F811
         assert payout_date < to
 
 
+def test_list_subscription_payments_with_is_paid(paddle_client):  # NOQA: F811,E501
+    response = paddle_client.list_subscription_payments(
+        is_paid=False
+    )
+
+    if not response:
+        warning = ('No subscription payments returned by '
+                   'list_subscription_payments in test_list_subscription_payments_with_is_paid')  # NOQA: E501
+        warnings.warn(warning, BadPaddleDataWarning)
+        skip_message = ('list_subscription_payments did not return any subscription payments')  # NOQA: E501
+        pytest.skip(skip_message)
+
+    for payment in response:
+        assert payment['is_paid'] == 0
+
+
 # ToDo: Fix this
 @pytest.mark.xfail(raises=PaddleException, reason='Date issue, unsure why')
 def test_reschedule_subscription_payment(paddle_client):  # NOQA: F811

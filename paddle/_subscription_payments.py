@@ -27,7 +27,7 @@ def list_subscription_payments(
         'plan': plan,
         'is_one_off_charge': is_one_off_charge,
     }  # type: PaddleJsonType
-    if is_paid and isinstance(is_paid, bool):
+    if is_paid is not None and isinstance(is_paid, bool):
         json['is_paid'] = 1 if is_paid else 0
     if _from:
         json['from'] = validate_date(_from, '_from')
