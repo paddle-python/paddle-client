@@ -10,7 +10,7 @@ def get_user_history(
     email: str,
     vendor_id: int = None,
     product_id: int = None
-) -> dict:
+) -> str:
     """
     https://developer.paddle.com/api-reference/checkout-api/user-history/getuserhistory
     """

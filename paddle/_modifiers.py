@@ -1,4 +1,5 @@
 import logging
+from typing import List
 from urllib.parse import urljoin
 
 from .types import PaddleJsonType
@@ -39,7 +40,7 @@ def list_modifiers(
     self,
     subscription_id: int = None,
     plan_id: int = None
-) -> dict:
+) -> List[dict]:
     """
     https://developer.paddle.com/api-reference/subscription-api/modifiers/listmodifiers
     """

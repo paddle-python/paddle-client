@@ -1,5 +1,5 @@
 import logging
-from typing import Union
+from typing import List, Union
 from urllib.parse import urljoin
 
 from .types import DateType, PaddleJsonType
@@ -16,7 +16,7 @@ def list_subscription_payments(
     _from: DateType = None,
     to: DateType = None,
     is_one_off_charge: bool = None,
-) -> dict:
+) -> List[dict]:
     """
     https://developer.paddle.com/api-reference/subscription-api/payments/listpayments
     """
@@ -41,7 +41,7 @@ def reschedule_subscription_payment(
     self,
     payment_id: int,
     date: DateType,
-) -> dict:
+) -> bool:
     """
     https://developer.paddle.com/api-reference/subscription-api/payments/updatepayment
     """
