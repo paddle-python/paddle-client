@@ -1,10 +1,12 @@
 # Paddle Client
 
-A python (3.5+) wrapper around the [Paddle.com](https://paddle.com/) [API](https://developer.paddle.com/api-reference/intro)
+A python (3.5+) wrapper around the [Paddle.com API](https://developer.paddle.com/api-reference/intro)
 
 If you are looking at intergrating Paddle with Django check out [dj-paddle](https://github.com/paddle-python/dj-paddle)
 
-_Note: This is a work in progress, not all of the Paddle endpoints have been implemented yet_
+The full documentation is available at: https://paddle-client.readthedocs.io
+
+_Note: Several of the Paddle Endpoints are currently not working as expected. See [Failing endpoints](#failing-endpoints)_ below.
 
 ## Quick start
 
@@ -15,7 +17,7 @@ pip install paddle-client
 ```
 
 
-### Usage
+### Basic Usage
 
 To use the Paddle API you will need a Paddle Vendor ID and API key which can be found on [Paddle's authentication page](https://vendors.paddle.com/authentication)
 
@@ -44,7 +46,7 @@ paddle.list_products()
 
 ## Documentation
 
-Coming soon. Please see `Endpoints` below for basic usage.
+The full documentation is available on Read the Docs: https://paddle-client.readthedocs.io
 
 
 ## Contributing
@@ -54,7 +56,11 @@ All contributions are welcome and appreciated. Please see [CONTRIBUTING.md](http
 
 ## Paddle Endpoints
 
-*Note: See `Usage` below for how to use each endpoint*
+The below endpoints from the [Paddle API Reference](https://developer.paddle.com/api-reference) have been implimented
+
+For full details see the [API Reference in the docs](https://paddle-client.readthedocs.io/en/latest/api_reference.html). This includes details on parameters and return types for all the different methods as well as other helper methods around the Paddle.com API.
+
+See [`Usage`](#usage) below for quick examples.
 
 **Checkout API**
 * [Get Order Details](https://developer.paddle.com/api-reference/checkout-api/order-information/getorder)
@@ -88,6 +94,8 @@ All contributions are welcome and appreciated. Please see [CONTRIBUTING.md](http
 * [Get Webhook History](https://developer.paddle.com/api-reference/alert-api/webhooks/webhooks)
 
 ### Usage
+
+See the [API Reference in the docs](https://paddle-client.readthedocs.io/en/latest/api_reference.html) for full usage with param are return details.
 
 ```python
 # Checkout API

@@ -18,8 +18,8 @@ def list_subscription_payments(
     is_one_off_charge: bool = None,
 ) -> List[dict]:
     """
-    https://developer.paddle.com/api-reference/subscription-api/payments/listpayments
-    """
+    `List Payment (subscription) Paddle docs <https://developer.paddle.com/api-reference/subscription-api/payments/listpayments>`_
+    """  # NOQA: E501
     url = urljoin(self.vendors_v2, 'subscription/payments')
 
     json = {
@@ -43,8 +43,8 @@ def reschedule_subscription_payment(
     date: DateType,
 ) -> bool:
     """
-    https://developer.paddle.com/api-reference/subscription-api/payments/updatepayment
-    """
+    `Reschedule Payment (subscription) Paddle docs <https://developer.paddle.com/api-reference/subscription-api/payments/updatepayment>`_
+    """  # NOQA: E501
     url = urljoin(self.vendors_v2, 'subscription/payments_reschedule')
 
     json = {

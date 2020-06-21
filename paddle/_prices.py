@@ -15,8 +15,8 @@ def get_prices(
     coupons: list = None,
 ) -> dict:
     """
-    https://developer.paddle.com/api-reference/checkout-api/prices/getprices
-    """
+    `Get Prices Paddle docs <https://developer.paddle.com/api-reference/checkout-api/prices/getprices>`_
+    """  # NOQA: E501
     url = urljoin(self.checkout_v2, 'prices')
 
     params = {}  # type: Dict[str, str]

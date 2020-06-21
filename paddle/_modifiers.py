@@ -15,8 +15,8 @@ def add_modifier(
     modifier_description: str = '',
 ) -> dict:
     """
-    https://developer.paddle.com/api-reference/subscription-api/modifiers/createmodifier
-    """
+    `Add Modifier Paddle docs <https://developer.paddle.com/api-reference/subscription-api/modifiers/createmodifier>`_
+    """  # NOQA: E501
     url = urljoin(self.vendors_v2, 'subscription/modifiers/create')
 
     json = {
@@ -30,8 +30,8 @@ def add_modifier(
 
 def delete_modifier(self, modifier_id: int) -> dict:
     """
-    https://developer.paddle.com/api-reference/subscription-api/modifiers/deletemodifier
-    """
+    `Delete Modifier Paddle docs <https://developer.paddle.com/api-reference/subscription-api/modifiers/deletemodifier>`_
+    """  # NOQA: E501
     url = urljoin(self.vendors_v2, 'subscription/modifiers/delete')
     return self.post(url=url, json={'modifier_id': modifier_id})
 
@@ -42,8 +42,8 @@ def list_modifiers(
     plan_id: int = None
 ) -> List[dict]:
     """
-    https://developer.paddle.com/api-reference/subscription-api/modifiers/listmodifiers
-    """
+    `List Modifiers Paddle docs <https://developer.paddle.com/api-reference/subscription-api/modifiers/listmodifiers>`_
+    """  # NOQA: E501
     url = urljoin(self.vendors_v2, 'subscription/modifiers')
 
     json = {

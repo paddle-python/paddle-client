@@ -134,3 +134,17 @@ Please send a [GitHub Pull Request to paddle-python](https://github.com/paddle-p
 All changes should have at least one test to accompany it, either to prove the bug it is fixing has indeed been fixed on to ensure a new feature works as expected.
 
 Please follow our coding conventions and try and make all of your commits atomic (one feature per commit) where possible.
+
+
+## Documentation
+
+Documentation is hosted on [Read the Docs](https://paddle-client.readthedocs.io/en/latest/) and can be build by anyone in the [paddle-python Github organisation](https://github.com/paddle-python)
+
+To make sure the docs build they are automatically built on each run of `tox`
+
+If you want to build it manually:
+
+```bash
+cd docs
+make html
+```

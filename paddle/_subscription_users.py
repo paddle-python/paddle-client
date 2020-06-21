@@ -16,10 +16,10 @@ def list_subscription_users(
     results_per_page: int = None,
 ) -> List[dict]:
     """
-    https://developer.paddle.com/api-reference/subscription-api/subscription-users/listusers
+    `List Users (subscription) Paddle docs <https://developer.paddle.com/api-reference/subscription-api/subscription-users/listusers>`_
 
     Note: response does not include any information in pages and totals
-    """
+    """  # NOQA: E501
     url = urljoin(self.vendors_v2, 'subscription/users')
 
     states = ['active', 'past due', 'trialling', 'paused']
@@ -38,21 +38,21 @@ def list_subscription_users(
 
 # def list_subscriptions(self, **kwargs: dict) -> List[dict]:
 #     """
-#     https://developer.paddle.com/api-reference/subscription-api/subscription-users/listusers
+#     `List Users (subscription) Paddle docs <https://developer.paddle.com/api-reference/subscription-api/subscription-users/listusers>`_  # NOQA: E501
 
 #     This is a convenient alias for list_subscription_users as while the
 #     other name matches the API name, it's not particularly guessable
-#     """
+#     """ # NOQA: E501
 #     return self.list_subscription_users(**kwargs)
 
 
 # def get_subscription(self, subscription_id: int) -> dict:
 #     """
-#     https://developer.paddle.com/api-reference/subscription-api/subscription-users/listusers
+#     `List Users (subscription) Paddle docs <https://developer.paddle.com/api-reference/subscription-api/subscription-users/listusers>`_  # NOQA: E501
 
 #     There is no get_subscription endpoint in Paddle's API, This is a
 #     convenient alias
-#     """
+#     """  # NOQA: E501
 #     for subscription in self.list_subscription_users():
 #         if subscription['subscription_id'] == subscription_id:
 #             return subscription
@@ -65,8 +65,8 @@ def cancel_subscription(
     subscription_id: int,
 ) -> bool:
     """
-    https://developer.paddle.com/api-reference/subscription-api/subscription-users/canceluser
-    """
+    `Cancel Subscription Paddle docs <https://developer.paddle.com/api-reference/subscription-api/subscription-users/canceluser>`_
+    """  # NOQA: E501
     url = urljoin(self.vendors_v2, 'subscription/users_cancel')
     return self.post(url=url, json={'subscription_id': subscription_id})
 
@@ -85,8 +85,8 @@ def update_subscription(
     pause: bool = None
 ) -> dict:
     """
-    https://developer.paddle.com/api-reference/subscription-api/subscription-users/updateuser
-    """
+    `Update Subscription Paddle docs <https://developer.paddle.com/api-reference/subscription-api/subscription-users/updateuser>`_
+    """  # NOQA: E501
     url = urljoin(self.vendors_v2, 'subscription/users/update')
 
     currency_codes = ['USD', 'GBP', 'EUR']
@@ -110,23 +110,23 @@ def update_subscription(
 
 # def pause_subscription(self, subscription_id: int) -> dict:
 #     """
-#     https://developer.paddle.com/api-reference/subscription-api/subscription-users/updateuser
+#     `Update Subscription Paddle docs <https://developer.paddle.com/api-reference/subscription-api/subscription-users/updateuser`_  # NOQA: E501
 
 #     There is no resume_subscription endpoint in Paddle's API. This is a
 #     convenient alias for update_subscription as no extra data can be sent
 #     when pausing/resuming subscriptions
-#     """
+#     """  # NOQA: E501
 #     return self.update_subscription(subscription_id=subscription_id, pause=True)  # NOQA: E501
 
 
 # def resume_subscription(self, subscription_id: int) -> dict:
 #     """
-#     https://developer.paddle.com/api-reference/subscription-api/subscription-users/updateuser
+#     `Update Subscription Paddle docs <https://developer.paddle.com/api-reference/subscription-api/subscription-users/updateuser`_  # NOQA: E501
 
 #     There is no resume_subscription endpoint in Paddle's API. This is a
 #     convenient alias for update_subscription as no extra data can be sent
 #     when pausing/resuming subscriptions
-#     """
+#     """  # NOQA: E501
 #     return self.update_subscription(subscription_id=subscription_id, pause=False)  # NOQA: E501
 
 
@@ -142,8 +142,8 @@ def preview_subscription_update(
     keep_modifiers: bool = None,
 ) -> dict:
     """
-    https://developer.paddle.com/api-reference/subscription-api/subscription-users/previewupdate
-    """
+    `Preview Subscription Update Paddle docs <https://developer.paddle.com/api-reference/subscription-api/subscription-users/previewupdate>`_
+    """  # NOQA: E501
     url = urljoin(self.vendors_v2, 'subscription/preview_update')
 
     currency_codes = ['USD', 'GBP', 'EUR']

@@ -14,8 +14,9 @@ def generate_license(
     expires_at: DatetimeType = None,
 ) -> dict:
     """
-    https://developer.paddle.com/api-reference/product-api/licenses/createlicense
-    """
+
+    `Generate License Paddle docs <https://developer.paddle.com/api-reference/product-api/licenses/createlicense>`_
+    """  # NOQA: E501
     url = urljoin(self.vendors_v2, 'product/generate_license')
     json = {
         'product_id': product_id,

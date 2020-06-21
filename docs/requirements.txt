@@ -1,0 +1,5 @@
+# requirements file for Read the Docs
+sphinx==3.*
+sphinx-rtd-theme
+sphinx-autodoc-typehints
+paddle-client

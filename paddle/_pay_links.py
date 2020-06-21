@@ -41,7 +41,7 @@ def create_pay_link(
     vat_postcode: str = None,
 ) -> dict:
     """
-    https://developer.paddle.com/api-reference/product-api/pay-links/createpaylink
+    `Create Pay Link Paddle docs <https://developer.paddle.com/api-reference/product-api/pay-links/createpaylink>`_
 
     product_id appears to be required:
         Paddle error 108 - Unable to find requested product
@@ -49,7 +49,7 @@ def create_pay_link(
         "If no product_id is set, custom non-subscription product checkouts
         can be generated instead by specifying title, webhook_url and prices."
     https://developer.paddle.com/api-reference/product-api/coupons/createcoupon  # NOQA: E501
-    """
+    """  # NOQA: E501
     url = urljoin(self.vendors_v2, 'product/generate_license')
 
     if not product_id:

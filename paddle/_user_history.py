@@ -12,8 +12,8 @@ def get_user_history(
     product_id: int = None
 ) -> str:
     """
-    https://developer.paddle.com/api-reference/checkout-api/user-history/getuserhistory
-    """
+    `Get User History Paddle docs <https://developer.paddle.com/api-reference/checkout-api/user-history/getuserhistory>`_
+    """  # NOQA: E501
     url = urljoin(self.checkout_v2, 'user/history')
 
     params = {'email': email}   # type: Dict[str, Union[str, int]]

@@ -14,8 +14,8 @@ def refund_product_payment(
     reason: str = None
 ) -> dict:
     """
-    https://developer.paddle.com/api-reference/product-api/payments/refundpayment
-    """
+    `Refund Product Payment Paddle docs <https://developer.paddle.com/api-reference/product-api/payments/refundpayment>`_
+    """  # NOQA: E501
     url = urljoin(self.vendors_v2, 'payment/refund')
 
     json = {

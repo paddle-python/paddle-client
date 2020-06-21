@@ -12,8 +12,8 @@ def list_transactions(
     page: int = None
 ) -> List[dict]:
     """
-    https://developer.paddle.com/api-reference/product-api/transactions/listtransactions
-    """
+    `List Transations Paddle docs <https://developer.paddle.com/api-reference/product-api/transactions/listtransactions>`_
+    """  # NOQA: E501
     valid_entities = ['user', 'subscription', 'order', 'checkout', 'product']
     if entity not in valid_entities:
         error = 'entity "{0}" must be one of {1}'.format(

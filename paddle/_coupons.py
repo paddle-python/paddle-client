@@ -10,8 +10,8 @@ log = logging.getLogger(__name__)
 
 def list_coupons(self, product_id: int) -> List[dict]:
     """
-    https://developer.paddle.com/api-reference/product-api/coupons/listcoupons
-    """
+    `List Coupon Paddle docs <https://developer.paddle.com/api-reference/product-api/coupons/listcoupons>`_
+    """  # NOQA: E501
     url = urljoin(self.vendors_v2, 'product/list_coupons')
     return self.post(url=url, json={'product_id': product_id})
 
@@ -34,13 +34,17 @@ def create_coupon(
     group: str = None,
 ) -> dict:
     """
-    https://developer.paddle.com/api-reference/product-api/coupons/createcoupon
+    `Create Coupon Paddle docs <https://developer.paddle.com/api-reference/product-api/coupons/createcoupon>`_
 
-    currency appears to be required:
-        Paddle error 134 - The given coupon currency is invalid. The currency must match your balance currency.  # NOQA: E501
+    ``currency`` appears to be required:
+
+    Paddle error 134 - The given coupon currency is invalid. The currency must
+    match your balance currency.
+
     Even though the docs states:
-        "Required if discount_amount is flat."
-    """
+
+    "Required if discount_amount is flat."
+    """  # NOQA: E501
     url = urljoin(self.checkout_v2_1, 'product/create_coupon')
 
     if coupon_type not in ['product', 'checkout']:
@@ -84,8 +88,8 @@ def create_coupon(
 
 def delete_coupon(self, coupon_code: str, product_id: int = None) -> dict:
     """
-    https://developer.paddle.com/api-reference/product-api/coupons/deletecoupon
-    """
+    `Delete Coupon Paddle docs <https://developer.paddle.com/api-reference/product-api/coupons/deletecoupon>`_
+    """  # NOQA: E501
     url = urljoin(self.vendors_v2, 'product/delete_coupon')
     json = {'coupon_code': coupon_code}  # type: PaddleJsonType
     if product_id:
@@ -108,8 +112,8 @@ def update_coupon(
     recurring: bool = None,
 ) -> dict:
     """
-    https://developer.paddle.com/api-reference/product-api/coupons/updatecoupon
-    """
+    `Update Coupon Paddle docs <https://developer.paddle.com/api-reference/product-api/coupons/updatecoupon>`_
+    """  # NOQA: E501
     url = urljoin(self.checkout_v2_1, 'product/update_coupon')
 
     if coupon_code and group:

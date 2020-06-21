@@ -15,8 +15,8 @@ def get_webhook_history(
     query_tail: DatetimeType = None,
 ) -> dict:
     """
-    https://developer.paddle.com/api-reference/alert-api/webhooks/webhooks
-    """
+    `Get Webhook History Paddle docs <https://developer.paddle.com/api-reference/alert-api/webhooks/webhooks>`_
+    """  # NOQA: E501
     url = urljoin(self.vendors_v2, 'alert/webhooks')
 
     json = {

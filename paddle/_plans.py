@@ -9,8 +9,8 @@ log = logging.getLogger(__name__)
 
 def list_plans(self, plan: int = None) -> List[dict]:
     """
-    https://developer.paddle.com/api-reference/subscription-api/plans/listplans
-    """
+    `List Plans Paddle docs <https://developer.paddle.com/api-reference/subscription-api/plans/listplans>`_
+    """  # NOQA: E501
     url = urljoin(self.vendors_v2, 'subscription/plans')
 
     if plan:
@@ -21,11 +21,11 @@ def list_plans(self, plan: int = None) -> List[dict]:
 
 # def get_plan(self, plan: int) -> dict:
 #     """
-#     https://developer.paddle.com/api-reference/subscription-api/plans/listplans
+#     `List Plans Paddle docs <https://developer.paddle.com/api-reference/subscription-api/plans/listplans>`_  # NOQA: E501
 
 #     There is no get_plan endpoint in Paddle's API. This is a convenient
-#     alias of the list plans endpoint where plan id is required
-#     """
+#     alias of the list plans endpoint where the Plan ID is required
+#     """  # NOQA: E501
 #     return self.list_plans(plan=plan)[0]
 
 
@@ -44,11 +44,11 @@ def create_plan(
     recurring_price_eur: float = None,
 ) -> dict:
     """
-    https://developer.paddle.com/api-reference/subscription-api/plans/createplan
+    `Create Plan Paddle docs <https://developer.paddle.com/api-reference/subscription-api/plans/createplan>`_
 
     In the docs all of the price variables are noted as strings except for USD
     which is a number. This is probably an error in the docs.
-    """
+    """  # NOQA: E501
     url = urljoin(self.vendors_v2, 'subscription/plans_create')
 
     plan_types = ['day', 'week', 'month', 'year']
