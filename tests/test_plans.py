@@ -148,3 +148,36 @@ def test_create_plan_mock(mocker, paddle_client):  # NOQA: F811
         json=json,
         method=method,
     )
+
+
+@pytest.mark.parametrize(
+    'currency,missing_field',
+    [
+        ('USD', 'initial_price_usd'),
+        ('USD', 'recurring_price_usd'),
+        ('GBP', 'initial_price_gbp'),
+        ('GBP', 'recurring_price_gbp'),
+        ('EUR', 'initial_price_eur'),
+        ('EUR', 'recurring_price_eur'),
+    ]
+)
+def test_create_plan_missing_price(paddle_client, currency, missing_field):  # NOQA: F811, E501
+    plan = {
+        'plan_name': 'test_create_plan_mmissing_usd_initial',
+        'plan_trial_days': 999,
+        'plan_length': 999,
+        'plan_type': 'year',
+        'main_currency_code': currency,
+        'initial_price_usd': 0.0,
+        'initial_price_gbp': 0.0,
+        'initial_price_eur': 0.0,
+        'recurring_price_usd': 0.0,
+        'recurring_price_gbp': 0.0,
+        'recurring_price_eur': 0.0,
+    }
+    del plan[missing_field]
+    with pytest.raises(ValueError) as error:
+        paddle_client.create_plan(**plan)
+
+    message = r'main_currency_code is {0} so {1} must be set'
+    error.match(message.format(currency, missing_field))
