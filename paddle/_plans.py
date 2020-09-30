@@ -62,15 +62,15 @@ def create_plan(
     if main_currency_code == 'USD' and initial_price_usd is None:
         raise ValueError('main_currency_code is USD so initial_price_usd must be set')  # NOQA: E501
     if main_currency_code == 'GBP' and initial_price_gbp is None:
-        raise ValueError('main_currency_code is USD so initial_price_gbp must be set')  # NOQA: E501
-    if main_currency_code == 'USD' and initial_price_eur is None:
-        raise ValueError('main_currency_code is USD so initial_price_eur must be set')  # NOQA: E501
+        raise ValueError('main_currency_code is GBP so initial_price_gbp must be set')  # NOQA: E501
+    if main_currency_code == 'EUR' and initial_price_eur is None:
+        raise ValueError('main_currency_code is EUR so initial_price_eur must be set')  # NOQA: E501
     if main_currency_code == 'USD' and recurring_price_usd is None:
         raise ValueError('main_currency_code is USD so recurring_price_usd must be set')  # NOQA: E501
     if main_currency_code == 'GBP' and recurring_price_gbp is None:
-        raise ValueError('main_currency_code is USD so recurring_price_gbp must be set')  # NOQA: E501
-    if main_currency_code == 'USD' and recurring_price_eur is None:
-        raise ValueError('main_currency_code is USD so recurring_price_eur must be set')  # NOQA: E501
+        raise ValueError('main_currency_code is GBP so recurring_price_gbp must be set')  # NOQA: E501
+    if main_currency_code == 'EUR' and recurring_price_eur is None:
+        raise ValueError('main_currency_code is EUR so recurring_price_eur must be set')  # NOQA: E501
 
     json = {
         'plan_name': plan_name,
