@@ -19,7 +19,8 @@ def test_list_transactions_subscription(paddle_client):  # NOQA: F811
         assert isinstance(plan['status'], str)
         assert isinstance(plan['created_at'], str)
         datetime.strptime(plan['created_at'], '%Y-%m-%d %H:%M:%S')
-        assert isinstance(plan['passthrough'], str) or plan['passthrough'] is None
+        assert isinstance(plan['passthrough'], str) \
+               or plan['passthrough'] is None
         assert isinstance(plan['product_id'], int)
         assert plan['is_subscription'] is True
         assert isinstance(plan['is_one_off'], bool)
@@ -46,7 +47,8 @@ def test_list_transactions_product(paddle_client):  # NOQA: F811
         assert isinstance(product['status'], str)
         assert isinstance(product['created_at'], str)
         datetime.strptime(product['created_at'], '%Y-%m-%d %H:%M:%S')
-        assert isinstance(product['passthrough'], str) or product['passthrough'] is None
+        assert isinstance(product['passthrough'], str) \
+               or product['passthrough'] is None
         assert isinstance(product['product_id'], int)
         assert product['is_subscription'] is False
         assert isinstance(product['is_one_off'], bool)
@@ -73,7 +75,8 @@ def test_list_transactions_checkout(paddle_client):  # NOQA: F811
         assert isinstance(checkout['status'], str)
         assert isinstance(checkout['created_at'], str)
         datetime.strptime(checkout['created_at'], '%Y-%m-%d %H:%M:%S')
-        assert isinstance(checkout['passthrough'], str) or checkout['passthrough'] is None
+        assert isinstance(checkout['passthrough'], str) \
+               or checkout['passthrough'] is None
         assert isinstance(checkout['product_id'], int)
         assert isinstance(checkout['is_subscription'], bool)
         assert isinstance(checkout['is_one_off'], bool)
