@@ -92,6 +92,7 @@ def test_create_pay_link_mock(mocker, paddle_client):  # NOQA: F811
         'vendor_auth_code': os.environ['PADDLE_API_KEY'],
     }
     url = 'https://vendors.paddle.com/api/2.0/product/generate_license'
+    url = paddle_client.get_environment_url(url)
     method = 'POST'
 
     paddle_client.create_pay_link(

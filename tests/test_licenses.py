@@ -48,6 +48,7 @@ def test_generate_license_mocked(mocker, paddle_client):  # NOQA: F811
 
     }
     url = 'https://vendors.paddle.com/api/2.0/product/generate_license'
+    url = paddle_client.get_environment_url(url)
     method = 'POST'
 
     paddle_client.generate_license(

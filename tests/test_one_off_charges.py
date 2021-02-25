@@ -39,6 +39,7 @@ def test_create_one_off_charge(mocker, paddle_client):  # NOQA: F811
     url = 'https://vendors.paddle.com/api/2.0/subscription/{0}/charge'.format(
         subscription_id
     )
+    url = paddle_client.get_environment_url(url)
     method = 'POST'
     request = mocker.patch('paddle.paddle.requests.request')
     paddle_client.create_one_off_charge(

@@ -40,7 +40,8 @@ class PaddleClient():
     called ``PADDLE_VENDOR_ID`` and ``PADDLE_API_KEY``
     """
 
-    def __init__(self, vendor_id: int = None, api_key: str = None):
+    def __init__(self, vendor_id: int = None, api_key: str = None,
+                 sandbox: bool = None):
         if not vendor_id:
             try:
                 vendor_id = int(os.environ['PADDLE_VENDOR_ID'])
@@ -53,7 +54,11 @@ class PaddleClient():
                 api_key = os.environ['PADDLE_API_KEY']
             except KeyError:
                 raise ValueError('API key not set')
+        if sandbox is None:
+            # Load sandbox flag from environment if not set in the constructor
+            sandbox = os.getenv('PADDLE_SANDBOX', False) == 'True'
 
+        self.is_sandbox = sandbox is True
         self.checkout_v1 = 'https://checkout.paddle.com/api/1.0/'
         self.checkout_v2 = 'https://checkout.paddle.com/api/2.0/'
         self.checkout_v2_1 = 'https://vendors.paddle.com/api/2.1/'
@@ -94,6 +99,7 @@ class PaddleClient():
             warnings.warn(warning_message, RuntimeWarning)
         if 'paddle.com/api/' not in url:
             raise ValueError('URL "{0}" does not appear to be a Paddle API URL')  # NOQA: E501
+        url = self.get_environment_url(url)
         kwargs['url'] = url
 
         kwargs['method'] = method.upper()
@@ -156,6 +162,12 @@ class PaddleClient():
         kwargs['url'] = url
         kwargs['method'] = 'POST'
         return self.request(**kwargs)
+
+    def get_environment_url(self, url):
+        if self.is_sandbox:
+            url = url.replace("://", "://sandbox-", 1)
+
+        return url
 
     from ._order_information import get_order_details
 

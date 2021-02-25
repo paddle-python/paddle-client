@@ -36,6 +36,7 @@ def test_refund_product_payment(mocker, paddle_client):  # NOQA: F811
         'vendor_auth_code': os.environ['PADDLE_API_KEY'],
     }
     url = 'https://vendors.paddle.com/api/2.0/payment/refund'
+    url = paddle_client.get_environment_url(url)
     method = 'POST'
     request = mocker.patch('paddle.paddle.requests.request')
     paddle_client.refund_product_payment(

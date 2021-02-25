@@ -140,6 +140,7 @@ def test_cancel_subscription(mocker, paddle_client):  # NOQA: F811
         'vendor_auth_code': os.environ['PADDLE_API_KEY'],
     }
     url = 'https://vendors.paddle.com/api/2.0/subscription/users_cancel'
+    url = paddle_client.get_environment_url(url)
     method = 'POST'
     request = mocker.patch('paddle.paddle.requests.request')
     paddle_client.cancel_subscription(
@@ -207,6 +208,7 @@ def test_update_subscription(mocker, paddle_client):  # NOQA: F811
         'vendor_auth_code': os.environ['PADDLE_API_KEY'],
     }
     url = 'https://vendors.paddle.com/api/2.0/subscription/users/update'
+    url = paddle_client.get_environment_url(url)
     method = 'POST'
     request = mocker.patch('paddle.paddle.requests.request')
     paddle_client.update_subscription(
@@ -294,6 +296,7 @@ def test_pause_subscription(mocker, paddle_client):  # NOQA: F811
         'vendor_auth_code': os.environ['PADDLE_API_KEY'],
     }
     url = 'https://vendors.paddle.com/api/2.0/subscription/users/update'
+    url = paddle_client.get_environment_url(url)
     method = 'POST'
     request = mocker.patch('paddle.paddle.requests.request')
     paddle_client.pause_subscription(subscription_id=subscription_id)
@@ -318,6 +321,7 @@ def test_resume_subscription(mocker, paddle_client):  # NOQA: F811
         'vendor_auth_code': os.environ['PADDLE_API_KEY'],
     }
     url = 'https://vendors.paddle.com/api/2.0/subscription/users/update'
+    url = paddle_client.get_environment_url(url)
     method = 'POST'
     request = mocker.patch('paddle.paddle.requests.request')
     paddle_client.resume_subscription(subscription_id=subscription_id)
