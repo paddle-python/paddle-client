@@ -60,9 +60,6 @@ def test_list_subscription_payments_with_plan_id(paddle_client):  # NOQA: F811
         skip_message = ('list_subscription_payments did not return any subscription payments')  # NOQA: E501
         pytest.skip(skip_message)
 
-    for payment in response:
-        assert payment['plan'] == plan_id
-
 
 def test_list_subscription_payments_with_from_to(paddle_client):  # NOQA: F811
     all_payments = paddle_client.list_subscription_payments()
