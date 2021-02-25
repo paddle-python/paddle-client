@@ -46,7 +46,7 @@ def test_list_transactions_product(paddle_client):  # NOQA: F811
         assert isinstance(product['status'], str)
         assert isinstance(product['created_at'], str)
         datetime.strptime(product['created_at'], '%Y-%m-%d %H:%M:%S')
-        assert isinstance(product['passthrough'], str)
+        assert isinstance(product['passthrough'], str) or product['passthrough'] is None
         assert isinstance(product['product_id'], int)
         assert product['is_subscription'] is False
         assert isinstance(product['is_one_off'], bool)
@@ -73,7 +73,7 @@ def test_list_transactions_checkout(paddle_client):  # NOQA: F811
         assert isinstance(checkout['status'], str)
         assert isinstance(checkout['created_at'], str)
         datetime.strptime(checkout['created_at'], '%Y-%m-%d %H:%M:%S')
-        assert isinstance(checkout['passthrough'], str)
+        assert isinstance(checkout['passthrough'], str) or checkout['passthrough'] is None
         assert isinstance(checkout['product_id'], int)
         assert isinstance(checkout['is_subscription'], bool)
         assert isinstance(checkout['is_one_off'], bool)
