@@ -49,7 +49,7 @@ def test_list_transactions_product(paddle_client):  # NOQA: F811
         assert isinstance(product['passthrough'], str)
         assert isinstance(product['product_id'], int)
         assert product['is_subscription'] is False
-        assert product['is_one_off'] is True
+        assert isinstance(product['is_one_off'], bool)
         # assert isinstance(product['product']['product_id'], int)
         # assert isinstance(product['product']['status'], str)
         assert isinstance(product['user']['user_id'], int)
