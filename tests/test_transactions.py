@@ -6,7 +6,7 @@ from .test_paddle import paddle_client  # NOQA: F401
 
 def test_list_transactions_subscription(paddle_client):  # NOQA: F811
     # ToDo: Create plan when API exists for it here
-    subscription_id = int(os.environ['PADDLE_TEST_DEFAULT_PLAN_ID'])
+    subscription_id = int(os.environ['PADDLE_TEST_DEFAULT_SUBSCRIPTION_ID'])
     subscription_list = paddle_client.list_transactions(
         entity='subscription',
         entity_id=subscription_id,
@@ -19,7 +19,7 @@ def test_list_transactions_subscription(paddle_client):  # NOQA: F811
         assert isinstance(plan['status'], str)
         assert isinstance(plan['created_at'], str)
         datetime.strptime(plan['created_at'], '%Y-%m-%d %H:%M:%S')
-        assert isinstance(plan['passthrough'], str)
+        assert isinstance(plan['passthrough'], str) or plan['passthrough'] is None
         assert isinstance(plan['product_id'], int)
         assert plan['is_subscription'] is True
         assert plan['is_one_off'] is False
