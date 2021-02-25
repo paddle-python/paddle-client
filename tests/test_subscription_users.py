@@ -338,9 +338,11 @@ def test_preview_subscription_update(mocker, paddle_client):  # NOQA: F811
         pytest.skip(skip_message)
 
     subscription_id = subscription_data['subscription_id']
+    quantity = subscription_data['quantity']
     amount = subscription_data['next_payment']['amount']
     currency = subscription_data['next_payment']['currency']
-    new_quantity = amount + 1
+    new_quantity = quantity + 1
+    expected_amount = new_quantity * amount
     response = paddle_client.preview_update_subscription(
         subscription_id=subscription_id,
         bill_immediately=True,
@@ -354,7 +356,7 @@ def test_preview_subscription_update(mocker, paddle_client):  # NOQA: F811
     assert isinstance(response['immediate_payment']['date'], str)
     datetime.strptime(response['immediate_payment']['date'], '%Y-%m-%d')
 
-    assert response['next_payment']['amount'] == amount
+    assert response['next_payment']['amount'] == expected_amount
     assert response['next_payment']['currency'] == currency
     assert isinstance(response['next_payment']['date'], str)
     datetime.strptime(response['next_payment']['date'], '%Y-%m-%d')
