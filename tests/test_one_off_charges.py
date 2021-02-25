@@ -54,7 +54,7 @@ def test_create_one_off_charge(mocker, paddle_client):  # NOQA: F811
 @pytest.mark.skip()
 def test_create_one_off_charge_no_mock(mocker, paddle_client):  # NOQA: F811
     subscription_id = int(os.environ['PADDLE_TEST_DEFAULT_SUBSCRIPTION_ID'])
-    amount = 0.01
+    amount = 1.00
     response = paddle_client.create_one_off_charge(
         subscription_id=subscription_id,
         amount=amount,
@@ -64,7 +64,7 @@ def test_create_one_off_charge_no_mock(mocker, paddle_client):  # NOQA: F811
     assert isinstance(response['currency'], str)
     assert isinstance(response['receipt_url'], str)
     assert response['subscription_id'] == subscription_id
-    assert response['amount'] == '%.2f' % round(amount, 2)
+    assert response['amount'] == '%.3f' % round(amount, 2)
     assert isinstance(response['payment_date'], str)
     datetime.strptime(response['payment_date'], '%Y-%m-%d')
 
