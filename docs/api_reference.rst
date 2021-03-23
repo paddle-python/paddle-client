@@ -49,16 +49,6 @@ As listed in the `Paddle API Reference <https://developer.paddle.com/api-referen
 
 
 
-Broken endpoints
-----------------
-
-The below endpoints have been implimented but are not working correctly according to the tests. They have been commented out in ``paddle/paddle.py`` and the tests will skip is the methods do not exist
-
-- `Generate License  <https://developer.paddle.com/api-reference/product-api/licenses/createlicense>`_ - ``Paddle error 108 - Unable to find requested product``
-- `Create pay link  <https://developer.paddle.com/api-reference/product-api/pay-links/createpaylink>`_ - ``Paddle error 108 - Unable to find requested product``
-- `Reschedule subscription payment  <https://developer.paddle.com/api-reference/subscription-api/payments/updatepayment>`_ - ``Paddle error 122 - Provided date is not valid``
-
-
 Full reference
 --------------
 
