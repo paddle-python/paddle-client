@@ -1,6 +1,7 @@
 import logging
 import os
 import warnings
+from distutils.util import strtobool
 from urllib.parse import urljoin
 
 import requests
@@ -40,8 +41,12 @@ class PaddleClient():
     called ``PADDLE_VENDOR_ID`` and ``PADDLE_API_KEY``
     """
 
-    def __init__(self, vendor_id: int = None, api_key: str = None,
-                 sandbox: bool = None):
+    def __init__(
+        self,
+        vendor_id: int = None,
+        api_key: str = None,
+        sandbox: bool = None,
+    ):
         if not vendor_id:
             try:
                 vendor_id = int(os.environ['PADDLE_VENDOR_ID'])
@@ -55,14 +60,18 @@ class PaddleClient():
             except KeyError:
                 raise ValueError('API key not set')
         if sandbox is None:
-            # Load sandbox flag from environment if not set in the constructor
-            sandbox = os.getenv('PADDLE_SANDBOX', False) == 'True'
+            sandbox = bool(strtobool(os.getenv('PADDLE_SANDBOX', 'False')))
 
-        self.is_sandbox = sandbox is True
+        self.sandbox = sandbox
         self.checkout_v1 = 'https://checkout.paddle.com/api/1.0/'
         self.checkout_v2 = 'https://checkout.paddle.com/api/2.0/'
         self.checkout_v2_1 = 'https://vendors.paddle.com/api/2.1/'
         self.vendors_v2 = 'https://vendors.paddle.com/api/2.0/'
+        if self.sandbox:
+            self.checkout_v1 = 'https://sandbox-checkout.paddle.com/api/1.0/'
+            self.checkout_v2 = 'https://sandbox-checkout.paddle.com/api/2.0/'
+            self.checkout_v2_1 = 'https://sandbox-vendors.paddle.com/api/2.1/'
+            self.vendors_v2 = 'https://sandbox-vendors.paddle.com/api/2.0/'
         self.default_url = self.vendors_v2
 
         self.vendor_id = vendor_id
@@ -72,11 +81,16 @@ class PaddleClient():
             'vendor_auth_code': self.api_key,
         }
 
-        self.url_warning = (
+        self.relative_url_warning = (
             'Paddle recieved a relative URL so it will attempt to join it to '
             '{0} as it is the Paddle URL with the most endpoints. The full '
             'URL that will be used is: {1} - You should specifiy the full URL '
             'as this default URL may change in the future.'
+        )
+        self.sandbox_url_warning = (
+            'PaddleClient is configured in sandbox mode but the URL provided '
+            'does not point to a sandbox subdomain. The URL will be converted '
+            'to use the Paddle sandbox ({0})'
         )
 
     def request(
@@ -95,11 +109,15 @@ class PaddleClient():
             if url.startswith('/'):
                 url = url[1:]
             url = urljoin(self.default_url, url)
-            warning_message = self.url_warning.format(self.default_url, url)
+            warning_message = self.relative_url_warning.format(self.default_url, url)  # NOQA: E501
             warnings.warn(warning_message, RuntimeWarning)
-        if 'paddle.com/api/' not in url:
-            raise ValueError('URL "{0}" does not appear to be a Paddle API URL')  # NOQA: E501
-        url = self.get_environment_url(url)
+        elif 'paddle.com/api/' not in url:
+            error = 'URL does not appear to be a Paddle API URL - {0}'
+            raise ValueError(error.format(url))
+        elif self.sandbox and '://sandbox-' not in url:
+            url = url.replace('://', '://sandbox-', 1)
+            warnings.warn(self.sandbox_url_warning.format(url), RuntimeWarning)
+
         kwargs['url'] = url
 
         kwargs['method'] = method.upper()
@@ -162,12 +180,6 @@ class PaddleClient():
         kwargs['url'] = url
         kwargs['method'] = 'POST'
         return self.request(**kwargs)
-
-    def get_environment_url(self, url):
-        if self.is_sandbox:
-            url = url.replace("://", "://sandbox-", 1)
-
-        return url
 
     from ._order_information import get_order_details
 
