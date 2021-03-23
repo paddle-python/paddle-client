@@ -124,7 +124,7 @@ class PaddleClient():
 
         if data and json:
             raise ValueError('Please set either data or json not both')
-        if kwargs['method'] == 'GET' and (data or json):
+        if kwargs['method'] == 'GET' and (data or json):   # pragma: no cover
             log.warn('GET data/json should not be provided with GET method.')
 
         if kwargs['method'] in ['POST', 'PUT', 'PATCH']:

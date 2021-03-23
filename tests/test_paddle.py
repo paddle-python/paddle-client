@@ -114,6 +114,14 @@ def test_json_and_data(paddle_client):  # NOQA: F811
     error.match('Please set either data or json not both')
 
 
+def test_invalid_url(paddle_client):  # NOQA: F811
+    url = 'https://example.com'
+    with pytest.raises(ValueError) as error:
+        paddle_client.get(url)
+    message = 'URL does not appear to be a Paddle API URL - {0}'
+    error.match(message.format(url))
+
+
 def test_bad_url(paddle_client):  # NOQA: F811
     with pytest.raises(PaddleException) as error:
         with pytest.warns(RuntimeWarning) as warning:
