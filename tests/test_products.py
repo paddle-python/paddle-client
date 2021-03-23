@@ -1,8 +1,7 @@
-from .test_paddle import paddle_client  # NOQA: F401
+from .fixtures import get_product, paddle_client  # NOQA: F401
 
 
-def test_list_products(paddle_client):  # NOQA: F811
-    # ToDo: Create product when API exists for it here
+def test_list_products(paddle_client, get_product):  # NOQA: F811
     response = paddle_client.list_products()
     assert 'count' in response
     assert 'total' in response

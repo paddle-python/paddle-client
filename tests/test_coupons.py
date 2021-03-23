@@ -1,43 +1,10 @@
-import os
 from datetime import datetime, timedelta
 
 import pytest
 
 from paddle import PaddleException
 
-from .test_paddle import paddle_client  # NOQA: F401
-
-
-@pytest.fixture()
-def create_coupon(paddle_client):  # NOQA: F811
-    product_id = int(os.environ['PADDLE_TEST_DEFAULT_PRODUCT_ID'])
-    currency = 'GBP'
-    now = datetime.now().isoformat()
-    response = paddle_client.create_coupon(
-        coupon_type='product',
-        discount_type='percentage',
-        discount_amount=1,
-        allowed_uses=1,
-        recurring=False,
-        currency=currency,
-        product_ids=[product_id],
-        coupon_code='paddle-python-create_coupon_fixture-{0}'.format(now),
-        description='Test coupon created by paddle-python create_coupon_fixture',  # NOQA: E501
-        expires=datetime.today(),
-        minimum_threshold=9999,
-        group='paddle-python',
-    )
-    coupon_code = response['coupon_codes'][0]
-    yield coupon_code, product_id
-
-    try:
-        paddle_client.delete_coupon(
-            coupon_code=coupon_code, product_id=product_id
-        )
-    except PaddleException as error:
-        valid_error = 'Paddle error 135 - Unable to find requested coupon'
-        if str(error) != valid_error:
-            raise
+from .fixtures import create_coupon, get_product, paddle_client  # NOQA: F401
 
 
 def test_list_coupons(paddle_client, create_coupon):  # NOQA: F811
@@ -57,22 +24,22 @@ def test_list_coupons(paddle_client, create_coupon):  # NOQA: F811
 
 
 def test_list_coupons_invalid_product(paddle_client):  # NOQA: F811
-    product_id = 11
+    product_id = 9999999999
     with pytest.raises(PaddleException) as error:
         paddle_client.list_coupons(product_id=product_id)
 
     error.match('Paddle error 108 - Unable to find requested product')
 
 
-def test_create_coupon(paddle_client):  # NOQA: F811
+def test_create_coupon(paddle_client, get_product):  # NOQA: F811
     coupon_type = 'product'
     discount_type = 'percentage'
     discount_amount = 1
     allowed_uses = 1
     recurring = False
-    product_id = int(os.environ['PADDLE_TEST_DEFAULT_PRODUCT_ID'])
+    product_id = get_product['id']
     product_ids = [product_id]
-    currency = 'GBP'
+    currency = 'USD'
     now = datetime.now().isoformat()
     coupon_code = 'paddle-python-test_create_coupon-{0}'.format(now)
     description = 'Test code created by paddle-python test_create_coupon'
@@ -132,7 +99,7 @@ def test_update_coupon(paddle_client, create_coupon):  # NOQA: F811
     now = datetime.now().isoformat()
     new_coupon_code = 'paddle-python-test_update_coupon-{0}'.format(now)
     expires = (datetime.today() + timedelta(days=1)).strftime('%Y-%m-%d')
-    currency = 'GBP'
+    currency = 'USD'
     recurring = True
     allowed_uses = 2
     discount_amount = 2

@@ -1,28 +1,18 @@
-import os
 import warnings
 from datetime import datetime, timedelta
 
-import pytest
+from .fixtures import (  # NOQA: F401
+    create_plan, get_subscription, paddle_client
+)
+from .test_paddle import BadPaddleDataWarning
 
-from paddle import PaddleException
 
-from .test_paddle import BadPaddleDataWarning, paddle_client  # NOQA: F401
-
-
-def test_list_subscription_payments(paddle_client):  # NOQA: F811
+def test_list_subscription_payments(paddle_client, get_subscription):  # NOQA: F811,E501
     response = paddle_client.list_subscription_payments()
-
-    if not response:
-        warning = ('No subscription payments returned by '
-                   'list_subscription_payments in test_list_subscription_payments')  # NOQA: E501
-        warnings.warn(warning, BadPaddleDataWarning)
-        skip_message = ('list_subscription_payments did not return any subscription payments')  # NOQA: E501
-        pytest.skip(skip_message)
-
     for payment in response:
         assert isinstance(payment['id'], int)
         assert isinstance(payment['subscription_id'], int)
-        assert isinstance(payment['amount'], int)
+        assert type(payment['amount']) in [int, float]
         assert isinstance(payment['currency'], str)
         assert isinstance(payment['payout_date'], str)
         datetime.strptime(payment['payout_date'], '%Y-%m-%d')
@@ -32,44 +22,26 @@ def test_list_subscription_payments(paddle_client):  # NOQA: F811
             assert isinstance(payment['receipt_url'], str)
 
 
-def test_list_subscription_payments_with_subscription_id(paddle_client):  # NOQA: F811,E501
-    subscription_id = int(os.environ['PADDLE_TEST_DEFAULT_SUBSCRIPTION_ID'])
+def test_list_subscription_payments_with_subscription_id(paddle_client, get_subscription):  # NOQA: F811,E501
+    subscription_id = get_subscription['subscription_id']
     response = paddle_client.list_subscription_payments(
         subscription_id=subscription_id
     )
-
-    if not response:
-        warning = ('No subscription payments returned by '
-                   'list_subscription_payments in test_list_subscription_payments_with_subscription_id')  # NOQA: E501
-        warnings.warn(warning, BadPaddleDataWarning)
-        skip_message = ('list_subscription_payments did not return any subscription payments')  # NOQA: E501
-        pytest.skip(skip_message)
-
     for payment in response:
         assert payment['subscription_id'] == subscription_id
 
 
-def test_list_subscription_payments_with_plan_id(paddle_client):  # NOQA: F811
-    plan_id = int(os.environ['PADDLE_TEST_DEFAULT_PLAN_ID'])
+def test_list_subscription_payments_with_plan_id(paddle_client, create_plan):  # NOQA: F811,E501
+    plan_id = create_plan['id']
     response = paddle_client.list_subscription_payments(plan=plan_id)
-
-    if not response:
-        warning = ('No subscription payments returned by '
-                   'list_subscription_payments in test_list_subscription_payments_with_plan_id')  # NOQA: E501
-        warnings.warn(warning, BadPaddleDataWarning)
-        skip_message = ('list_subscription_payments did not return any subscription payments')  # NOQA: E501
-        pytest.skip(skip_message)
+    for payment in response:
+        assert 'id' in payment
+        assert 'amount' in payment
+        assert 'currency' in payment
 
 
-def test_list_subscription_payments_with_from_to(paddle_client):  # NOQA: F811
+def test_list_subscription_payments_with_from_to(paddle_client, get_subscription):  # NOQA: F811,E501
     all_payments = paddle_client.list_subscription_payments()
-    if not all_payments:
-        warning = ('No subscription payments returned by '
-                   'list_subscription_payments in test_list_subscription_payments_with_from_to')  # NOQA: E501
-        warnings.warn(warning, BadPaddleDataWarning)
-        skip_message = ('list_subscription_payments did not return any subscription payments')  # NOQA: E501
-        pytest.skip(skip_message)
-
     single_payment = all_payments[0]
     single_payout_date = datetime.strptime(single_payment['payout_date'], '%Y-%m-%d')  # NOQA: E501
 
@@ -85,35 +57,33 @@ def test_list_subscription_payments_with_from_to(paddle_client):  # NOQA: F811
         assert payout_date < to
 
 
-def test_list_subscription_payments_with_is_paid(paddle_client):  # NOQA: F811,E501
-    response = paddle_client.list_subscription_payments(
-        is_paid=False
-    )
-
+def test_list_subscription_payments_with_is_paid(paddle_client, get_subscription):  # NOQA: F811,E501
+    response = paddle_client.list_subscription_payments(is_paid=False)
     if not response:
+        subscription_payments = paddle_client.list_subscription_payments()
+        assert len(subscription_payments) != len(response)
+
         warning = ('No subscription payments returned by '
                    'list_subscription_payments in test_list_subscription_payments_with_is_paid')  # NOQA: E501
         warnings.warn(warning, BadPaddleDataWarning)
-        skip_message = ('list_subscription_payments did not return any subscription payments')  # NOQA: E501
-        pytest.skip(skip_message)
 
     for payment in response:
         assert payment['is_paid'] == 0
 
 
-# ToDo: Fix this
-@pytest.mark.xfail(raises=PaddleException, reason='Date issue, unsure why')
 def test_reschedule_subscription_payment(paddle_client):  # NOQA: F811
     all_payments = paddle_client.list_subscription_payments(
         is_paid=False,
         is_one_off_charge=False,
     )
     if not all_payments:
-        warning = ('No subscription payments returned by '
-                   'list_subscription_payments in test_refund_product_payments')  # NOQA
+        subscription_payments = paddle_client.list_subscription_payments()
+        assert len(subscription_payments) != len(all_payments)
+        warning = (
+            'No subscription payments returned by list_subscription_payments '
+            'in test_refund_product_payments'
+        )
         warnings.warn(warning, BadPaddleDataWarning)
-        skip_message = ('list_subscription_payments did not return any subscription payments')  # NOQA: E501
-        pytest.skip(skip_message)
 
     payment = all_payments[0]
     single_payout_date = datetime.strptime(payment['payout_date'], '%Y-%m-%d')

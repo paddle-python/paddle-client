@@ -1,26 +1,27 @@
 import pytest
 
-from paddle import PaddleClient, PaddleException
+from paddle import PaddleException
 
-from .test_paddle import paddle_client, unset_vendor_id  # NOQA: F401
+from .fixtures import (  # NOQA: F401
+    create_plan, get_subscription, paddle_client
+)
 
 
-def test_get_user_history_with_vendor_id(unset_vendor_id):  # NOQA: F811
-    email = 'test@example.com'
-    vendor_id = 11  # This will need to be manually entered
-    paddle = PaddleClient(vendor_id=vendor_id)
-    response = paddle.get_user_history(email=email, vendor_id=vendor_id)
+def test_get_user_history_with_vendor_id(paddle_client, get_subscription):  # NOQA: F811,E501
+    email = get_subscription['user_email']
+    vendor_id = paddle_client.vendor_id
+    response = paddle_client.get_user_history(email=email, vendor_id=vendor_id)
     assert response == 'We\'ve sent details of your past transactions, licenses and downloads to you via email.'  # NOQA: E501
 
 
-def test_get_user_history_with_vendor_id_env_var(paddle_client):  # NOQA: F811
-    email = 'test@example.com'
+def test_get_user_history_with_vendor_id_env_var(paddle_client, get_subscription):  # NOQA: F811,E501
+    email = get_subscription['user_email']
     response = paddle_client.get_user_history(email=email)
     assert response == 'We\'ve sent details of your past transactions, licenses and downloads to you via email.'  # NOQA: E501
 
 
-def test_get_user_history_with_product_id(paddle_client):  # NOQA: F811
-    email = 'test@example.com'
+def test_get_user_history_with_product_id(paddle_client, get_subscription):  # NOQA: F811,E501
+    email = get_subscription['user_email']
     product_id = 1
     with pytest.raises(PaddleException) as error:
         paddle_client.get_user_history(email=email, product_id=product_id)
@@ -29,9 +30,7 @@ def test_get_user_history_with_product_id(paddle_client):  # NOQA: F811
     error.match(msg)
 
 
-def test_get_user_history_missing_vendoer_id_and_product_id(unset_vendor_id):  # NOQA: F811, E501
-    email = 'test@example.com'
-    vendor_id = 11  # This will need to be manually entered
-    paddle = PaddleClient(vendor_id=vendor_id)
-    response = paddle.get_user_history(email=email)
+def test_get_user_history_missing_vendor_id_and_product_id(paddle_client, get_subscription):  # NOQA: F811, E501
+    email = get_subscription['user_email']
+    response = paddle_client.get_user_history(email=email)
     assert response == 'We\'ve sent details of your past transactions, licenses and downloads to you via email.'  # NOQA: E501
