@@ -7,7 +7,6 @@ from .test_paddle import BadPaddleDataWarning, paddle_client  # NOQA: F401
 
 
 def test_list_subscription_users(paddle_client, get_subscription):  # NOQA: F811,E501
-    # ToDo: Create plan when API exists for it here
     subscription_users = paddle_client.list_subscription_users()
     for subscription in subscription_users:
         assert isinstance(subscription['subscription_id'], int)
@@ -27,7 +26,6 @@ def test_list_subscription_users(paddle_client, get_subscription):  # NOQA: F811
 
 
 def test_list_subscription_users_with_subscription_id(paddle_client, get_subscription):  # NOQA: F811,E501
-    # ToDo: Create plan when API exists for it here
     subscription_id = get_subscription['subscription_id']
     subscription_users = paddle_client.list_subscription_users(
         subscription_id=subscription_id,
@@ -37,8 +35,6 @@ def test_list_subscription_users_with_subscription_id(paddle_client, get_subscri
 
 
 def test_list_subscription_users_with_plan_id(paddle_client, get_subscription):  # NOQA: F811,E501
-    # ToDo: Create plan when API exists for it here
-
     plan_id = get_subscription['plan_id']
     subscription_users = paddle_client.list_subscription_users(plan_id=plan_id)
     for subscription in subscription_users:
@@ -46,7 +42,6 @@ def test_list_subscription_users_with_plan_id(paddle_client, get_subscription): 
 
 
 def test_list_subscription_users_with_state(paddle_client, get_subscription):  # NOQA: F811,E501
-    # ToDo: Create plan when API exists for it here
     state = get_subscription['state']
     subscription_users = paddle_client.list_subscription_users(state=state)
     for subscription in subscription_users:
@@ -54,7 +49,6 @@ def test_list_subscription_users_with_state(paddle_client, get_subscription):  #
 
 
 def test_list_subscription_users_with_page(paddle_client, get_subscription):  # NOQA: F811,E501
-    # ToDo: Create plan when API exists for it here
     list_one = paddle_client.list_subscription_users(
         results_per_page=1, page=1,
     )
@@ -65,24 +59,16 @@ def test_list_subscription_users_with_page(paddle_client, get_subscription):  # 
 
 
 def test_list_subscription_users_with_results_per_page(paddle_client, get_subscription):  # NOQA: F811,E501
-    # ToDo: Create plan when API exists for it here
     list_one = paddle_client.list_subscription_users(
         results_per_page=1, page=1,
     )
     assert len(list_one) == 1
 
 
-def test_update_subscription(paddle_client, get_subscription):  # NOQA: F811
-    subscription_id = get_subscription['subscription_id']
-    new_quantity = get_subscription['quantity'] + 0.01
-    paddle_client.update_subscription(
-        subscription_id=subscription_id,
-        quantity=new_quantity,
-    )
-    new_subscription_data = paddle_client.list_subscription_users(
-        subscription_id=subscription_id,
-    )
-    assert new_subscription_data.quantity == new_quantity
+def test_list_subscription_users_invalid_state(paddle_client):  # NOQA: F811
+    with pytest.raises(ValueError) as error:
+        paddle_client.list_subscription_users(state='test')
+    error.match('state must be one of active, past due, trialling, paused')
 
 
 def test_update_subscription(paddle_client, get_subscription):  # NOQA: F811
@@ -144,6 +130,14 @@ def test_update_subscription(paddle_client, get_subscription):  # NOQA: F811
         assert 'paused_at' not in new_subscription_data
         assert 'paused_from' not in new_subscription_data
         assert 'paused_reason' not in new_subscription_data
+
+
+def test_update_subscription_invalid_currency(paddle_client):  # NOQA: F811
+    with pytest.raises(ValueError) as error:
+        paddle_client.update_subscription(
+            subscription_id=1, currency='test'
+        )
+    error.match('currency must be one of USD, GBP, EUR')
 
 
 @pytest.mark.mocked

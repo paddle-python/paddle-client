@@ -92,7 +92,9 @@ def pause_subscription(self, subscription_id: int) -> dict:
     convenient helper method for update_subscription as no extra data can be
     sent when pausing/resuming subscriptions
     """  # NOQA: E501
-    return self.update_subscription(subscription_id=subscription_id, pause=True)  # NOQA: E501
+    return self.update_subscription(  # pragma: no cover
+        subscription_id=subscription_id, pause=True
+    )
 
 
 def resume_subscription(self, subscription_id: int) -> dict:
@@ -103,4 +105,6 @@ def resume_subscription(self, subscription_id: int) -> dict:
     convenient helper method for update_subscription as no extra data can be
     sent when pausing/resuming subscriptions
     """  # NOQA: E501
-    return self.update_subscription(subscription_id=subscription_id, pause=False)  # NOQA: E501
+    return self.update_subscription(  # pragma: no cover
+        subscription_id=subscription_id, pause=False
+    )
