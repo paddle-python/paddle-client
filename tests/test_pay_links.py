@@ -49,6 +49,14 @@ def test_create_pay_link_no_product_or_webhook(paddle_client):  # NOQA: F811
     error.match('webhook_url must be set if product_id is not set')
 
 
+def test_create_pay_link_no_product_and_recurring_prices(paddle_client):  # NOQA: F811,E501
+    with pytest.raises(ValueError) as error:
+        paddle_client.create_pay_link(
+            title='test', webhook_url='test', recurring_prices=['USD:19.99'],
+        )
+    error.match('recurring_prices can only be set if product_id is set to a subsciption')  # NOQA: F811,E501
+
+
 def test_create_pay_link_no_product_reccuring(paddle_client):  # NOQA: F811
     with pytest.raises(ValueError) as error:
         paddle_client.create_pay_link(
@@ -139,3 +147,13 @@ def test_create_pay_link_vat_number(paddle_client):  # NOQA: F811
         )
     message = 'vat_postcode must be set for {0} when vat_country is set'
     error.match(message.format(country))
+
+
+def test_create_pay_link_invalid_date(paddle_client):  # NOQA: F811
+    with pytest.raises(ValueError) as error:
+        paddle_client.create_pay_link(
+            title='test',
+            webhook_url='https://example.com/paddle-python',
+            expires='test'
+        )
+    error.match('expires must be a datetime/date object or string in format YYYY-MM-DD')  # NOQA: E501
