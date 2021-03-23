@@ -22,12 +22,11 @@ def test_get_user_history_with_vendor_id_env_var(paddle_client):  # NOQA: F811
 def test_get_user_history_with_product_id(paddle_client):  # NOQA: F811
     email = 'test@example.com'
     product_id = 1
-    with pytest.raises(PaddleException):
+    with pytest.raises(PaddleException) as error:
         paddle_client.get_user_history(email=email, product_id=product_id)
-    try:
-        paddle_client.get_user_history(email=email, product_id=product_id)
-    except PaddleException as error:
-        assert str(error) == 'Paddle error 110 - We were unable to find any past transactions, licenses or downloads matching that email address.'  # NOQA: E501
+
+    msg = 'Paddle error 110 - We were unable to find any past transactions, licenses or downloads matching that email address.'  # NOQA: E501
+    error.match(msg)
 
 
 def test_get_user_history_missing_vendoer_id_and_product_id(unset_vendor_id):  # NOQA: F811, E501

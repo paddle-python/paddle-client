@@ -39,17 +39,12 @@ def test_get_prices_invalid_customer_country(paddle_client):  # NOQA: F811
     bad_country = '00'
     value_error = 'Country code "{0}" is not valid'.format(bad_country)
 
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError) as error:
         paddle_client.get_prices(
             product_ids=[product_id], customer_country=bad_country,
         )
 
-    try:
-        paddle_client.get_prices(
-            product_ids=[product_id], customer_country=bad_country,
-        )
-    except ValueError as error:
-        assert str(error) == value_error
+    error.match(value_error)
 
 
 def test_get_prices_with_customer_ip(paddle_client):  # NOQA: F811

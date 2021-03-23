@@ -47,45 +47,40 @@ def test_paddle_vendor_id_not_set(unset_vendor_id):
 
 
 def test_paddle_vendor_id_not_int(set_vendor_id_to_invalid):
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError) as error:
         PaddleClient(api_key='test')
-    try:
-        PaddleClient(api_key='test')
-    except ValueError as error:
-        assert str(error) == 'Vendor ID must be a number'
+    error.match('Vendor ID must be a number')
 
 
-def test_paddle_api_key_not_set(unset_api_key):
-    with pytest.raises(ValueError):
+def test_paddle_api_key_not_set(unset_vendor_id, unset_api_key):
+    with pytest.raises(ValueError) as error:
         PaddleClient(vendor_id=1)
-    try:
-        PaddleClient(vendor_id=1)
-    except ValueError as error:
-        assert str(error) == 'API key not set'
+    error.match('API key not set')
+
+
+def test_sandbox(paddle_client):
+    with pytest.raises(PaddleException) as error:
+        paddle_client.post('https://sandbox-checkout.paddle.com/api/1.0/order')
+
+    msg = 'HTTP error 405 - The method used for the Request is not allowed for the requested resource.'  # NOQA: E501
+    error.match(msg)
 
 
 def test_paddle_json_and_data(paddle_client):
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError) as error:
         paddle_client.get('anyurl', json={'a': 'b'}, data={'a': 'b'})
-    try:
-        paddle_client.get('anyurl', json={'a': 'b'}, data={'a': 'b'})
-    except ValueError as error:
-        assert str(error) == 'Please set either data or json not both'
+    error.match('Please set either data or json not both')
 
 
 def test_paddle_data_and_json(paddle_client):
-    with pytest.raises(PaddleException):
+    with pytest.raises(PaddleException) as error:
         paddle_client.get('/badurl')
-    try:
-        paddle_client.get('badurl')
-    except PaddleException as error:
-        assert str(error) == 'Paddle error 101 - Bad method call'
+    error.match('Paddle error 101 - Bad method call')
 
 
 def test_paddle_http_error(paddle_client):
-    with pytest.raises(PaddleException):
-        paddle_client.post('https://checkout.paddle.com/api/1.0/order')
-    try:
-        paddle_client.post('https://checkout.paddle.com/api/1.0/order')
-    except PaddleException as error:
-        assert str(error) == 'HTTP error 405 - The method used for the Request is not allowed for the requested resource.'  # NOQA: E501
+    with pytest.raises(PaddleException) as error:
+        paddle_client.post('https://sandbox-checkout.paddle.com/api/1.0/order')
+
+    message = 'HTTP error 405 - The method used for the Request is not allowed for the requested resource.'  # NOQA: E501
+    error.match(message)

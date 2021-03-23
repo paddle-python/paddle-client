@@ -19,9 +19,8 @@ def test_get_order_details(paddle_client):  # NOQA: F811
 
 
 def test_get_order_details_invalid_id(paddle_client):  # NOQA: F811
-    with pytest.raises(PaddleException):
+    with pytest.raises(PaddleException) as error:
         paddle_client.get_order_details(checkout_id='fake-id')
-    try:
-        paddle_client.get_order_details(checkout_id='fake-id')
-    except PaddleException as e:
-        assert str(e) == 'Paddle error 101 - Could not find a checkout matching this ID'  # NOQA: E501
+
+    msg = 'Paddle error 101 - Could not find a checkout matching this ID'
+    error.match(msg)

@@ -65,26 +65,20 @@ def test_create_one_off_charge_no_mock(mocker, paddle_client):  # NOQA: F811
     assert isinstance(response['currency'], str)
     assert isinstance(response['receipt_url'], str)
     assert response['subscription_id'] == subscription_id
-    assert response['amount'] == '%.3f' % round(amount, 2)
+    assert response['amount'] == '%.2f' % round(amount, 2)
     assert isinstance(response['payment_date'], str)
     datetime.strptime(response['payment_date'], '%Y-%m-%d')
 
 
 def test_create_one_off_charge_zero_ammount(paddle_client):  # NOQA: F811
     subscription_id = int(os.environ['PADDLE_TEST_DEFAULT_SUBSCRIPTION_ID'])
-    with pytest.raises(PaddleException):
+
+    with pytest.raises(PaddleException) as error:
         paddle_client.create_one_off_charge(
             subscription_id=subscription_id,
             amount=0.0,
             charge_name="test_create_one_off_charge"
         )
 
-    error = 'Paddle error 183 - Charges cannot be made with a negative amount'
-    try:
-        paddle_client.create_one_off_charge(
-            subscription_id=subscription_id,
-            amount=0.0,
-            charge_name="test_create_one_off_charge"
-        )
-    except PaddleException as e:
-        assert str(e) == error
+    msg = 'Paddle error 183 - Charges cannot be made with a negative amount'
+    error.match(msg)

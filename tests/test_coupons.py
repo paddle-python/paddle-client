@@ -58,13 +58,10 @@ def test_list_coupons(paddle_client, create_coupon):  # NOQA: F811
 
 def test_list_coupons_invalid_product(paddle_client):  # NOQA: F811
     product_id = 11
-    paddle_error = 'Paddle error 108 - Unable to find requested product'
-    with pytest.raises(PaddleException):
+    with pytest.raises(PaddleException) as error:
         paddle_client.list_coupons(product_id=product_id)
-    try:
-        paddle_client.list_coupons(product_id=product_id)
-    except PaddleException as error:
-        assert str(error) == paddle_error
+
+    error.match('Paddle error 108 - Unable to find requested product')
 
 
 def test_create_coupon(paddle_client):  # NOQA: F811
