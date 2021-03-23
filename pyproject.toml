@@ -3,7 +3,7 @@ name = "paddle-client"
 packages = [
     {include = "paddle"}
 ]
-version = "0.8.1"
+version = "1.0.0"
 description = "Python wrapper around the Paddle.com API"
 license = "MIT"
 authors = ["Matt Pye <pyematt@gmail.com>"]
@@ -13,7 +13,7 @@ homepage = "https://github.com/paddle-python/paddle-client"
 keywords = ["paddle", "paddle.com", "payments", "billing", "commerce", "finance", "saas"]
 
 [tool.poetry.dependencies]
-python = "^3.5.2"
+python = "^3.5.0"
 requests = "^2.23.0"
 
 [tool.poetry.dev-dependencies]
