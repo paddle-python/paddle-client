@@ -82,7 +82,6 @@ See [`Usage`](#usage) below for quick examples.
 * [List Subscription Users](https://developer.paddle.com/api-reference/subscription-api/subscription-users/listusers)
 * [Cancel Subscription](https://developer.paddle.com/api-reference/subscription-api/subscription-users/canceluser)
 * [Update Subscription](https://developer.paddle.com/api-reference/subscription-api/subscription-users/updateuser)
-* [Preview Subscription Update](https://developer.paddle.com/api-reference/subscription-api/subscription-users/previewupdate)
 * [Add Modifier](https://developer.paddle.com/api-reference/subscription-api/modifiers/createmodifier)
 * [Delete Modifier](https://developer.paddle.com/api-reference/subscription-api/modifiers/deletemodifier)
 * [List Modifiers](https://developer.paddle.com/api-reference/subscription-api/modifiers/listmodifiers)
@@ -92,6 +91,7 @@ See [`Usage`](#usage) below for quick examples.
 
 **Alert API**
 * [Get Webhook History](https://developer.paddle.com/api-reference/alert-api/webhooks/webhooks)
+
 
 ### Usage
 
@@ -164,11 +164,6 @@ paddle.update_subscription(
 )
 paddle.pause_subscription(subscription_id=1234)
 paddle.resume_subscription(subscription_id=1234)
-paddle.preview_update_subscription(
-    subscription_id=123,
-    bill_immediately=True,
-    quantity=101,
-)
 paddle.add_modifier(subscription_id=1234, modifier_amount=10.5)
 paddle.delete_modifier(modifier_id=10)
 paddle.list_modifiers()

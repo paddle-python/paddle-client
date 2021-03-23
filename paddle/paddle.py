@@ -200,9 +200,6 @@ class PaddleClient():
     from ._subscription_users import update_subscription
     from ._subscription_users import pause_subscription
     from ._subscription_users import resume_subscription
-    from ._subscription_users import preview_subscription_update
-    # Alias to better match update_subscription
-    from ._subscription_users import preview_subscription_update as preview_update_subscription  # NOQA: E501
 
     from ._modifiers import add_modifier
     from ._modifiers import delete_modifier
