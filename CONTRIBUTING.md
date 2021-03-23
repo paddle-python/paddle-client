@@ -28,83 +28,92 @@ Please see the sections below for more details
 1. check all coding conventions are adhered to (`tox`)
 1. Commit your changes (`git commit -am 'Add some feature'`)
 1. Push to the branch (`git push origin my-new-feature`)
-1. Create new pull request
+1. Create a new pull request
 
 
-## Setup
+## Testing
 
-This package uses the [Poetry](https://python-poetry.org/) for packaging and dependency management. Before you get started please install it.
+### Setup
 
-Once you have cloned this repository you will then need:
-* Your `Paddle Vendor ID` which can be found on the [Paddle's authentication page](https://vendors.paddle.com/authentication)
-* Your `Paddle API key` which is found on the same [Paddle's authentication page](https://vendors.paddle.com/authentication)
+This package uses [Poetry](https://python-poetry.org/) for packaging and dependency management. Before you get started please install it.
 
 ```bash
 # Fork and clone this repo
 poetry install
-
-# Create a file called .env and add the above settings
-export PADDLE_VENDOR_ID=...
-export PADDLE_API_KEY="..."
-
 poetry shell
-source .env
 ```
+
+An account in the [Paddle Sandbox](https://sandbox-vendors.paddle.com/authentication) has been created for testing this package and this account has been hardcoded into the tests via the paddle-client fixture so all of the tests will ignore any PADDLE_* environmental variables.
+
+This sandbox account is currently configured in a state that all of the tests pass out of the box including the creation of products and subscriptions which can't be done via the API.
+With that in mind, this might not be the case in the future. If a test fails due to missing data, the pytest error should make it clear what data needs to be created. Below are instructions on how to create the test data.
+
+
+#### Creating a product
+
+This requires access to the Paddle Sandbox account (`paddle-client@pkgdeploy.com`). If you do not have access please create a GitHub issue.
+
+1. Go to the Sandbox products https://sandbox-vendors.paddle.com/products
+1. Product Name: `test-product` (the name is used to match the fixture)
+1. Fulfillment Method: `Paddle License`
+  * Default Activations per License: 9999
+  * Enable Trials: Unchecked
+  * Default Expiry Days: 0
+1. Complete your integration of the Paddle SDK: Ignore Waiting for API requests... (this can be ignored)
+1. Set Prices > Go to prices manager
+  * USD: $1
+  * Sale: Disabled
+1. Close the page (without saving)
+
+
+#### Creating a subscription
+
+Certain tests require a subscription to be created, which is simply a plan that has been paid for by a user. While there is no way to create subscriptions / payment via the Paddle API, a simple way to using the PaddleCheckout has been configured to create them manually in a few seconds:
+
+Before following the below steps to create a payment please run the tests as a payment may already exist. It will also make sure a Paddle plan is setup ready for a subscription and let you know of the plan ID which is needed below.
+
+1. Run a test which requires a subscription payment (to print the Plan ID) - `pytest tests/test_subscription_payments.py::test_list_subscription_payments`
+1. Take note of the plan ID from the failed test (if the test does not fail you don't need to setup a new subscription)
+1. Edit the PaddleCheckout HTML page at `tests/create_subscription.html` replacing `data-product="<plan-id>"` with the output of the above command:
+    ```
+    <!-- If the new plan ID was 9000: -->
+    <a
+      data-product="9000"
+      class="paddle_button"
+      href="#!"
+      ...
+    >
+      Buy Now!
+    </a>
+    ```
+1. Open the create_subscription checkout HTML page - `open tests/create_subscription.html`
+1. Click on the `Buy Now!` button
+1. In the Paddle modal enter fake card info provided on the page
 
 
 ## Running tests
 
-At the moment several of the tests require a few extra bits of information from Paddle. We are looking at removing these dependencies soon be creating them with fixtures. Please help us do it if you are up for it.
-
-* A `Paddle Product ID` which you can get one by creating a product on [Paddle's product page](https://vendors.paddle.com/products)
-* A `Paddle Plan/Subscription ID` which can be created on [Paddle's Subscription Plans page](https://vendors.paddle.com/subscriptions/plans)
-* A `Paddle Checkout ID` which can be got by going into an order from the [Paddle orders page](https://vendors.paddle.com/orders). If you don't have any orders yet you can create an order for $0.
-
-The tests currently require you to add the above as environmental variables (names below). To make them easier to set these each time the python virtual environment is loaded they can be placed into a `.env` file which can be sourced.
+Pytest is used to run the tests:
 
 ```bash
-# Add the above to the relevant environmental variables (and .env file)
-export PADDLE_TEST_DEFAULT_CHECKOUT_ID="..."
-export PADDLE_TEST_DEFAULT_PRODUCT_ID=...
-export PADDLE_TEST_DEFAULT_PLAN_ID=...
-
-poetry shell
-source .env
-pytest -m "not manual_cleanup" tests/
+pytest tests/
 # Coverage info is written to htmlcov/
-
-pytest tests/  # Run all tests against Paddle's API. See mocking and cleanup below
 ```
+All tests are run against the Paddle Sandbox environment and most of the setup and teardown is handled within the tests.
+
+The only exception to this is if someone accidentally deletes all of the subscription plans and products. When this happens it means any test which requires a checkout to have been completed (payments, updates etc) will fail due to no plan or product existing.
+
 
 ### Mocking
 
-As few mocks should be used as possible, Mocks should only be used for dangerous Paddle operations that can't be undone or cleaned up.
+As few mocks should be used as possible, Mocks should only be used for dangerous Paddle operations that can't be undone or cleaned up via the API making it difficult to create enough test data..
 
-Mocks should be done at the point paddle-python interfaces with `requests` and check the exact kwargs that were sent. This will cause any change in the request to cause the mocked test to fail. All mocked tests should also be accompanied by a matching test which hits Paddle's API but has the decorator`@pytest.mark.skip()` (see an already mocked test below as an example).
+Mocks should be done at the point paddle-python interfaces with `requests` and check the exact kwargs that were sent. This will cause any change in the request to cause the mocked test to fail. All mocked tests should also be accompanied by a matching test that hits Paddle's API but has the decorator`@pytest.mark.skip()` (see an already mocked test below as an example).
 
 The current mocked tests are:
 
-* Refund Payment - `test_transactions.py::test_refund_product_payment`
 * Cancel Subscription - `test_subscription_users.py::test_cancel_subscription`
-* Update Subscription - `test_subscription_users.py::test_update_subscription`
-* Create one off charge - `test_one_off_charges.py::test_create_one_off_charge`
 
-
-### Cleanup
-
-_(These tests are currently not working and marked as skipped so this can be ignored)_
-
-Parts of the Paddle API have create endpoints but not delete endpoints. Because of this several tests need to be cleaned up manually after they are run:
-
-
-* `tests/test_licenses.py::test_generate_license`
-* `tests/test_pay_links.py::test_create_pay_link`
-
-
-If you want to run `pytest` without running the tests that need manual clean up you can use
-```bash
-pytest -m "not manual_cleanup" tests/
-```
 
 ## Coding conventions
 
