@@ -17,7 +17,7 @@ def list_transactions(
     valid_entities = ['user', 'subscription', 'order', 'checkout', 'product']
     if entity not in valid_entities:
         error = 'entity "{0}" must be one of {1}'.format(
-            entity, ",".join(valid_entities)
+            entity, ', '.join(valid_entities)
         )
         raise ValueError(error)
 
