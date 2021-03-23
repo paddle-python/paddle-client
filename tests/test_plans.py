@@ -122,5 +122,28 @@ def test_create_plan_missing_price(paddle_client, currency, missing_field):  # N
     with pytest.raises(ValueError) as error:
         paddle_client.create_plan(**plan)
 
-    message = r'main_currency_code is {0} so {1} must be set'
+    message = 'main_currency_code is {0} so {1} must be set'
     error.match(message.format(currency, missing_field))
+
+
+def test_create_plan_invalid_plan_type(paddle_client):  # NOQA: F811
+    with pytest.raises(ValueError) as error:
+        paddle_client.create_plan(
+            plan_name='test',
+            plan_type='test',
+            plan_trial_days=0,
+            plan_length=999,
+        )
+    error.match('plan_type must be one of day, week, month, year')
+
+
+def test_create_plan_invalid_main_currency_code(paddle_client):  # NOQA: F811
+    with pytest.raises(ValueError) as error:
+        paddle_client.create_plan(
+            plan_name='plan_name',
+            plan_trial_days=0,
+            plan_type='year',
+            plan_length=999,
+            main_currency_code='test'
+        )
+    error.match('main_currency_code must be one of USD, GBP, EUR')
