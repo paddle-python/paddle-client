@@ -1,5 +1,7 @@
 from datetime import datetime
 
+import pytest
+
 from .fixtures import (  # NOQA: F401
     create_plan, get_checkout, get_product, get_subscription, paddle_client
 )
@@ -84,6 +86,13 @@ def test_list_transactions_checkout(paddle_client, get_checkout):  # NOQA: F811
         assert isinstance(checkout['user']['marketing_consent'], bool)
         assert isinstance(checkout['receipt_url'], str)
 
+
+def test_list_transactions_bad_entity(paddle_client):  # NOQA: F811
+    entity = 'test'
+    with pytest.raises(ValueError) as error:
+        paddle_client.list_transactions(entity=entity, entity_id=1)
+    msg = 'entity "{0}" must be one of user, subscription, order, checkout, product'  # NOQA: E501
+    error.match(msg.format(entity))
 
 # ToDo: Check order entity
 # ToDo: Check user entity
