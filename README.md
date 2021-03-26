@@ -44,6 +44,30 @@ paddle.list_products()
 ```
 
 
+### Paddle sandbox environment
+
+The [Paddle sandbox environment](https://developer.paddle.com/getting-started/sandbox) is a separate Paddle environment which can be used for development and testing. You are required to create a new account in this environment, different to your production account.
+
+Once you have this account setup and configured you can user the sandbox account by passing `sandbox=True` when initialising the Paddle Client. This will send all API calls to the Paddle sandbox URLs instead of the production URLs
+
+```python
+from paddle import PaddleClient
+
+
+paddle = PaddleClient(vendor_id=12345, api_key='myapikey', sandbox=True)
+```
+
+It is also possible to turn the sandbox environment on using an environmental variable called `PADDLE_SANDBOX`:
+```bash
+export PADDLE_SANDBOX="true"
+```
+```python
+from paddle import PaddleClient
+
+
+paddle = PaddleClient(vendor_id=12345, api_key='myapikey')
+```
+
 ## Documentation
 
 The full documentation is available on Read the Docs: https://paddle-client.readthedocs.io
