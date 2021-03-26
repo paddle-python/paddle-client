@@ -36,9 +36,10 @@ class PaddleException(Exception):
 
 class PaddleClient():
     """
-    If ``vendor_id`` and ``api_key`` are not passed through when initalising
-    Paddle will fall back and try and use environmental variables
-    called ``PADDLE_VENDOR_ID`` and ``PADDLE_API_KEY``
+    If ``vendor_id``, ``api_key`` or ``sandbox`` are not passed through when
+    initalising the PaddleClient it will fall back and try and use
+    environmental variables called ``PADDLE_VENDOR_ID``, ``PADDLE_API_KEY``
+    and ``PADDLE_SANDBOX``
     """
 
     def __init__(
