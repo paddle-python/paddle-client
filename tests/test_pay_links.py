@@ -1,123 +1,159 @@
-import os
-
 import pytest
 
-from .test_paddle import paddle_client  # NOQA: F401
+from .fixtures import get_product, paddle_client  # NOQA: F401
 
 
-@pytest.mark.manual_cleanup
-def test_create_pay_link(paddle_client):  # NOQA: F811
-    create_pay_link = getattr(paddle_client, 'create_pay_link', None)
-    if not create_pay_link or not callable(create_pay_link):
-        pytest.skip('paddle.create_pay_link does not exist')
-
-    # ToDo: Create product when API exists for it here
+def test_create_pay_link(paddle_client, get_product):  # NOQA: F811
     response = paddle_client.create_pay_link(
-        # product_id=int(os.environ['PADDLE_TEST_DEFAULT_PRODUCT_ID']),
+        product_id=get_product['id'],
         title='paddle-python-test_create_pay_link',
-        webhook_url='https://example.com/paddle-python',
         prices=['USD:19.99'],
-        # recurring_prices=['USD:19.99'],
+        recurring_prices=['USD:19.99'],
         trial_days=1,
         custom_message='custom_message',
-        coupon_code='paddle-python-coupon_code',
         discountable=False,
         image_url='https://example.com/image_url',
         return_url='https://example.com/return_url',
         quantity_variable=1,
         quantity=1,
-        affiliates=['12345:0.25'],
         recurring_affiliate_limit=1,
-        # marketing_consent='0',
+        marketing_consent=True,
         customer_email='test@example.com',
-        customer_country='GB',
-        customer_postcode='SW1A 1AA',
+        customer_country='US',
+        customer_postcode='00000',
         passthrough='passthrough data',
+        vat_number="vat_number",
+        vat_company_name="vat_company_name",
+        vat_street="vat_street",
+        vat_city="vat_city",
+        vat_state="vat_state",
+        vat_country="vat_country",
+        vat_postcode="vat_postcode",
+        # affiliates=['12345:0.25'],
+        # coupon_code='paddle-python-coupon_code',
+        # webhook_url='https://example.com/paddle-python',
     )
-    assert 'url' in response
+    assert isinstance(response['url'], str)
+    assert response['url'].startswith('https://sandbox-checkout.paddle.com/checkout/custom/')  # NOQA: E501
 
 
-def test_create_pay_link_mock(mocker, paddle_client):  # NOQA: F811
-    """
-    Mock test as the above test is not run by tox due to manual_cleanup mark
-    """
-    create_pay_link = getattr(paddle_client, 'create_pay_link', None)
-    if not create_pay_link or not callable(create_pay_link):
-        pytest.skip('paddle.create_pay_link does not exist')
+def test_create_pay_link_no_product_or_title(paddle_client):  # NOQA: F811
+    with pytest.raises(ValueError) as error:
+        paddle_client.create_pay_link()
+    error.match('title must be set if product_id is not set')
 
-    request = mocker.patch('paddle.paddle.requests.request')
 
-    # product_id = int(os.environ['PADDLE_TEST_DEFAULT_PRODUCT_ID'])
-    title = 'paddle-python-test_create_pay_link'
-    webhook_url = 'https://example.com/paddle-python'
-    prices = ['USD:19.99']
-    trial_days = 1
-    custom_message = 'custom_message'
-    coupon_code = 'paddle-python-coupon_code'
-    discountable = False
-    image_url = 'https://example.com/image_url'
-    return_url = 'https://example.com/return_url'
-    quantity_variable = 0
-    quantity = 1
-    affiliates = ['12345:0.25']
-    recurring_affiliate_limit = 1
-    # marketing_consent = False
-    customer_email = 'test@example.com'
-    customer_country = 'GB'
-    customer_postcode = 'SW1A 1AA'
-    passthrough = 'passthrough data'
+def test_create_pay_link_no_product_or_webhook(paddle_client):  # NOQA: F811
+    with pytest.raises(ValueError) as error:
+        paddle_client.create_pay_link(title='test')
+    error.match('webhook_url must be set if product_id is not set')
 
-    json = {
-        # 'product_id': product_id,
-        'title': title,
-        'webhook_url': webhook_url,
-        'prices': prices,
-        # recurring_prices=prices,
-        'trial_days': trial_days,
-        'custom_message': custom_message,
-        'coupon_code': coupon_code,
-        'discountable': 1 if discountable else 0,
-        'image_url': image_url,
-        'return_url': return_url,
-        'quantity_variable': quantity_variable,
-        'quantity': quantity,
-        'affiliates': affiliates,
-        'recurring_affiliate_limit': recurring_affiliate_limit,
-        # 'marketing_consent': '1' if marketing_consent else '0',
-        'customer_email': customer_email,
-        'customer_country': customer_country,
-        'customer_postcode': customer_postcode,
-        'passthrough': passthrough,
-        'vendor_id': int(os.environ['PADDLE_VENDOR_ID']),
-        'vendor_auth_code': os.environ['PADDLE_API_KEY'],
-    }
-    url = 'https://vendors.paddle.com/api/2.0/product/generate_license'
-    method = 'POST'
 
-    paddle_client.create_pay_link(
-        # product_id=int(os.environ['PADDLE_TEST_DEFAULT_PRODUCT_ID']),
-        title=title,
-        webhook_url=webhook_url,
-        prices=prices,
-        # recurring_prices=prices,
-        trial_days=trial_days,
-        custom_message=custom_message,
-        coupon_code=coupon_code,
-        discountable=discountable,
-        image_url=image_url,
-        return_url=return_url,
-        quantity_variable=quantity_variable,
-        quantity=quantity,
-        affiliates=affiliates,
-        recurring_affiliate_limit=recurring_affiliate_limit,
-        # marketing_consent=marketing_consent,
-        customer_email=customer_email,
-        customer_country=customer_country,
-        customer_postcode=customer_postcode,
-        passthrough=passthrough,
+def test_create_pay_link_no_product_and_recurring_prices(paddle_client):  # NOQA: F811,E501
+    with pytest.raises(ValueError) as error:
+        paddle_client.create_pay_link(
+            title='test', webhook_url='test', recurring_prices=['USD:19.99'],
+        )
+    error.match('recurring_prices can only be set if product_id is set to a subsciption')  # NOQA: F811,E501
+
+
+def test_create_pay_link_no_product_reccuring(paddle_client):  # NOQA: F811
+    with pytest.raises(ValueError) as error:
+        paddle_client.create_pay_link(
+            title='test',
+            recurring_prices=['USD:19.99']
+        )
+    error.match('webhook_url must be set if product_id is not set')
+
+
+def test_create_pay_link_product_and_webhook(paddle_client, get_product):  # NOQA: F811,E501
+    with pytest.raises(ValueError) as error:
+        paddle_client.create_pay_link(
+            product_id=get_product['id'],
+            webhook_url='https://example.com/paddle-python',
+        )
+    error.match('product_id and webhook_url cannot both be set')
+
+
+def test_create_pay_link_invalid_country(paddle_client):  # NOQA: F811
+    country = 'FAKE'
+    with pytest.raises(ValueError) as error:
+        paddle_client.create_pay_link(
+            title='test',
+            webhook_url='https://example.com/paddle-python',
+            customer_country=country,
+        )
+    error.match('Country code "{0}" is not valid'.format(country))
+
+
+def test_create_pay_link_country_without_postcode(paddle_client):  # NOQA: F811
+    country = 'US'
+    with pytest.raises(ValueError) as error:
+        paddle_client.create_pay_link(
+            title='test',
+            webhook_url='https://example.com/paddle-python',
+            customer_country=country,
+        )
+
+    message = (
+        'customer_postcode must be set for {0} when customer_country is set'
     )
-    request.assert_called_once_with(
-        url=url,
-        json=json,
-        method=method,
-    )
+    error.match(message.format(country))
+
+
+def test_create_pay_link_vat_number(paddle_client):  # NOQA: F811
+    with pytest.raises(ValueError) as error:
+        paddle_client.create_pay_link(
+            title='test', webhook_url='fake', vat_number='1234',
+        )
+    error.match('vat_company_name must be set if vat_number is set')
+
+    with pytest.raises(ValueError) as error:
+        paddle_client.create_pay_link(
+            title='test', webhook_url='fake', vat_number='1234',
+            vat_company_name='name',
+        )
+    error.match('vat_street must be set if vat_number is set')
+
+    with pytest.raises(ValueError) as error:
+        paddle_client.create_pay_link(
+            title='test', webhook_url='fake', vat_number='1234',
+            vat_company_name='name', vat_street='street',
+        )
+    error.match('vat_city must be set if vat_number is set')
+
+    with pytest.raises(ValueError) as error:
+        paddle_client.create_pay_link(
+            title='test', webhook_url='fake', vat_number='1234',
+            vat_company_name='name', vat_street='street',
+            vat_city='city',
+        )
+    error.match('vat_state must be set if vat_number is set')
+
+    with pytest.raises(ValueError) as error:
+        paddle_client.create_pay_link(
+            title='test', webhook_url='fake', vat_number='1234',
+            vat_company_name='name', vat_street='street',
+            vat_city='city', vat_state='state',
+        )
+    error.match('vat_country must be set if vat_number is set')
+
+    with pytest.raises(ValueError) as error:
+        country = 'US'
+        paddle_client.create_pay_link(
+            title='test', webhook_url='fake', vat_number='1234',
+            vat_company_name='name', vat_street='street',
+            vat_city='city', vat_state='state', vat_country=country,
+        )
+    message = 'vat_postcode must be set for {0} when vat_country is set'
+    error.match(message.format(country))
+
+
+def test_create_pay_link_invalid_date(paddle_client):  # NOQA: F811
+    with pytest.raises(ValueError) as error:
+        paddle_client.create_pay_link(
+            title='test',
+            webhook_url='https://example.com/paddle-python',
+            expires='test'
+        )
+    error.match('expires must be a datetime/date object or string in format YYYY-MM-DD')  # NOQA: E501

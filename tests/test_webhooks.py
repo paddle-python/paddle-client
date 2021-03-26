@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 
-from .test_paddle import paddle_client  # NOQA: F401
+from .fixtures import paddle_client  # NOQA: F401
 
 
 def test_get_webhook_history(paddle_client):  # NOQA: F811
@@ -40,8 +40,8 @@ def test_get_webhook_history_head_and_tail(paddle_client):  # NOQA: F811
     webhook = base_webhook_history['data'][0]
     head = datetime.strptime(webhook['created_at'], '%Y-%m-%d %H:%M:%S')
 
-    new_head = head + timedelta(minutes=30)
-    new_tail = head - timedelta(minutes=30)
+    new_head = head + timedelta(minutes=5)
+    new_tail = head - timedelta(minutes=5)
     webhook_history = paddle_client.get_webhook_history(
         query_head=new_head.strftime('%Y-%m-%d %H:%M:%S'),
         query_tail=new_tail,

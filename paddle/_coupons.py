@@ -53,10 +53,8 @@ def create_coupon(
         raise ValueError('product_ids must be specified if coupon_type is "product"')  # NOQA: E501
     if discount_type not in ['flat', 'percentage']:
         raise ValueError('coupon_type must be "product" or "checkout"')
-    if discount_type == 'flat' and not currency:
-        raise ValueError('currency must be specified if discount_type is "flat"')  # NOQA: E501
     if coupon_code and (coupon_prefix or num_coupons):
-        raise ValueError('coupon_prefix and num_coupons not valid when coupon_code set')  # NOQA: E501
+        raise ValueError('coupon_prefix and num_coupons are not valid when coupon_code set')  # NOQA: E501
 
     json = {
         'coupon_type': coupon_type,

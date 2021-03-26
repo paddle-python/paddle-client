@@ -92,7 +92,9 @@ def pause_subscription(self, subscription_id: int) -> dict:
     convenient helper method for update_subscription as no extra data can be
     sent when pausing/resuming subscriptions
     """  # NOQA: E501
-    return self.update_subscription(subscription_id=subscription_id, pause=True)  # NOQA: E501
+    return self.update_subscription(  # pragma: no cover
+        subscription_id=subscription_id, pause=True
+    )
 
 
 def resume_subscription(self, subscription_id: int) -> dict:
@@ -103,37 +105,6 @@ def resume_subscription(self, subscription_id: int) -> dict:
     convenient helper method for update_subscription as no extra data can be
     sent when pausing/resuming subscriptions
     """  # NOQA: E501
-    return self.update_subscription(subscription_id=subscription_id, pause=False)  # NOQA: E501
-
-
-def preview_subscription_update(
-    self,
-    subscription_id: int,
-    quantity: int = None,
-    bill_immediately: bool = None,
-    prorate: bool = None,
-    plan_id: int = None,
-    currency: str = None,
-    recurring_price: float = None,
-    keep_modifiers: bool = None,
-) -> dict:
-    """
-    `Preview Subscription Update Paddle docs <https://developer.paddle.com/api-reference/subscription-api/subscription-users/previewupdate>`_
-    """  # NOQA: E501
-    url = urljoin(self.vendors_v2, 'subscription/preview_update')
-
-    currency_codes = ['USD', 'GBP', 'EUR']
-    if currency and currency not in currency_codes:
-        raise ValueError('currency must be one of {0}'.format(', '.join(currency_codes)))  # NOQA: E501
-
-    json = {
-        'subscription_id': subscription_id,
-        'quantity': quantity,
-        'currency': currency,
-        'recurring_price': recurring_price,
-        'bill_immediately': bill_immediately,
-        'plan_id': plan_id,
-        'prorate': prorate,
-        'keep_modifiers': keep_modifiers,
-    }  # type: PaddleJsonType
-    return self.post(url=url, json=json)
+    return self.update_subscription(  # pragma: no cover
+        subscription_id=subscription_id, pause=False
+    )

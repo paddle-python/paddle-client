@@ -2,7 +2,7 @@
 
 A python (3.5+) wrapper around the [Paddle.com API](https://developer.paddle.com/api-reference/intro)
 
-If you are looking at intergrating Paddle with Django check out [dj-paddle](https://github.com/paddle-python/dj-paddle)
+If you are looking at integrating Paddle with Django check out [dj-paddle](https://github.com/paddle-python/dj-paddle)
 
 The full documentation is available at: https://paddle-client.readthedocs.io
 
@@ -29,7 +29,7 @@ paddle = PaddleClient(vendor_id=12345, api_key='myapikey')
 paddle.list_products()
 ```
 
-If `vendor_id` and `api_key` are not passed through when initalising Paddle will fall back and try and use environmental variables called `PADDLE_VENDOR_ID` and `PADDLE_API_KEY`
+If `vendor_id` and `api_key` are not passed through when initialising Paddle will fall back and try and use environmental variables called `PADDLE_VENDOR_ID` and `PADDLE_API_KEY`
 ```bash
 export PADDLE_VENDOR_ID=12345
 export PADDLE_API_KEY="myapikey"
@@ -44,6 +44,30 @@ paddle.list_products()
 ```
 
 
+### Paddle sandbox environment
+
+The [Paddle sandbox environment](https://developer.paddle.com/getting-started/sandbox) is a separate Paddle environment which can be used for development and testing. You are required to create a new account in this environment, different to your production account.
+
+Once you have this account setup and configured you can user the sandbox account by passing `sandbox=True` when initialising the Paddle Client. This will send all API calls to the Paddle sandbox URLs instead of the production URLs
+
+```python
+from paddle import PaddleClient
+
+
+paddle = PaddleClient(vendor_id=12345, api_key='myapikey', sandbox=True)
+```
+
+It is also possible to turn the sandbox environment on using an environmental variable called `PADDLE_SANDBOX`:
+```bash
+export PADDLE_SANDBOX="true"
+```
+```python
+from paddle import PaddleClient
+
+
+paddle = PaddleClient(vendor_id=12345, api_key='myapikey')
+```
+
 ## Documentation
 
 The full documentation is available on Read the Docs: https://paddle-client.readthedocs.io
@@ -56,7 +80,7 @@ All contributions are welcome and appreciated. Please see [CONTRIBUTING.md](http
 
 ## Paddle Endpoints
 
-The below endpoints from the [Paddle API Reference](https://developer.paddle.com/api-reference) have been implimented
+The below endpoints from the [Paddle API Reference](https://developer.paddle.com/api-reference) have been implemented
 
 For full details see the [API Reference in the docs](https://paddle-client.readthedocs.io/en/latest/api_reference.html). This includes details on parameters and return types for all the different methods as well as other helper methods around the Paddle.com API.
 
@@ -82,7 +106,6 @@ See [`Usage`](#usage) below for quick examples.
 * [List Subscription Users](https://developer.paddle.com/api-reference/subscription-api/subscription-users/listusers)
 * [Cancel Subscription](https://developer.paddle.com/api-reference/subscription-api/subscription-users/canceluser)
 * [Update Subscription](https://developer.paddle.com/api-reference/subscription-api/subscription-users/updateuser)
-* [Preview Subscription Update](https://developer.paddle.com/api-reference/subscription-api/subscription-users/previewupdate)
 * [Add Modifier](https://developer.paddle.com/api-reference/subscription-api/modifiers/createmodifier)
 * [Delete Modifier](https://developer.paddle.com/api-reference/subscription-api/modifiers/deletemodifier)
 * [List Modifiers](https://developer.paddle.com/api-reference/subscription-api/modifiers/listmodifiers)
@@ -92,6 +115,7 @@ See [`Usage`](#usage) below for quick examples.
 
 **Alert API**
 * [Get Webhook History](https://developer.paddle.com/api-reference/alert-api/webhooks/webhooks)
+
 
 ### Usage
 
@@ -164,11 +188,6 @@ paddle.update_subscription(
 )
 paddle.pause_subscription(subscription_id=1234)
 paddle.resume_subscription(subscription_id=1234)
-paddle.preview_update_subscription(
-    subscription_id=123,
-    bill_immediately=True,
-    quantity=101,
-)
 paddle.add_modifier(subscription_id=1234, modifier_amount=10.5)
 paddle.delete_modifier(modifier_id=10)
 paddle.list_modifiers()
@@ -183,25 +202,3 @@ paddle.create_one_off_charge(
 # Alert API
 paddle.get_webhook_history()
 ```
-
-
-## Failing Endpoints
-
-The below endpoints have been implimented but are not working correctly according to the tests. They have been commented out in `paddle/paddle.py` and the tests will skip is the methods do not exist
-
-* [Generate License](https://developer.paddle.com/api-reference/product-api/licenses/createlicense) - `Paddle error 108 - Unable to find requested product`
-* [Create pay link](https://developer.paddle.com/api-reference/product-api/pay-links/createpaylink) -  `Paddle error 108 - Unable to find requested product`
-* [Reschedule subscription payment](https://developer.paddle.com/api-reference/subscription-api/payments/updatepayment) -  `Paddle error 122 - Provided date is not valid` - After manually testing via Paddles API reference I believe this is an issue with Paddle's API.
-
-
-## ToDo
-* Fix generate license, create pay link and reschedule payment endpoints
-* Get test coverage to 100%
-* Use `pytest-mock` `Spy` to check params, json, urls etc for test requests
-    * Needed to any tests which skip due to missing data
-* How to deal with the manual cleanup?
-* Pull request template
-* TravisCI?
-* Dependabot
-* Remove double call for exception error message checking - How to get the exception str from `pytest.raises()`? pytest-mock `Spy`?
-* Add pytest warnings to provide direct links to Paddle for bits that need to be cleaned up

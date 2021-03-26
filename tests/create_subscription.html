@@ -1,0 +1,64 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>paddle-client - create subscription</title>
+  <meta name="description" content="paddle-client create subscription page">
+</head>
+
+<body>
+
+<div>
+    <h1>Create test subscription</h1>
+    <p>
+    Use the <a href="https://developer.paddle.com/getting-started/sandbox#test-cards">sandbox card details</a></p>
+    <pre>
+      <code>
+        Card number: 4242 4242 4242 4242
+        Cardholder name: Test Name
+        Expiration Date: 12/2039
+        Security Code: 111
+      </code>
+    </pre>
+    <a
+      data-product="9814"
+      class="paddle_button"
+      href="#!"
+      data-email="test@example.com"
+      data-country="US"
+      data-postcode="00000"
+      data-message="Sandbox card: 4242 4242 4242 4242 --- Cardholder name: Test Name --- Expiration Date: 12/2039 --- Security Code / CVV: 111"
+      data-passthrough="paddle-client-test"
+    >
+      Buy Now!
+    </a>
+
+    <p id="product-id-warning" style="display: none; color: Crimson">Please edit this HTML and update the data-product attribute of the "Buy Now!" button</p>
+</div>
+
+<script src="https://cdn.paddle.com/paddle/paddle.js"></script>
+<script type="text/javascript">
+Paddle.Environment.set('sandbox');
+Paddle.Setup({
+    vendor: 1468,
+    debug: true,
+});
+
+document.addEventListener('DOMContentLoaded', disableButtonForBadProductId);
+
+
+function disableButtonForBadProductId() {
+  const paddleButton = document.querySelector('.paddle_button');
+  const productId = paddleButton.getAttribute('data-product');
+  if (productId === '<plan-id>') {
+    const productIdWarning = document.querySelector('#product-id-warning');
+    productIdWarning.style.display = 'block';
+    paddleButton.disabled = true;
+    paddleButton.style.opacity = '0.3';
+  }
+}
+
+</script>
+</body>
+</html>

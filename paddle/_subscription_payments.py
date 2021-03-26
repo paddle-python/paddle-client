@@ -2,7 +2,7 @@ import logging
 from typing import List, Union
 from urllib.parse import urljoin
 
-from .types import DateType, PaddleJsonType
+from .types import DateType, PaddleJsonType  # NOQA: F401
 from .validators import validate_date
 
 log = logging.getLogger(__name__)

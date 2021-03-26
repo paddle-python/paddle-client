@@ -1,15 +1,14 @@
-import os
-
 import pytest
 
 from paddle import PaddleException
 
-from .test_paddle import paddle_client  # NOQA: F401
+from .fixtures import (  # NOQA: F401
+    create_plan, get_checkout, get_subscription, paddle_client
+)
 
 
-def test_get_order_details(paddle_client):  # NOQA: F811
-    # ToDo: Create / get a list of orders instead of hardcoding ID here
-    checkout_id = os.environ['PADDLE_TEST_DEFAULT_CHECKOUT_ID']
+def test_get_order_details(paddle_client, get_checkout):  # NOQA: F811
+    checkout_id = get_checkout
     response = paddle_client.get_order_details(checkout_id=checkout_id)
     assert len(response.keys()) == 4
     assert response['checkout']['checkout_id'] == checkout_id
@@ -19,9 +18,8 @@ def test_get_order_details(paddle_client):  # NOQA: F811
 
 
 def test_get_order_details_invalid_id(paddle_client):  # NOQA: F811
-    with pytest.raises(PaddleException):
+    with pytest.raises(PaddleException) as error:
         paddle_client.get_order_details(checkout_id='fake-id')
-    try:
-        paddle_client.get_order_details(checkout_id='fake-id')
-    except PaddleException as e:
-        assert str(e) == 'Paddle error 101 - Could not find a checkout matching this ID'  # NOQA: E501
+
+    msg = 'Paddle error 101 - Could not find a checkout matching this ID'
+    error.match(msg)

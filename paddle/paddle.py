@@ -1,6 +1,7 @@
 import logging
 import os
 import warnings
+from distutils.util import strtobool
 from urllib.parse import urljoin
 
 import requests
@@ -40,7 +41,12 @@ class PaddleClient():
     called ``PADDLE_VENDOR_ID`` and ``PADDLE_API_KEY``
     """
 
-    def __init__(self, vendor_id: int = None, api_key: str = None):
+    def __init__(
+        self,
+        vendor_id: int = None,
+        api_key: str = None,
+        sandbox: bool = None,
+    ):
         if not vendor_id:
             try:
                 vendor_id = int(os.environ['PADDLE_VENDOR_ID'])
@@ -53,11 +59,19 @@ class PaddleClient():
                 api_key = os.environ['PADDLE_API_KEY']
             except KeyError:
                 raise ValueError('API key not set')
+        if sandbox is None:
+            sandbox = bool(strtobool(os.getenv('PADDLE_SANDBOX', 'False')))
 
+        self.sandbox = sandbox
         self.checkout_v1 = 'https://checkout.paddle.com/api/1.0/'
         self.checkout_v2 = 'https://checkout.paddle.com/api/2.0/'
         self.checkout_v2_1 = 'https://vendors.paddle.com/api/2.1/'
         self.vendors_v2 = 'https://vendors.paddle.com/api/2.0/'
+        if self.sandbox:
+            self.checkout_v1 = 'https://sandbox-checkout.paddle.com/api/1.0/'
+            self.checkout_v2 = 'https://sandbox-checkout.paddle.com/api/2.0/'
+            self.checkout_v2_1 = 'https://sandbox-vendors.paddle.com/api/2.1/'
+            self.vendors_v2 = 'https://sandbox-vendors.paddle.com/api/2.0/'
         self.default_url = self.vendors_v2
 
         self.vendor_id = vendor_id
@@ -67,11 +81,16 @@ class PaddleClient():
             'vendor_auth_code': self.api_key,
         }
 
-        self.url_warning = (
+        self.relative_url_warning = (
             'Paddle recieved a relative URL so it will attempt to join it to '
             '{0} as it is the Paddle URL with the most endpoints. The full '
             'URL that will be used is: {1} - You should specifiy the full URL '
             'as this default URL may change in the future.'
+        )
+        self.sandbox_url_warning = (
+            'PaddleClient is configured in sandbox mode but the URL provided '
+            'does not point to a sandbox subdomain. The URL will be converted '
+            'to use the Paddle sandbox ({0})'
         )
 
     def request(
@@ -90,17 +109,22 @@ class PaddleClient():
             if url.startswith('/'):
                 url = url[1:]
             url = urljoin(self.default_url, url)
-            warning_message = self.url_warning.format(self.default_url, url)
+            warning_message = self.relative_url_warning.format(self.default_url, url)  # NOQA: E501
             warnings.warn(warning_message, RuntimeWarning)
-        if 'paddle.com/api/' not in url:
-            raise ValueError('URL "{0}" does not appear to be a Paddle API URL')  # NOQA: E501
+        elif 'paddle.com/api/' not in url:
+            error = 'URL does not appear to be a Paddle API URL - {0}'
+            raise ValueError(error.format(url))
+        elif self.sandbox and '://sandbox-' not in url:
+            url = url.replace('://', '://sandbox-', 1)
+            warnings.warn(self.sandbox_url_warning.format(url), RuntimeWarning)
+
         kwargs['url'] = url
 
         kwargs['method'] = method.upper()
 
         if data and json:
             raise ValueError('Please set either data or json not both')
-        if kwargs['method'] == 'GET' and (data or json):
+        if kwargs['method'] == 'GET' and (data or json):   # pragma: no cover
             log.warn('GET data/json should not be provided with GET method.')
 
         if kwargs['method'] in ['POST', 'PUT', 'PATCH']:
@@ -170,9 +194,9 @@ class PaddleClient():
 
     from ._products import list_products
 
-    # from ._licenses import generate_license
+    from ._licenses import generate_license
 
-    # from ._pay_links import create_pay_link
+    from ._pay_links import create_pay_link
 
     from ._transactions import list_transactions
 
@@ -188,9 +212,6 @@ class PaddleClient():
     from ._subscription_users import update_subscription
     from ._subscription_users import pause_subscription
     from ._subscription_users import resume_subscription
-    from ._subscription_users import preview_subscription_update
-    # Alias to better match update_subscription
-    from ._subscription_users import preview_subscription_update as preview_update_subscription  # NOQA: E501
 
     from ._modifiers import add_modifier
     from ._modifiers import delete_modifier

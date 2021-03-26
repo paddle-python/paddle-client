@@ -1,36 +1,10 @@
-import os
-
-import pytest
-
-from paddle import PaddleException
-
-from .test_paddle import paddle_client  # NOQA: F401
+from .fixtures import (  # NOQA: F401, E501
+    create_modifier, create_plan, get_subscription, paddle_client
+)
 
 
-@pytest.fixture()
-def create_modifier(paddle_client):  # NOQA: F811
-    subscription_id = int(os.environ['PADDLE_TEST_DEFAULT_SUBSCRIPTION_ID'])
-    response = paddle_client.add_modifier(
-        subscription_id=subscription_id,
-        modifier_amount=0.01,
-        modifier_recurring=True,
-        modifier_description='test_modifier_fixture_modifier_description',
-    )
-    modifier_id = response['modifier_id']
-    subscription_id = response['subscription_id']
-
-    yield modifier_id, subscription_id
-
-    try:
-        paddle_client.delete_modifier(modifier_id=modifier_id)
-    except PaddleException as error:
-        valid_error = 'Paddle error 123 - Unable to find requested modifier'
-        if str(error) != valid_error:
-            raise
-
-
-def test_add_modifier(paddle_client):  # NOQA: F811
-    subscription_id = int(os.environ['PADDLE_TEST_DEFAULT_SUBSCRIPTION_ID'])
+def test_add_modifier(paddle_client, get_subscription):  # NOQA: F811
+    subscription_id = get_subscription['subscription_id']
     response = paddle_client.add_modifier(
         subscription_id=subscription_id,
         modifier_amount=0.01,

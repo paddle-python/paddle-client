@@ -27,7 +27,7 @@ def create_pay_link(
     expires: DatetimeType = None,
     affiliates: List[str] = None,
     recurring_affiliate_limit: int = None,
-    marketing_consent: str = None,
+    marketing_consent: bool = None,
     customer_email: str = None,
     customer_country: str = None,
     customer_postcode: str = None,
@@ -47,13 +47,16 @@ def create_pay_link(
 
     Paddle error 108 - Unable to find requested product
 
-
     Even though the docs states:
 
     "If no product_id is set, custom non-subscription product checkouts
     can be generated instead by specifying title, webhook_url and prices."
+
+    Sending an invalid coupon code will result in the request failing with
+    "Paddle error 101 - Bad method call"
+
     """  # NOQA: E501
-    url = urljoin(self.vendors_v2, 'product/generate_license')
+    url = urljoin(self.vendors_v2, 'product/generate_pay_link')
 
     if not product_id:
         if not title:
@@ -62,14 +65,16 @@ def create_pay_link(
             raise ValueError('webhook_url must be set if product_id is not set')  # NOQA: E501
         if recurring_prices:
             raise ValueError('recurring_prices can only be set if product_id is set to a subsciption')  # NOQA: E501
+    if webhook_url and product_id:
+        raise ValueError('product_id and webhook_url cannot both be set')  # NOQA: E501
     if customer_country:
         if customer_country not in supported_countries.keys():
             error = 'Country code "{0}" is not valid'.format(customer_country)
             raise ValueError(error)
         if customer_country in countries_requiring_postcode and not customer_postcode:  # NOQA: E501
             error = ('customer_postcode must be set for {0} when '
-                     'customer_country is set'.format(vat_country))
-            raise ValueError(error)
+                     'customer_country is set')
+            raise ValueError(error.format(customer_country))
 
     if vat_number:
         if not vat_company_name:
@@ -103,7 +108,7 @@ def create_pay_link(
         'quantity': quantity,
         'affiliates': affiliates,
         'recurring_affiliate_limit': recurring_affiliate_limit,
-        'marketing_consent': marketing_consent,
+        'marketing_consent': '1' if marketing_consent else '0',
         'customer_email': customer_email,
         'customer_country': customer_country,
         'customer_postcode': customer_postcode,
