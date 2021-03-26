@@ -58,7 +58,7 @@ For reference on how to use. An example on how to use :meth:`List Products<paddl
 
     from paddle import PaddleClient
 
-    paddle = PaddleClient(vendor_id=12345, api_key='myapikey')
+    paddle = PaddleClient(vendor_id=12345, api_key='myapikey', sandbox=False)
     paddle.list_products()
 
 
