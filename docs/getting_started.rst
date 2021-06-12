@@ -1,7 +1,7 @@
 Getting started
 ===============
 
-Paddle Client is a python (3.5+) wrapper around the `Paddle.com API <https://developer.paddle.com/api-reference/intro>`_
+Paddle Client is a python (3.6+) wrapper around the `Paddle.com API <https://developer.paddle.com/api-reference/intro>`_
 
 
 Paddle authentication

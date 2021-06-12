@@ -121,13 +121,12 @@ The current mocked tests are:
 * All code in the paddle module should have type hints (checked by mypy)
 * Make sure everything is flake8 compliment
 * Use `isort` to sort imports and make them easy to read
-* We want to keep supporting Python 3.5 for now so no `fstrings` sorry
 * Please keep to the same style as the code already (single quotes, line length etc)
 
 
 ## tox
 
-`tox` is set up to help run `pytest` against each of the supported versions (python 3.5+). It will also ensure the above code conventions are adhered to by running `mypy`, `flake8` and `isort` against your code.
+`tox` is set up to help run `pytest` against each of the supported versions (python 3.6+). It will also ensure the above code conventions are adhered to by running `mypy`, `flake8` and `isort` against your code.
 
 To use tox you first need to follow the test setup above, then run the tox command:
 ```bash

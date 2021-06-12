@@ -182,45 +182,19 @@ class PaddleClient():
         kwargs['method'] = 'POST'
         return self.request(**kwargs)
 
-    from ._order_information import get_order_details
-
-    from ._user_history import get_user_history
-
-    from ._prices import get_prices
-
-    from ._coupons import list_coupons
-    from ._coupons import create_coupon
-    from ._coupons import delete_coupon
-    from ._coupons import update_coupon
-
-    from ._products import list_products
-
+    from ._coupons import create_coupon, delete_coupon, list_coupons, update_coupon
     from ._licenses import generate_license
-
-    from ._pay_links import create_pay_link
-
-    from ._transactions import list_transactions
-
-    from ._product_payments import refund_product_payment
-
-    from ._plans import list_plans
-    from ._plans import get_plan
-    from ._plans import create_plan
-
-    from ._subscription_users import list_subscription_users
-    from ._subscription_users import list_subscription_users as list_subscriptions  # NOQA: E501
-    from ._subscription_users import cancel_subscription
-    from ._subscription_users import update_subscription
-    from ._subscription_users import pause_subscription
-    from ._subscription_users import resume_subscription
-
-    from ._modifiers import add_modifier
-    from ._modifiers import delete_modifier
-    from ._modifiers import list_modifiers
-
-    from ._subscription_payments import list_subscription_payments
-    from ._subscription_payments import reschedule_subscription_payment
-
+    from ._modifiers import add_modifier, delete_modifier, list_modifiers
     from ._one_off_charges import create_one_off_charge
-
+    from ._order_information import get_order_details
+    from ._pay_links import create_pay_link
+    from ._plans import create_plan, get_plan, list_plans
+    from ._prices import get_prices
+    from ._product_payments import refund_product_payment
+    from ._products import list_products
+    from ._subscription_payments import list_subscription_payments, reschedule_subscription_payment
+    from ._subscription_users import list_subscription_users  # NOQA: E501
+    from ._subscription_users import cancel_subscription, pause_subscription, resume_subscription, update_subscription
+    from ._transactions import list_transactions
+    from ._user_history import get_user_history
     from ._webhooks import get_webhook_history

@@ -1,9 +1,7 @@
 import warnings
 from datetime import datetime, timedelta
 
-from .fixtures import (  # NOQA: F401
-    create_plan, get_subscription, paddle_client
-)
+from .fixtures import create_plan, get_subscription, paddle_client  # NOQA: F401
 from .test_paddle import BadPaddleDataWarning
 
 

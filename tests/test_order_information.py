@@ -2,9 +2,7 @@ import pytest
 
 from paddle import PaddleException
 
-from .fixtures import (  # NOQA: F401
-    create_plan, get_checkout, get_subscription, paddle_client
-)
+from .fixtures import create_plan, get_checkout, get_subscription, paddle_client  # NOQA: F401
 
 
 def test_get_order_details(paddle_client, get_checkout):  # NOQA: F811
