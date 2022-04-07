@@ -22,7 +22,7 @@ def list_subscription_users(
     """  # NOQA: E501
     url = urljoin(self.vendors_v2, 'subscription/users')
 
-    states = ['active', 'past due', 'trialling', 'paused']
+    states = ['active', 'past due', 'trialling', 'paused', 'deleted']
     if state is not None and state not in states:
         raise ValueError('state must be one of {0}'.format(', '.join(states)))
 
