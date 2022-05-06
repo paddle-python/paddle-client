@@ -83,8 +83,6 @@ def create_pay_link(
             raise ValueError('vat_street must be set if vat_number is set')
         if not vat_city:
             raise ValueError('vat_city must be set if vat_number is set')
-        if not vat_state:
-            raise ValueError('vat_state must be set if vat_number is set')
         if not vat_country:
             raise ValueError('vat_country must be set if vat_number is set')
         if vat_country in countries_requiring_postcode and not vat_postcode:  # NOQA: E501
