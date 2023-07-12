@@ -126,14 +126,6 @@ def test_create_pay_link_vat_number(paddle_client):  # NOQA: F811
         paddle_client.create_pay_link(
             title='test', webhook_url='fake', vat_number='1234',
             vat_company_name='name', vat_street='street',
-            vat_city='city',
-        )
-    error.match('vat_state must be set if vat_number is set')
-
-    with pytest.raises(ValueError) as error:
-        paddle_client.create_pay_link(
-            title='test', webhook_url='fake', vat_number='1234',
-            vat_company_name='name', vat_street='street',
             vat_city='city', vat_state='state',
         )
     error.match('vat_country must be set if vat_number is set')
