@@ -2,9 +2,7 @@ import pytest
 
 from paddle import PaddleException
 
-from .fixtures import (  # NOQA: F401
-    create_plan, get_subscription, paddle_client
-)
+from .fixtures import create_plan, get_subscription, paddle_client  # NOQA: F401
 
 
 def test_get_user_history_with_vendor_id(paddle_client, get_subscription):  # NOQA: F811,E501

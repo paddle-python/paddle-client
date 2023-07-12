@@ -2,9 +2,7 @@ from datetime import datetime
 
 import pytest
 
-from .fixtures import (  # NOQA: F401
-    create_plan, get_checkout, get_product, get_subscription, paddle_client
-)
+from .fixtures import create_plan, get_checkout, get_product, get_subscription, paddle_client  # NOQA: F401
 
 
 def test_list_transactions_subscription(paddle_client, get_subscription):  # NOQA: F811,E501

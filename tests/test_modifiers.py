@@ -1,6 +1,4 @@
-from .fixtures import (  # NOQA: F401, E501
-    create_modifier, create_plan, get_subscription, paddle_client
-)
+from .fixtures import create_modifier, create_plan, get_subscription, paddle_client  # NOQA: F401, E501
 
 
 def test_add_modifier(paddle_client, get_subscription):  # NOQA: F811

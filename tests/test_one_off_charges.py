@@ -4,9 +4,7 @@ import pytest
 
 from paddle import PaddleException
 
-from .fixtures import (  # NOQA: F401
-    create_plan, get_subscription, paddle_client
-)
+from .fixtures import create_plan, get_subscription, paddle_client  # NOQA: F401
 
 
 def test_create_one_off_charge(paddle_client, get_subscription):  # NOQA: F811,E501
@@ -21,11 +19,11 @@ def test_create_one_off_charge(paddle_client, get_subscription):  # NOQA: F811,E
     assert isinstance(response['currency'], str)
     assert isinstance(response['receipt_url'], str)
     assert response['subscription_id'] == subscription_id
-    # There is a bug with the sandbox API where the ammount is returned
-    # with 3 decimal places.
-    if len(str(response['amount'])) == 5:
-        assert response['amount'] == '%.3f' % round(amount, 3)
-    else:
+    # There is a bug with the sandbox API where the amount is returned
+    # without decimal places.
+    if len(str(response['amount'])) == 1:  # 5
+        assert response['amount'] == '%.0f' % round(amount)
+    else:  # 5.00 etc.
         assert response['amount'] == '%.2f' % round(amount, 2)
     assert isinstance(response['payment_date'], str)
     datetime.strptime(response['payment_date'], '%Y-%m-%d')

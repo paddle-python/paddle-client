@@ -1,6 +1,6 @@
 # Paddle Client
 
-A python (3.5+) wrapper around the [Paddle.com API](https://developer.paddle.com/api-reference/intro)
+A python (3.6+) wrapper around the [Paddle.com API](https://developer.paddle.com/api-reference/intro)
 
 If you are looking at integrating Paddle with Django check out [dj-paddle](https://github.com/paddle-python/dj-paddle)
 
